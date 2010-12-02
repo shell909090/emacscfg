@@ -16,8 +16,8 @@ clean:
 	make -C plugins clean
 
 install: build
-        rm -f ~/.emacs ~/.emacs.bmk
-        ln -s $(shell pwd)/emacs.el ~/.emacs
-        ln -s $(shell pwd)/emacs.bmk ~/.emacs.bmk
+	rm -f ~/.emacs ~/.emacs.bmk
+	ln -s $(shell pwd)/emacs.el ~/.emacs
+	ln -s $(shell pwd)/emacs.bmk ~/.emacs.bmk
 
 ### Makefile ends here
