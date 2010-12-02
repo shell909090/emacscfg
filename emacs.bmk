@@ -1,0 +1,39 @@
+;;;; Emacs Bookmark Format Version 1 ;;;;
+;;; This format is meant to be slightly human-readable;
+;;; nevertheless, you probably don't want to edit it.
+;;; -*- End Of Bookmark File Format Version Stamp -*-
+(("shhawk"
+  (filename . "/pscp:shellcom@shell909090.com:/home/shellcom/public_html/")
+  (front-context-string . "cgi-bin\n  -rw-r-")
+  (rear-context-string . "096 06-10 14:19 ")
+  (position . 1229))
+ ("shell@filesrv"
+  (filename . "/pscp:xuzx@192.168.5.6:/home/xuzx/")
+  (front-context-string . ".bash_history\n  ")
+  (rear-context-string . "341 03-04 10:28 ")
+  (position . 186))
+ ("xuzx@dev7"
+  (filename . "/pscp:xuzx@192.168.5.17:/home/xuzx/")
+  (front-context-string . ".bash_history\n  ")
+  (rear-context-string . "454 06-02 10:46 ")
+  (position . 184))
+ ("shell@dev8"
+  (filename . "/pscp:shell@192.168.5.18:/home/shell/")
+  (front-context-string . "backend-trunk\n  ")
+  (rear-context-string . "096 01-14 17:15 ")
+  (position . 771))
+ ("shell@proxy"
+  (filename . "/pscp:shell@192.168.5.61:/home/shell/")
+  (front-context-string . ".ICEauthority\n  ")
+  (rear-context-string . "789 10-20 11:52 ")
+  (position . 208))
+ ("shlo"
+  (filename . "/scp:shell@192.168.1.51#5122:/home/shell/")
+  (front-context-string . ".ICEauthority\n  ")
+  (rear-context-string . "09 Nov  7 10:51 ")
+  (position . 206))
+ ("share"
+  (filename . "//filesrv/share/")
+  (front-context-string . "dev-研发\n  drwxrwx")
+  (rear-context-string . "  0 12-30 17:39 ")
+  (position . 1313)))

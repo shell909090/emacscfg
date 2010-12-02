@@ -1,0 +1,8 @@
+syntax: glob
+
+*.elc
+*.pyc
+*.pyo
+*.so
+*.o
+*~
