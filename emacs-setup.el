@@ -1,8 +1,8 @@
 ;; show
 (setq inhibit-startup-screen t);; close welcome screen
 (setq column-number-mode t);; enable column mode
-(show-paren-mode t);; ÏÔÊ¾Æ¥ÅäÀ¨ºÅ
-(setq show-paren-style 'parentheses);; ÏÔÊ¾Æ¥ÅäÀ¨ºÅ
+(show-paren-mode t);; æ˜¾ç¤ºåŒ¹é…æ‹¬å·
+(setq show-paren-style 'parentheses);; æ˜¾ç¤ºåŒ¹é…æ‹¬å·
 (setq visible-bell t)
 (setq frame-title-format "%b");; set title
 (auto-image-file-mode);; enable image view
@@ -25,20 +25,20 @@
 (put 'dired-find-alternate-file 'disabled nil)
 (transient-mark-mode t);; unknown
 (fset 'yes-or-no-p 'y-or-n-p);; use y/n to anwser
-;; ÔÚĞĞÊ× C-k Ê±£¬Í¬Ê±É¾³ı¸ÃĞĞ
+;; åœ¨è¡Œé¦– C-k æ—¶ï¼ŒåŒæ—¶åˆ é™¤è¯¥è¡Œ
 (setq-default kill-whole-line t)
 (global-unset-key [?\C- ])
-;; Ö§³ÖemacsºÍÍâ²¿³ÌĞòµÄÕ³Ìù
+;; æ”¯æŒemacså’Œå¤–éƒ¨ç¨‹åºçš„ç²˜è´´
 (setq x-select-enable-clipboard t)
-;; Ä¬ÈÏ½¨Á¢ÎÄ¼şÊ¹ÓÃunix¸ñÊ½£¬utf-8±àÂë
+;; é»˜è®¤å»ºç«‹æ–‡ä»¶ä½¿ç”¨unixæ ¼å¼ï¼Œutf-8ç¼–ç 
 (setq default-buffer-file-coding-system 'utf-8-unix)
 
-;; Ä¬ÈÏ´ò¿ªabbrevÄ£Ê½£¬²»ÌáÊ¾×Ô¶¯±£´æ
+;; é»˜è®¤æ‰“å¼€abbrevæ¨¡å¼ï¼Œä¸æç¤ºè‡ªåŠ¨ä¿å­˜
 (setq-default abbrev-mode t)
 (setq save-abbrevs nil)
 
-;; pythonÄ£Ê½
+;; pythonæ¨¡å¼
 (setq python-indent 8)
 
-;; cc-mode£¬Ä¬ÈÏÊ¹ÓÃlinux c·ç¸ñ£¬Ëõ½ø8
+;; cc-modeï¼Œé»˜è®¤ä½¿ç”¨linux cé£æ ¼ï¼Œç¼©è¿›8
 (setq c-default-style "linux" c-basic-offset 8)
