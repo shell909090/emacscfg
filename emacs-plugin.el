@@ -30,4 +30,5 @@
 (msf-abbrev-load)
 
 (require 'dired-x)
-(setq-default dired-omit-files-p t)
+(setq dired-omit-mode t)
+(setq dired-omit-files "^\\.?#\\|^\\.[^\\.]+")
