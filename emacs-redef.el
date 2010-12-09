@@ -79,7 +79,7 @@
   (let ((file-ext (file-name-extension filename)))
     (cond ((memq system-type '(windows-nt cygwin)) "start")
 	  ((member file-ext '("avi" "rmvb" "mp3")) "mplayer")
-	  (t ""))))
+	  (t "xdg-open"))))
 (defun dired-open-file (&optional arg)
   (interactive)
   (apply 'start-process "dired-file" nil

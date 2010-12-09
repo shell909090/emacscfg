@@ -1,6 +1,7 @@
 syntax: glob
 
 ac-comphist.dat
+tramp
 *.elc
 *.pyc
 *.pyo
