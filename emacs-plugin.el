@@ -28,3 +28,6 @@
 (require 'msf-abbrev)
 (setq msf-abbrev-root "~/.emacs.d/mode-abbrevs")
 (msf-abbrev-load)
+
+(require 'dired-x)
+(setq-default dired-omit-files-p t)
