@@ -76,18 +76,14 @@
      	     (dired up)
      	     (dired-goto-file dir))))))
 (defun dired-guess-cmd (filename)
-  (let ((file-ext (file-name-extension filename)))
-    (cond ((memq system-type '(windows-nt cygwin)) "start")
-	  ((member file-ext '("avi" "rmvb" "mp3")) "mplayer")
-	  (t "xdg-open"))))
+  (cond ((memq system-type '(windows-nt cygwin)) "start")
+	(t "xdg-open")))
 (defun dired-open-file (&optional arg)
   (interactive)
   (apply 'start-process "dired-file" nil
-	 (list
-	  (read-from-minibuffer "run by: "
-				(dired-guess-cmd (dired-get-filename)))
-	  (dired-get-filename)))
-  )
+	 (list (read-from-minibuffer
+		"run by: " (dired-guess-cmd (dired-get-filename)))
+	       (dired-get-filename))))
 (add-hook 'dired-mode-hook
 	  (lambda ()
 	    (define-key dired-mode-map "b" 'dired-open-file)
