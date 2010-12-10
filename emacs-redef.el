@@ -80,10 +80,12 @@
 	(t "xdg-open")))
 (defun dired-open-file (&optional arg)
   (interactive)
-  (apply 'start-process "dired-file" nil
-	 (list (read-from-minibuffer
-		"run by: " (dired-guess-cmd (dired-get-filename)))
-	       (dired-get-filename))))
+  (apply 'start-process "dired-open" nil
+	 (append
+	  (split-string (read-from-minibuffer
+			 "command: "
+			 (dired-guess-cmd (dired-get-filename))))
+	  (list (dired-get-filename)))))
 (add-hook 'dired-mode-hook
 	  (lambda ()
 	    (define-key dired-mode-map "b" 'dired-open-file)
