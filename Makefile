@@ -4,12 +4,14 @@
 ## Version: $Id: Makefile,v 0.0 2010/01/20 17:13:26 shell Exp $
 ## Keywords: 
 ## X-URL: 
-SOURCES=emacs-console.el emacs-keymap.el emacs-linux.el emacs-redef.el emacs-setup.el emacs-win.el
+SOURCES=keymap.el redef.el setup.el
+EMACS-CONFIG=emacs-console.el emacs-linux.el emacs-win.el
 
-build: $(SOURCES) emacs-plugin.el
+build: $(SOURCES) $(EMACS-CONFIG) plugins.el
 	make -C plugins build
 	emacs -Q -L . --batch -f batch-byte-compile $(SOURCES)
-	emacs -Q -L plugins/ --batch -f batch-byte-compile emacs-plugin.el
+	emacs -Q -L . --batch -f batch-byte-compile $(EMACS-CONFIG)
+	emacs -Q -L plugins/ --batch -f batch-byte-compile plugins.el
 
 clean:
 	rm -f *.elc

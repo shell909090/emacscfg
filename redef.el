@@ -81,12 +81,21 @@
 (defun dired-open-file (&optional arg)
   (interactive)
   (apply 'start-process "dired-open" nil
-	 (append
-	  (split-string (read-from-minibuffer
-			 "command: "
-			 (dired-guess-cmd (dired-get-filename))))
+	 (append (split-string
+		  (read-shell-command
+		   "command: " (dired-guess-cmd (dired-get-filename))))
 	  (list (dired-get-filename)))))
+(defun dired-copy-from (&optional arg)
+  (interactive)
+  (let ((source-path (read-file-name "filepath: ")))
+    (copy-file source-path (file-name-nondirectory source-path))))
+(defun dired-rename-from (&optional arg)
+  (interactive)
+  (let ((source-path (read-file-name "filepath: ")))
+    (rename-file source-path (file-name-nondirectory source-path))))
 (add-hook 'dired-mode-hook
 	  (lambda ()
 	    (define-key dired-mode-map "b" 'dired-open-file)
+	    (define-key dired-mode-map "c" 'dired-copy-from)
+	    (define-key dired-mode-map "r" 'dired-rename-from)
 	    ))
