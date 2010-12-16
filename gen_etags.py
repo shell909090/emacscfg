@@ -1,54 +1,41 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-# @date: 2009-06-25
-# @author: shell.xu
-from __future__ import with_statement
+'''
+@date: 2009-06-25
+@author: shell.xu
+'''
 import os
 import sys
 import platform
 from os import path
 
-if platform.system () == 'Windows':
+sys_platform = platform.system()
+if sys_platform == 'Windows':
     etags_path = 'C:\\Program Files\\emacs\\bin\\etags.exe'
-elif platform.system () == 'Linux':
-    etags_path = '/usr/bin/etags'
-else:
-    etags_path = os.popen ("which etags", "r").read ().strip ()
-ext_list = [".c", ".cpp", ".cxx", ".h", ".hpp", ".py"]
+else: etags_path = os.popen("which etags", "r").read().strip()
 
-def walk_tag (base_path, target_path):
-    ''' '''
-    for dirpath, dirnames, filenames in os.walk (base_path):
+ext_list = set(['.c', '.cpp', '.cxx', '.h', '.hpp', '.py', '.java'])
+
+def proc_file(fullpath, target_path):
+    if sys_platform == 'Windows':
+        params = ('etags.exe', fullpath, '-a', '-o', target_path)
+    elif sys_platform == 'Linux':
+        params = ('etags', fullpath, '-a', '-o', target_path)
+    else: raise Exception('platform not support')
+    os.spawnv(os.P_WAIT, etags_path, params)
+
+def gen_tag_table(cur_dir):
+    target_path = path.join(cur_dir, 'TAGS')
+    try: os.remove(target_path)
+    except OSError: pass
+    for dirpath, dirnames, filenames in os.walk(cur_dir):
         for filename in filenames:
-            fullname = path.join (dirpath, filename)
-            bProc = False
-            for ext in ext_list:
-                if fullname.lower ().endswith (ext):
-                    bProc = True
-                    break
-            if bProc:
-                if platform.system () == 'Windows':
-                    params = ('etags.exe', '"%s"' % fullname, "--members",
-                              "-a", "-o", '"%s"' % target_path)
-                elif platform.system () == 'Linux':
-                    params = ('etags', fullname, "--members",
-                              "-a", "-o", target_path)
-                else: # warning this error is safe
-                    params = None
-                os.spawnv (os.P_WAIT, etags_path, params)
-                
+            if path.splitext(filename)[1].lower() in ext_list:
+                proc_file(path.join(dirpath, filename), target_path)
 
-def gen_tag_table (cur_dir):
-    """ """
-    target_path = path.join (cur_dir, "TAGS")
-    try:
-        os.remove (target_path)
-    except OSError:
-        pass
-    walk_tag (cur_dir, target_path)
-
-if __name__ == "__main__":
-    if len (sys.argv) < 2:
-        gen_tag_table (os.getcwd ())
-    else:
-        gen_tag_table (sys.argv[1])
+if __name__ == '__main__':
+    if len(sys.argv) == 1: gen_tag_table(os.getcwd())
+    elif len(sys.argv) == 2: gen_tag_table(sys.argv[1])
+    elif len(sys.argv) > 2:
+        target_path = path.join(sys.argv[1], 'TAGS')
+        for filepath in sys.argv[2:]: proc_file(filepath, target_path)
