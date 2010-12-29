@@ -17,3 +17,5 @@
   )
  )
 (load "keymap")
+(if (file-exists-p "~/.emacs.d/locals.el")
+    (load "locals"))

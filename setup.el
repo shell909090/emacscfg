@@ -37,8 +37,5 @@
 (setq-default abbrev-mode t)
 (setq save-abbrevs nil)
 
-;; python模式
-(setq python-indent 8)
-
 ;; cc-mode，默认使用linux c风格，缩进8
 (setq c-default-style "linux" c-basic-offset 8)
