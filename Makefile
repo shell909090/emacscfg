@@ -18,8 +18,8 @@ clean:
 	make -C plugins clean
 
 install: build
-	rm -f ~/.emacs ~/.emacs.bmk
+	rm -f ~/.emacs ~/.emacs.elc
 	ln -s $(shell pwd)/emacs.el ~/.emacs
-	ln -s $(shell pwd)/emacs.bmk ~/.emacs.bmk
+	emacs -Q --batch -f batch-byte-compile ~/.emacs
 
 ### Makefile ends here
