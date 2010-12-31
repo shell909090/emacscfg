@@ -1,20 +1,19 @@
 ;;; keymap.el --- 
-
 ;;; define keymap
+
 (global-set-key [f4] 'speedbar)
 (global-set-key [f5] 'ibuffer)
-(global-set-key [C-f5] 'bookmark-bmenu-list);; list bookmark
-(global-set-key [f6] 'shell);; open shell
-(global-set-key [C-f6] 'run-python-cmd)
+(global-set-key [f6] 'bookmark-bmenu-list)
 (global-set-key [f7] 'switch-windows-buffer)
 
-(global-set-key "\M-/" 'hippie-expand)
+(global-set-key [(meta /)] 'hippie-expand)
 (global-set-key [(control ?;)] 'comment-or-uncomment-region)
 (global-set-key [(control x) (control b)] 'ibuffer)
 (global-set-key [(control x) (k)] 'kill-this-buffer);; kill *this* buffer with no question
 (global-set-key [(control tab)] 'other-window);; same as C-x o
 
 (global-set-key [(control c) (a)] 'abbrev-mode)
+(global-set-key [(control c) (b)] 'bookmark-bmenu-list)
 (global-set-key [(control c) (c)] 'auto-complete-mode)
 (global-set-key [(control c) (f)] 'grep-find)
 (global-set-key [(control c) (g)] 'gen-etags-tables)
