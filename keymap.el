@@ -1,4 +1,4 @@
-;;; emacs-keymap.el --- 
+;;; keymap.el --- 
 
 ;;; define keymap
 (global-set-key [f4] 'speedbar)
@@ -14,15 +14,13 @@
 (global-set-key [(control x) (k)] 'kill-this-buffer);; kill *this* buffer with no question
 (global-set-key [(control tab)] 'other-window);; same as C-x o
 
-(global-set-key [(control c) (tab)] 'hippie-expand)
 (global-set-key [(control c) (a)] 'abbrev-mode)
 (global-set-key [(control c) (c)] 'auto-complete-mode)
-(global-set-key [(control c) (d)] 'debug-python-file)
-(global-set-key [(control c) (n)] 'msf-abbrev-define-new-abbrev-this-mode)
+(global-set-key [(control c) (f)] 'grep-find)
 (global-set-key [(control c) (g)] 'gen-etags-tables)
 (global-set-key [(control c) (l)] 'align)
 (global-set-key [(control c) (m)] 'man)
-(global-set-key [(control c) (o)] 'color-theme-select)
+(global-set-key [(control c) (n)] 'msf-abbrev-define-new-abbrev-this-mode)
 (global-set-key [(control c) (r)] 'revert-buffer)
 (global-set-key [(control c) (s)] 'popup-term)
 (global-set-key [(control c) (t)] 'top)
