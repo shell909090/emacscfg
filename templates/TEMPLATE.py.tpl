@@ -4,7 +4,4 @@
 @date: (>>>ISO_DATE<<<)
 @author: shell.xu
 '''
-from __future__ import with_statement
-import os
-import sys
-
+import os, sys
