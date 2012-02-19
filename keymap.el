@@ -13,14 +13,14 @@
 (global-set-key [(control tab)] 'other-window);; same as C-x o
 
 (global-set-key [(control c) (a)] 'abbrev-mode)
-(global-set-key [(control c) (b)] 'bookmark-bmenu-list)
 (global-set-key [(control c) (c)] 'auto-complete-mode)
+(global-set-key [(control c) (e)] 'multi-term)
 (global-set-key [(control c) (f)] 'grep-find)
 (global-set-key [(control c) (g)] 'gen-etags-tables)
 (global-set-key [(control c) (l)] 'align)
 (global-set-key [(control c) (m)] 'man)
-(global-set-key [(control c) (n)] 'msf-abbrev-define-new-abbrev-this-mode)
 (global-set-key [(control c) (r)] 'revert-buffer)
 (global-set-key [(control c) (s)] 'popup-term)
 (global-set-key [(control c) (t)] 'top)
 (global-set-key [(control c) (v)] 'visit-tags-table);; just load
+(global-set-key [(control c) (x)] 'multi-term-dedicated-open)

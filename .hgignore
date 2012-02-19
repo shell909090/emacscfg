@@ -2,6 +2,7 @@ syntax: glob
 
 ac-comphist.dat
 tramp
+TAGS
 locals.*
 *.elc
 *.pyc

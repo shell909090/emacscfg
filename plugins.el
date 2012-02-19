@@ -1,7 +1,11 @@
 (require 'python)
 (require 'ibuffer)
-(require 'multi-term)
 (require 'top-mode)
+
+;; load multi-term
+(require 'multi-term)
+(setq multi-term-dedicated-select-after-open-p t)
+(setq multi-term-switch-after-close t)
 
 ;; load template
 (require 'template)
