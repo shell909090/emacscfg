@@ -6,6 +6,9 @@
 (require 'multi-term)
 (setq multi-term-dedicated-select-after-open-p t)
 (setq multi-term-switch-after-close t)
+(custom-set-variables
+ '(term-default-bg-color "#000000")
+ '(term-default-fg-color "#ffffff"))
 
 ;; load template
 (require 'template)
