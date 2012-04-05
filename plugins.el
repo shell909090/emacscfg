@@ -43,3 +43,7 @@
 (require 'dired-x)
 (setq-default dired-omit-files-p t)
 (setq dired-omit-files "^\\.?#\\|^\\.[^\\.]+")
+
+;; load dictionary-el, not dict in emacs-goodies-el
+(require 'dictionary)
+(setq dictionary-server "localhost")
