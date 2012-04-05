@@ -2,6 +2,10 @@
 (require 'ibuffer)
 (require 'top-mode)
 
+;; cc-mode，默认使用linux c风格，缩进8
+(require 'cc-mode)
+(setq c-default-style "linux" c-basic-offset 8)
+
 ;; load multi-term
 (require 'multi-term)
 (setq multi-term-dedicated-select-after-open-p t)

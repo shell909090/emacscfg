@@ -23,4 +23,5 @@
 (global-set-key [(control c) (s)] 'popup-term)
 (global-set-key [(control c) (t)] 'top)
 (global-set-key [(control c) (v)] 'visit-tags-table);; just load
+(global-set-key [(control c) (w)] 'compile)
 (global-set-key [(control c) (x)] 'multi-term-dedicated-open)

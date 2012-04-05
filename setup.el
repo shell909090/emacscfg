@@ -36,6 +36,3 @@
 ;; 默认打开abbrev模式，不提示自动保存
 (setq-default abbrev-mode t)
 (setq save-abbrevs nil)
-
-;; cc-mode，默认使用linux c风格，缩进8
-(setq c-default-style "linux" c-basic-offset 8)
