@@ -27,17 +27,15 @@ make clean ;清理安装目录
 make install ;编译并安装配置
 
 推荐安装：
-auto-complete
-dictionary
+auto-complete-el
+debian-el
+dictionary-el
 dvc
+emacs-goodies-el
+  color-theme
+  tabbar
 php-elisp
 slime
-tabbar
 
 测试中：
-debian-el
-e2wm
 ecb
-remember
-
-
