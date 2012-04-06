@@ -36,6 +36,21 @@
 (setq msf-abbrev-root "~/.emacs.d/mode-abbrevs")
 (msf-abbrev-load)
 
+;; load hippie-expand
+(setq hippie-expand-try-functions-list
+      '( ;;senator-complete-symbol
+        try-expand-dabbrev
+        try-expand-dabbrev-visible
+        try-expand-dabbrev-all-buffers
+        try-expand-dabbrev-from-kill
+        try-complete-file-name-partially
+        try-complete-file-name
+        try-expand-all-abbrevs
+        try-expand-list
+        try-expand-line
+        try-complete-lisp-symbol-partially
+        try-complete-lisp-symbol))
+
 ;; load multi-term
 (autoload 'multi-term "multi-term" "multi terminal" t)
 (autoload 'multi-term-dedicated-open "multi-term" "multi terminal" t)

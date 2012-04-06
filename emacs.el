@@ -6,6 +6,7 @@
 (load "setup")
 (load "plugins")
 (load "userfunc")
+(load "keymap")
 (cond
  ((memq system-type '(windows-nt cygwin))
   (load "emacs-win"))
@@ -14,6 +15,5 @@
 	   (memq initial-window-system '(x w32)))
       (load "emacs-linux")
     (load "emacs-console"))))
-(load "keymap")
 (if (file-exists-p "~/.emacs.d/locals.el")
     (load "locals"))

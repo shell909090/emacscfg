@@ -1,5 +1,4 @@
 ;; self define functions
-;; function
 (defun switch-windows-buffer ()
   (interactive)
   (let ((this-buffer (window-buffer)))
@@ -9,28 +8,11 @@
     )
 )
 
-;; function
 (defun popup-term ()
   (interactive)
   (apply 'start-process "terminal" nil popup-terminal-command)
   )
 
-;; load hippie-expand
-(setq hippie-expand-try-functions-list
-      '( ;;senator-complete-symbol
-        try-expand-dabbrev
-        try-expand-dabbrev-visible
-        try-expand-dabbrev-all-buffers
-        try-expand-dabbrev-from-kill
-        try-complete-file-name-partially
-        try-complete-file-name
-        try-expand-all-abbrevs
-        try-expand-list
-        try-expand-line
-        try-complete-lisp-symbol-partially
-        try-complete-lisp-symbol))
-
-;; for etags
 (defun gen-etags-tables ()
   (interactive)
   (let ((etags-path (expand-file-name (read-directory-name "etags path:")))

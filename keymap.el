@@ -13,7 +13,6 @@
 (global-set-key [(control tab)] 'other-window);; same as C-x o
 
 (global-set-key [(control c) (a)] 'abbrev-mode)
-(global-set-key [(control c) (c)] 'auto-complete-mode)
 (global-set-key [(control c) (d)] 'dictionary-search)
 (global-set-key [(control c) (e)] 'multi-term)
 (global-set-key [(control c) (f)] 'grep-find)

@@ -1,5 +1,4 @@
 (tool-bar-mode -1);; remove tool bar
-(menu-bar-mode -1);; remove menu bar
 
 (server-start)
 (set-frame-font "monospace-10")

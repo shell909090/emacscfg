@@ -1,5 +1,4 @@
 (tool-bar-mode -1);; remove tool bar
-(menu-bar-mode -1);; remove menu bar
 
 (server-start)
 
@@ -7,11 +6,10 @@
 
 (custom-set-faces
  '(default
-    ((t
-      (:inherit nil :stipple nil :background "SystemWindow"
-		:foreground "SystemWindowText" :inverse-video nil
-		:box nil :strike-through nil :overline nil :underline nil
-		:slant normal :weight normal :height 105 :width normal
-		:foundry "outline" :family "Courier New")))))
+    ((t (:inherit nil :stipple nil :background "SystemWindow"
+		  :foreground "SystemWindowText" :inverse-video nil
+		  :box nil :strike-through nil :overline nil :underline nil
+		  :slant normal :weight normal :height 105 :width normal
+		  :foundry "outline" :family "Courier New")))))
 
 (setq popup-terminal-command '("cmd" "/c" "start"))
