@@ -1,0 +1,42 @@
+###  README --- /home/shell/.emacs.d/
+
+## Copyright 2012 shell xu
+##
+## Author: shell909090@gmail.com
+## Keywords: 
+
+文件说明：
+emacs-console.el	console模式下的定制配置文件
+emacs.el		主配置文件
+emacs-linux.el		linux非console模式(X11模式)下的配置文件
+emacs-win.el		windows下的配置文件
+gen_etags.py		用于etags生成
+keymap.el		用于全局键盘映射
+locals.el		本地配置文件
+plugins.el		插件载入和配置
+redef.el		自定义函数
+setup.el		默认配置参数
+
+mode-abbrevs		缩写数据目录
+plusins			插件安装目录
+templates		自动建立模板目录
+
+安装方法：
+copy dir to ~/.emacs.d/
+make clean ;清理安装目录
+make install ;编译并安装配置
+
+推荐安装：
+auto-complete
+dictionary
+dvc
+php-elisp
+slime
+
+测试中：
+debian-el
+e2wm
+ecb
+remember
+
+

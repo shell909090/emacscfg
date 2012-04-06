@@ -4,7 +4,7 @@
 ## Version: $Id: Makefile,v 0.0 2010/01/20 17:13:26 shell Exp $
 ## Keywords: 
 ## X-URL: 
-SOURCES=keymap.elc redef.elc setup.elc
+SOURCES=emacs.elc keymap.elc redef.elc setup.elc
 EMACS-CONFIG=emacs-console.elc emacs-linux.elc emacs-win.elc
 
 build: $(SOURCES) $(EMACS-CONFIG) plugins.elc
@@ -23,6 +23,6 @@ clean:
 install: build
 	rm -f ~/.emacs ~/.emacs.elc
 	ln -s $(shell pwd)/emacs.el ~/.emacs
-	emacs -Q --batch -f batch-byte-compile ~/.emacs
+	ln -s $(shell pwd)/emacs.elc ~/.emacs.elc
 
 ### Makefile ends here
