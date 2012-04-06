@@ -2,8 +2,8 @@
 (menu-bar-mode -1);; remove menu bar
 
 (server-start)
-(set-frame-font "DejaVu Sans Mono:pixelsize=15")
+(set-frame-font "monospace-10")
 (set-fontset-font "fontset-default" 'unicode
-		  '("AR PL UMing CN:pixelsize=15" . "unicode-bmp"))
+		  '("AR PL UMing CN" . "unicode-bmp"))
 
 (setq popup-terminal-command '("x-terminal-emulator"))

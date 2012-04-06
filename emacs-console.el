@@ -1,5 +1,5 @@
-;; (tool-bar-mode -1);; remove tool bar
+;; (tool-bar-mode -1) console don't have tool bar
 (menu-bar-mode -1);; remove menu bar
 
-;; (server-start);; use for multi-file open in same window, look like have some problem
-(set-frame-font "DejaVu Sans Mono:pixelsize=15")
+;; (server-start)
+(set-frame-font "monospace-10")

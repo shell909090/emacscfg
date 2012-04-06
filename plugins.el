@@ -16,12 +16,12 @@
 
 ;; load template
 (require 'template)
-;;here set the templates directory
 (setq template-subdirectories '("./" "Templates/" "~/.emacs.d/templates/"))
 (template-initialize)
 (setq template-auto-insert t)
 
 ;; load desktop
+(require 'desktop)
 (desktop-save-mode)
 
 ;; load auto complete
@@ -40,10 +40,10 @@
 (setq msf-abbrev-root "~/.emacs.d/mode-abbrevs")
 (msf-abbrev-load)
 
+;; load dired-x
 (require 'dired-x)
 (setq-default dired-omit-files-p t)
 (setq dired-omit-files "^\\.?#\\|^\\.[^\\.]+")
 
-;; load dictionary-el, not dict in emacs-goodies-el
-(require 'dictionary)
+;; use dictionary-el, not dict in emacs-goodies-el
 (setq dictionary-server "localhost")
