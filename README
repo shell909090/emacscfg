@@ -23,8 +23,12 @@ templates		自动建立模板目录
 
 安装方法：
 copy dir to ~/.emacs.d/
+make
+
+注:
 make clean ;清理安装目录
-make install ;编译并安装配置
+make build ;编译全部代码
+make install ;安装配置
 
 推荐安装：
 auto-complete-el

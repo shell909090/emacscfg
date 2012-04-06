@@ -19,7 +19,7 @@
       (list (cons "." (concat temporary-file-directory "backup"))))
 
 ;; others
-(setq default-major-mode 'text-mode);; set default mode
+(setq major-mode 'text-mode);; set default mode
 (auto-compression-mode 1);; set compression mode
 (pc-selection-mode);; use shift + [array] to select
 (put 'dired-find-alternate-file 'disabled nil)
@@ -31,7 +31,7 @@
 ;; 支持emacs和外部程序的粘贴
 (setq x-select-enable-clipboard t)
 ;; 默认建立文件使用unix格式，utf-8编码
-(setq default-buffer-file-coding-system 'utf-8-unix)
+(setq buffer-file-coding-system 'utf-8-unix)
 
 ;; 默认打开abbrev模式，不提示自动保存
 (setq-default abbrev-mode t)

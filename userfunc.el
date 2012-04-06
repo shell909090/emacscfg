@@ -8,6 +8,7 @@
     )
 )
 
+(defvar popup-terminal-command nil)
 (defun popup-term ()
   (interactive)
   (apply 'start-process "terminal" nil popup-terminal-command)
