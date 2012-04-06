@@ -4,7 +4,7 @@
 ## Version: $Id: Makefile,v 0.0 2010/01/20 17:13:26 shell Exp $
 ## Keywords: 
 ## X-URL: 
-SOURCES=emacs.elc keymap.elc redef.elc setup.elc
+SOURCES=emacs.elc keymap.elc userfunc.elc setup.elc
 EMACS-CONFIG=emacs-console.elc emacs-linux.elc emacs-win.elc
 
 build: $(SOURCES) $(EMACS-CONFIG) plugins.elc

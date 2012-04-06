@@ -5,7 +5,7 @@
 (add-to-list 'load-path "~/.emacs.d/plugins/")
 (load "setup")
 (load "plugins")
-(load "redef")
+(load "userfunc")
 (cond
  ((memq system-type '(windows-nt cygwin))
   (load "emacs-win"))

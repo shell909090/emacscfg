@@ -37,6 +37,7 @@
 	(python-command (expand-file-name "~/.emacs.d/gen_etags.py")))
     (call-process "python" nil t nil python-command etags-path
 		  (buffer-file-name (current-buffer)))))
+
 (defun dired-etags-tables ()
   (interactive)
   (let ((etags-path (expand-file-name (read-directory-name "etags path:")))
