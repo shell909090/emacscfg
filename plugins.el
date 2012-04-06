@@ -1,28 +1,23 @@
-(require 'python)
-(require 'ibuffer)
-(require 'top-mode)
-
 ;; cc-mode，默认使用linux c风格，缩进8
-(require 'cc-mode)
 (setq c-default-style "linux" c-basic-offset 8)
 
 ;; load desktop
 (require 'desktop)
 (desktop-save-mode)
 
-;; load multi-term
-(require 'multi-term)
-(setq multi-term-dedicated-select-after-open-p t)
-(setq multi-term-switch-after-close t)
-(custom-set-variables
- '(term-default-bg-color "#000000")
- '(term-default-fg-color "#ffffff"))
+;; load tabbar
+(require 'tabbar)
+(tabbar-mode)
 
-;; load template
-(require 'template)
-(setq template-subdirectories '("./" "Templates/" "~/.emacs.d/templates/"))
-(template-initialize)
-(setq template-auto-insert t)
+;; load color theme
+(require 'color-theme)
+(color-theme-initialize)
+(color-theme-clarity)
+
+;; load dired-x
+(require 'dired-x)
+(setq-default dired-omit-files-p t)
+(setq dired-omit-files "^\\.?#\\|^\\.[^\\.]+")
 
 ;; load auto complete
 (require 'auto-complete)
@@ -30,24 +25,28 @@
 (define-key ac-complete-mode-map "\C-n" 'ac-next)
 (define-key ac-complete-mode-map "\C-p" 'ac-previous)
 
-;; load color theme
-(require 'color-theme)
-(color-theme-initialize)
-(color-theme-clarity)
+;; load template
+(require 'template)
+(setq template-subdirectories '("./" "Templates/" "~/.emacs.d/templates/"))
+(template-initialize)
+(setq template-auto-insert t)
 
 ;; load msf-abbrev
 (require 'msf-abbrev)
 (setq msf-abbrev-root "~/.emacs.d/mode-abbrevs")
 (msf-abbrev-load)
 
-;; load dired-x
-(require 'dired-x)
-(setq-default dired-omit-files-p t)
-(setq dired-omit-files "^\\.?#\\|^\\.[^\\.]+")
+;; load multi-term
+(autoload 'multi-term "multi-term" "multi terminal" t)
+(autoload 'multi-term-dedicated-open "multi-term" "multi terminal" t)
+(setq multi-term-dedicated-select-after-open-p t)
+(setq multi-term-switch-after-close t)
+(custom-set-variables
+ '(term-default-bg-color "#000000")
+ '(term-default-fg-color "#ffffff"))
 
-;; load tabbar
-(require 'tabbar)
-(tabbar-mode)
+;; load top
+(autoload 'top "top-mode" "top mode" t)
 
 ;; use dictionary-el, not dict in emacs-goodies-el
 (setq dictionary-server "localhost")
