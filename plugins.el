@@ -6,6 +6,10 @@
 (require 'cc-mode)
 (setq c-default-style "linux" c-basic-offset 8)
 
+;; load desktop
+(require 'desktop)
+(desktop-save-mode)
+
 ;; load multi-term
 (require 'multi-term)
 (setq multi-term-dedicated-select-after-open-p t)
@@ -19,10 +23,6 @@
 (setq template-subdirectories '("./" "Templates/" "~/.emacs.d/templates/"))
 (template-initialize)
 (setq template-auto-insert t)
-
-;; load desktop
-(require 'desktop)
-(desktop-save-mode)
 
 ;; load auto complete
 (require 'auto-complete)
@@ -44,6 +44,10 @@
 (require 'dired-x)
 (setq-default dired-omit-files-p t)
 (setq dired-omit-files "^\\.?#\\|^\\.[^\\.]+")
+
+;; load tabbar
+(require 'tabbar)
+(tabbar-mode)
 
 ;; use dictionary-el, not dict in emacs-goodies-el
 (setq dictionary-server "localhost")

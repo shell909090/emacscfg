@@ -32,6 +32,7 @@ dictionary
 dvc
 php-elisp
 slime
+tabbar
 
 测试中：
 debian-el

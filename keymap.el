@@ -26,3 +26,7 @@
 (global-set-key [(control c) (v)] 'visit-tags-table);; just load
 (global-set-key [(control c) (w)] 'compile)
 (global-set-key [(control c) (x)] 'multi-term-dedicated-open)
+
+;; for tabbar
+(global-set-key [(meta \])] 'tabbar-forward)
+(global-set-key [(meta \[)] 'tabbar-backward)

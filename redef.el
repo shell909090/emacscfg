@@ -1,3 +1,4 @@
+;; self define functions
 ;; function
 (defun switch-windows-buffer ()
   (interactive)
@@ -56,6 +57,7 @@
     (when (and (file-directory-p filename)
 	       (not (eq (current-buffer) orig)))
       (kill-buffer orig))))
+
 (eval-after-load "dired"
   ;; don't remove `other-window', the caller expects it to be there
   '(defun dired-up-directory (&optional other-window)
@@ -72,9 +74,11 @@
      	     (kill-buffer orig)
      	     (dired up)
      	     (dired-goto-file dir))))))
+
 (defun dired-guess-cmd (filename)
   (cond ((memq system-type '(windows-nt cygwin)) "start")
 	(t "xdg-open")))
+
 (defun dired-open-file (&optional arg)
   (interactive)
   (apply 'start-process "dired-open" nil
@@ -82,14 +86,17 @@
 		  (read-shell-command
 		   "command: " (dired-guess-cmd (dired-get-filename))))
 	  (list (dired-get-filename)))))
+
 (defun dired-copy-from (&optional arg)
   (interactive)
   (let ((source-path (read-file-name "filepath: ")))
     (copy-file source-path (file-name-nondirectory source-path))))
+
 (defun dired-rename-from (&optional arg)
   (interactive)
   (let ((source-path (read-file-name "filepath: ")))
     (rename-file source-path (file-name-nondirectory source-path))))
+
 (add-hook 'dired-mode-hook
 	  (lambda ()
 	    (define-key dired-mode-map "b" 'dired-open-file)
@@ -97,3 +104,14 @@
 	    (define-key dired-mode-map "r" 'dired-rename-from)
 	    (define-key dired-mode-map [(control c) (g)] 'dired-etags-tables)
 	    ))
+
+;; tabbar mode
+(setq tabbar-buffer-groups-function
+      (lambda () (list "All Buffers")))
+
+(setq tabbar-buffer-list-function
+      (lambda ()
+        (remove-if
+	 (lambda(buffer)
+	   (find (aref (buffer-name buffer) 0) " *"))
+	 (buffer-list))))
