@@ -101,9 +101,8 @@
 	 (buffer-list))))
 
 (defun switch-tabbar (num)
-  (let ((tabs (tabbar-tabs (tabbar-get-tabset "All Buffers"))))
-    (switch-to-buffer
-     (car (nth
-	   (if (> num 0) (- num 1) (+ (length tabs) num))
-	   tabs))
-    )))
+  (switch-to-buffer
+   (car (nth
+	 (if (> num 0) (- num 1) (+ (length tabs) num))
+	 (tabbar-tabs (tabbar-get-tabset "All Buffers"))))
+    ))
