@@ -32,7 +32,7 @@ make install ;安装配置
 
 推荐安装：
 auto-complete-el
-debian-el
+debian-el	
 dictionary-el
 dvc
 emacs-goodies-el
@@ -43,3 +43,4 @@ slime
 
 测试中：
 ecb
+tail
