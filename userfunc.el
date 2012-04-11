@@ -90,20 +90,20 @@
 	    ))
 
 ;; tabbar mode
-(setq tabbar-buffer-groups-function
-      (lambda () (list "All Buffers")))
+;; (setq tabbar-buffer-groups-function
+;;       (lambda () (list "All Buffers")))
 
-(setq tabbar-buffer-list-function
-      (lambda ()
-        (remove-if
-	 (lambda(buffer)
-	   (find (aref (buffer-name buffer) 0) " *"))
-	 (buffer-list))))
+;; (setq tabbar-buffer-list-function
+;;       (lambda ()
+;;         (remove-if
+;; 	 (lambda(buffer)
+;; 	   (find (aref (buffer-name buffer) 0) " *"))
+;; 	 (buffer-list))))
 
-(defun switch-tabbar (num)
-  (let* ((tabs (tabbar-tabs (tabbar-get-tabset "All Buffers")))
-	 (tab (nth
-	       (if (> num 0) (- num 1) (+ (length tabs) num))
-	       tabs)))
-    (if tab (switch-to-buffer (car tab)))
-    ))
+;; (defun switch-tabbar (num)
+;;   (let* ((tabs (tabbar-tabs (tabbar-get-tabset "All Buffers")))
+;; 	 (tab (nth
+;; 	       (if (> num 0) (- num 1) (+ (length tabs) num))
+;; 	       tabs)))
+;;     (if tab (switch-to-buffer (car tab)))
+;;     ))

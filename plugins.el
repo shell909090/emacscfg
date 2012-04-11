@@ -6,8 +6,8 @@
 (desktop-save-mode)
 
 ;; load tabbar
-(require 'tabbar)
-(tabbar-mode)
+;; (require 'tabbar)
+;; (tabbar-mode)
 
 ;; load color theme
 (require 'color-theme)
