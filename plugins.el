@@ -71,11 +71,4 @@
 (setq dictionary-server "localhost")
 
 ;; autoload go mode
-(autoload (quote go-mode) "go-mode" "\
-Major mode for editing Go source text.
-
-This provides basic syntax highlighting for keywords, built-ins,
-functions, and some types.  It also provides indentation that is
-\(almost) identical to gofmt.
-
-\(fn)" t nil)
+(autoload (quote go-mode) "go-mode" "Major mode for editing Go source text." t nil)

@@ -89,6 +89,13 @@
 	    (define-key dired-mode-map [(control c) (g)] 'dired-etags-tables)
 	    ))
 
+;; bookmark mode
+(add-hook 'bookmark-load-hook
+	  (lambda ()
+	    (define-key bookmark-bmenu-mode-map "c" 'bookmark-bmenu-edit-annotation)
+	    (define-key bookmark-bmenu-mode-map "e" 'bookmark-bmenu-select)
+	    ))
+
 ;; tabbar mode
 ;; (setq tabbar-buffer-groups-function
 ;;       (lambda () (list "All Buffers")))
