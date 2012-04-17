@@ -1,6 +1,7 @@
 ;; setup auto-mode-alist
 (add-to-list 'auto-mode-alist (cons "\\.go$" (function go-mode)))
 (add-to-list 'auto-mode-alist (cons "\\.markdown$" (function markdown-mode)))
+(add-to-list 'auto-mode-alist (cons "\\.md$" (function markdown-mode)))
 
 ;; cc-mode，默认使用linux c风格，缩进8
 (setq c-default-style "linux" c-basic-offset 8)
