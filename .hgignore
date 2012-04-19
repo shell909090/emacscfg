@@ -4,6 +4,7 @@ ac-comphist.dat
 tramp
 TAGS
 locals.*
+*.db
 *.elc
 *.pyc
 *.pyo

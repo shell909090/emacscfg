@@ -3,8 +3,20 @@
 (add-to-list 'auto-mode-alist (cons "\\.markdown$" (function markdown-mode)))
 (add-to-list 'auto-mode-alist (cons "\\.md$" (function markdown-mode)))
 
-;; cc-mode，默认使用linux c风格，缩进8
+;; cc mode，默认使用linux c风格，缩进8
 (setq c-default-style "linux" c-basic-offset 8)
+
+;; pylookup
+(setq pylookup-dir "~/.emacs.d/")
+(setq pylookup-program (concat pylookup-dir "/pylookup.py"))
+(setq pylookup-db-file (concat pylookup-dir "/pylookup.db"))
+;; set search option if you want
+;; (setq pylookup-search-options '("--insensitive" "0" "--desc" "0"))
+;; to speedup, just load it on demand
+(autoload 'pylookup-lookup "pylookup"
+  "Lookup SEARCH-TERM in the Python HTML indexes." t)
+(autoload 'pylookup-update "pylookup" 
+  "Run pylookup-update and create the database at `pylookup-db-file'." t)
 
 ;; load desktop
 (require 'desktop)

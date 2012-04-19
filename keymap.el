@@ -19,6 +19,7 @@
 (global-set-key [(control c) (g)] 'gen-etags-tables)
 (global-set-key [(control c) (l)] 'align)
 (global-set-key [(control c) (m)] 'man)
+(global-set-key [(control c) (p)] 'pylookup-lookup)
 (global-set-key [(control c) (r)] 'revert-buffer)
 (global-set-key [(control c) (s)] 'popup-term)
 (global-set-key [(control c) (t)] 'top)
