@@ -1,11 +1,8 @@
-(tool-bar-mode -1);; remove tool bar
-
+;;; emacs-win.el --- 
 (server-start)
 
-;; 默认启动最大化
+;; maximize
 (run-with-idle-timer 1 nil 'w32-send-sys-command 61488)
-
-(custom-set-variables '(column-number-mode t) '(show-paren-mode t))
 
 (custom-set-faces
  '(default

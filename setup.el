@@ -5,6 +5,7 @@
 (setq visible-bell t);; stop annoying bell
 (setq frame-title-format "%b");; set title
 (menu-bar-mode -1);; remove menu bar
+(ignore-errors (tool-bar-mode -1));; remove tool bar
 (setq major-mode 'text-mode);; set default mode
 (setq x-select-enable-clipboard t);; emacs selection to x clipboard
 (fset 'yes-or-no-p 'y-or-n-p);; use y/n to anwser
@@ -61,3 +62,6 @@
   (require 'dired-x)
   (setq-default dired-omit-files-p t)
   (setq dired-omit-files "^\\.?#\\|^\\.[^\\.]+"))
+
+;; delete selection mode, not automatically work in emacs23
+(delete-selection-mode 1)

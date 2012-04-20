@@ -1,5 +1,4 @@
-(tool-bar-mode -1);; remove tool bar
-
+;;; emacs-linux.el --- 
 (server-start)
 
 ;; maximize

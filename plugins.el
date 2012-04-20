@@ -1,3 +1,4 @@
+;;; plugins.el --- 
 ;; autoload go mode
 (autoload 'go-mode "go-mode" "Major mode for editing Go source text." t)
 
