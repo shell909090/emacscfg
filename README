@@ -37,10 +37,9 @@ dictionary-el
 dvc
 emacs-goodies-el
   color-theme
-  tabbar
 php-elisp
+python-ropemacs
 slime
 
 测试中：
 ecb
-tail

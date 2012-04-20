@@ -12,10 +12,9 @@
 (defvar popup-terminal-command nil)
 (defun popup-term ()
   (interactive)
-  (apply 'start-process "terminal" nil popup-terminal-command)
-  )
+  (apply start-process "terminal" nil popup-terminal-command))
 
-(defun gen-etags-tables ()
+(defun update-etags-tables ()
   (interactive)
   (let ((etags-path (expand-file-name (read-directory-name "etags path:")))
 	(python-command (expand-file-name "~/.emacs.d/gen_etags.py")))
@@ -60,42 +59,42 @@
      	     (dired up)
      	     (dired-goto-file dir))))))
 
-(defun dired-guess-cmd (filename)
-  (cond ((memq system-type '(windows-nt cygwin)) "start")
-	(t "xdg-open")))
+(defun dired-extra-functions (keymap)
 
-(defun dired-open-file (&optional arg)
-  (interactive)
-  (apply 'start-process "dired-open" nil
-	 (append (split-string
-		  (read-shell-command
-		   "command: " (dired-guess-cmd (dired-get-filename))))
-		 (list (dired-get-filename)))))
+  (defun dired-guess-cmd (filename)
+    (cond ((memq system-type '(windows-nt cygwin)) "start")
+	  (t "xdg-open")))
 
-(defun dired-copy-from (&optional arg)
-  (interactive)
-  (let ((source-path (read-file-name "filepath: ")))
-    (copy-file source-path (file-name-nondirectory source-path))))
+  (defun dired-open-file (&optional arg)
+    (interactive)
+    (apply 'start-process "dired-open" nil
+	   (append (split-string
+		    (read-shell-command
+		     "command: " (dired-guess-cmd (dired-get-filename))))
+		   (list (dired-get-filename)))))
 
-(defun dired-rename-from (&optional arg)
-  (interactive)
-  (let ((source-path (read-file-name "filepath: ")))
-    (rename-file source-path (file-name-nondirectory source-path))))
+  (defun dired-copy-from (&optional arg)
+    (interactive)
+    (let ((source-path (read-file-name "filepath: ")))
+      (copy-file source-path (file-name-nondirectory source-path))))
 
-(add-hook 'dired-mode-hook
-	  (lambda ()
-	    (define-key dired-mode-map "b" 'dired-open-file)
-	    (define-key dired-mode-map "c" 'dired-copy-from)
-	    (define-key dired-mode-map "r" 'dired-rename-from)
-	    (define-key dired-mode-map [(control c) (g)] 'dired-etags-tables)
-	    ))
+  (defun dired-rename-from (&optional arg)
+    (interactive)
+    (let ((source-path (read-file-name "filepath: ")))
+      (rename-file source-path (file-name-nondirectory source-path))))
+
+  (define-key keymap "b" 'dired-open-file)
+  (define-key keymap "c" 'dired-copy-from)
+  (define-key keymap "r" 'dired-rename-from)
+  (define-key keymap [(control c) (g)] 'dired-etags-tables))
+
+(eval-after-load "dired" '(dired-extra-functions dired-mode-map))
 
 ;; bookmark mode
-(add-hook 'bookmark-load-hook
-	  (lambda ()
-	    (define-key bookmark-bmenu-mode-map "c" 'bookmark-bmenu-edit-annotation)
-	    (define-key bookmark-bmenu-mode-map "e" 'bookmark-bmenu-select)
-	    ))
+(eval-after-load "bookmark"
+  '(define-key bookmark-bmenu-mode-map "c" 'bookmark-bmenu-edit-annotation))
+(eval-after-load "bookmark"
+  '(define-key bookmark-bmenu-mode-map "e" 'bookmark-bmenu-select))
 
 ;; tabbar mode
 ;; (setq tabbar-buffer-groups-function
