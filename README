@@ -13,8 +13,8 @@ emacs-win.el		windows下的配置文件
 gen_etags.py		用于etags生成
 keymap.el		用于全局键盘映射
 locals.el		本地配置文件
-plugins.el		插件载入和配置
-setup.el		默认配置参数
+plugins.el		第三方插件载入和配置
+setup.el		默认配置参数，包括系统级组件配置
 userfunc.el		自定义函数
 
 mode-abbrevs		缩写数据目录

@@ -69,7 +69,7 @@
 	 (append (split-string
 		  (read-shell-command
 		   "command: " (dired-guess-cmd (dired-get-filename))))
-	  (list (dired-get-filename)))))
+		 (list (dired-get-filename)))))
 
 (defun dired-copy-from (&optional arg)
   (interactive)

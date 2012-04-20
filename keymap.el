@@ -1,5 +1,6 @@
 ;;; keymap.el --- 
 ;;; define keymap
+(global-unset-key [?\C- ])
 
 (global-set-key [f4] 'speedbar)
 (global-set-key [f5] 'ibuffer)
@@ -26,17 +27,3 @@
 (global-set-key [(control c) (v)] 'visit-tags-table);; just load
 (global-set-key [(control c) (w)] 'compile)
 (global-set-key [(control c) (x)] 'multi-term-dedicated-open)
-
-;; for tabbar
-;; (global-set-key [(meta \])] 'tabbar-forward)
-;; (global-set-key [(meta \[)] 'tabbar-backward)
-;; (global-set-key [(meta \1)] (lambda () (interactive) (switch-tabbar 1)))
-;; (global-set-key [(meta \2)] (lambda () (interactive) (switch-tabbar 2)))
-;; (global-set-key [(meta \3)] (lambda () (interactive) (switch-tabbar 3)))
-;; (global-set-key [(meta \4)] (lambda () (interactive) (switch-tabbar 4)))
-;; (global-set-key [(meta \5)] (lambda () (interactive) (switch-tabbar 5)))
-;; (global-set-key [(meta \6)] (lambda () (interactive) (switch-tabbar 6)))
-;; (global-set-key [(meta \7)] (lambda () (interactive) (switch-tabbar 7)))
-;; (global-set-key [(meta \8)] (lambda () (interactive) (switch-tabbar 8)))
-;; (global-set-key [(meta \9)] (lambda () (interactive) (switch-tabbar 9)))
-;; (global-set-key [(meta \0)] (lambda () (interactive) (switch-tabbar -1)))
