@@ -12,7 +12,7 @@
 (defvar popup-terminal-command nil)
 (defun popup-term ()
   (interactive)
-  (apply start-process "terminal" nil popup-terminal-command))
+  (apply 'start-process "terminal" nil popup-terminal-command))
 
 (defun update-etags-tables ()
   (interactive)
