@@ -27,6 +27,34 @@
 	(python-command (expand-file-name "~/.emacs.d/gen_etags.py")))
     (call-process "python" nil t nil python-command etags-path)))
 
+(defun open-url-with-w3m (url)
+  (if (one-window-p)
+      (split-window-horizontally))
+  (other-window 1)
+  (w3m-goto-url url))
+
+(defvar lookup-dictcn-cache '())
+(defun lookup-dictcn (term)
+  (interactive
+   (list (completing-read
+	  "Search: " lookup-dictcn-cache
+	  nil nil (thing-at-point 'word))))
+  (open-url-with-w3m
+   (concat "http://3g.dict.cn/s.php?q="
+	   (w3m-url-encode-string term 'utf-8))))
+
+;; (defvar lookup-google-cache '())
+;; (defun lookup-google (term)
+;;   (interactive
+;;    (list (completing-read
+;; 	  "Search: " lookup-google-cache
+;; 	  nil nil (thing-at-point 'word))))
+;;   (open-url-with-w3m
+;;    (concat "https://www.google.com/m/search?q="
+;; 	   (w3m-url-encode-string term 'utf-8))))
+
+;; (setq url-proxy-services '(("http" . "localhost:3128")))
+
 ;; dired
 ;; Another way of achieving this:
 

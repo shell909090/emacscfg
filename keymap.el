@@ -10,20 +10,21 @@
 (global-set-key [(meta /)] 'hippie-expand)
 (global-set-key [(control ?;)] 'comment-or-uncomment-region)
 (global-set-key [(control x) (control b)] 'ibuffer)
-(global-set-key [(control x) (k)] 'kill-this-buffer);; kill *this* buffer with no question
+(global-set-key "\C-xk" 'kill-this-buffer);; kill *this* buffer with no question
 (global-set-key [(control tab)] 'other-window);; same as C-x o
 
-(global-set-key [(control c) (a)] 'abbrev-mode)
-(global-set-key [(control c) (d)] 'dictionary-search)
-(global-set-key [(control c) (e)] 'multi-term)
-(global-set-key [(control c) (f)] 'grep-find)
-(global-set-key [(control c) (l)] 'align)
-(global-set-key [(control c) (m)] 'man)
-(global-set-key [(control c) (p)] 'pylookup-lookup)
-(global-set-key [(control c) (r)] 'revert-buffer)
-(global-set-key [(control c) (s)] 'popup-term)
-(global-set-key [(control c) (t)] 'top)
-(global-set-key [(control c) (u)] 'update-etags-tables)
-(global-set-key [(control c) (v)] 'visit-tags-table);; just load
-(global-set-key [(control c) (w)] 'compile)
-(global-set-key [(control c) (x)] 'multi-term-dedicated-open)
+(global-set-key "\C-cb" 'lookup-dictcn)
+(global-set-key "\C-cd" 'dictionary-search)
+(global-set-key "\C-ce" 'multi-term)
+(global-set-key "\C-cf" 'grep-find)
+(global-set-key "\C-cl" 'align)
+(global-set-key "\C-cm" 'man)
+(global-set-key "\C-cp" 'pylookup-lookup)
+(global-set-key "\C-cs" 'popup-term)
+(global-set-key "\C-ct" 'top)
+(global-set-key "\C-cx" 'multi-term-dedicated-open)
+
+(global-set-key "\C-ccm" 'compile)
+(global-set-key "\C-ccr" 'revert-buffer)
+(global-set-key "\C-ccu" 'update-etags-tables)
+(global-set-key "\C-ccv" 'visit-tags-table);; just load
