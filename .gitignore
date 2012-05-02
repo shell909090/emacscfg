@@ -1,1 +1,4 @@
 *.elc
+*.dat
+locals.*
+auto-save-list/*
