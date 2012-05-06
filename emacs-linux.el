@@ -9,8 +9,8 @@
  nil 0 nil "_NET_WM_STATE" 32
  '(1 "_NET_WM_STATE_MAXIMIZED_VERT" 0))
 
-(set-frame-font "monospace-10")
+(set-frame-font "monospace-11")
 (set-fontset-font "fontset-default" 'unicode
-		  '("AR PL UMing CN" . "unicode-bmp"))
+		  '("WenQuanYi Zen Hei:style=Regular" . "unicode-bmp"))
 
 (setq popup-terminal-command '("x-terminal-emulator"))
