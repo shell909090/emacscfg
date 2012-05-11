@@ -19,15 +19,15 @@
   "Run pylookup-update and create the database at `pylookup-db-file'." t)
 
 ;; python ropemacs mode
-(ignore-errors
-  (require 'pymacs)
-  (pymacs-load "ropemacs" "rope-")
-  (define-key ropemacs-local-keymap "\C-cd" nil)
-  (define-key ropemacs-local-keymap "\C-cf" nil)
-  (define-key ropemacs-local-keymap "\C-ci" 'rope-auto-import)
-  (define-key ropemacs-local-keymap "\C-co" 'rope-find-occurrences)
-  (setq ropemacs-confirm-saving 'nil)
-  (setq ropemacs-enable-autoimport 't))
+;; (ignore-errors
+;;   (require 'pymacs)
+;;   (pymacs-load "ropemacs" "rope-")
+;;   (define-key ropemacs-local-keymap "\C-cd" nil)
+;;   (define-key ropemacs-local-keymap "\C-cf" nil)
+;;   (define-key ropemacs-local-keymap "\C-ci" 'rope-auto-import)
+;;   (define-key ropemacs-local-keymap "\C-co" 'rope-find-occurrences)
+;;   (setq ropemacs-confirm-saving 'nil)
+;;   (setq ropemacs-enable-autoimport 't))
 
 ;; load color theme
 (ignore-errors

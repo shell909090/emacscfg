@@ -1,4 +1,5 @@
 *.elc
 *.dat
 locals.*
+tramp
 auto-save-list/*
