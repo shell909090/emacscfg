@@ -13,18 +13,17 @@
 (global-set-key "\C-xk" 'kill-this-buffer);; kill *this* buffer with no question
 (global-set-key [(control tab)] 'other-window);; same as C-x o
 
-(global-set-key "\C-cb" 'lookup-dictcn)
 (global-set-key "\C-cd" 'dictionary-search)
 (global-set-key "\C-ce" 'multi-term)
 (global-set-key "\C-cf" 'grep-find)
 (global-set-key "\C-cl" 'align)
 (global-set-key "\C-cm" 'man)
 (global-set-key "\C-cp" 'pylookup-lookup)
+(global-set-key "\C-cr" 'revert-buffer)
 (global-set-key "\C-cs" 'popup-term)
 (global-set-key "\C-ct" 'top)
+(global-set-key "\C-cw" 'compile)
 (global-set-key "\C-cx" 'multi-term-dedicated-open)
 
-(global-set-key "\C-ccm" 'compile)
-(global-set-key "\C-ccr" 'revert-buffer)
 (global-set-key "\C-ccu" 'update-etags-tables)
 (global-set-key "\C-ccv" 'visit-tags-table);; just load
