@@ -28,12 +28,6 @@
     (ignore-errors (delete-file tagfile))
     (traverse-directory dirname)))
 
-(defun dired-etags-tables ()
-  (interactive)
-  (let ((etags-path (expand-file-name (read-directory-name "etags path:")))
-	(python-command (expand-file-name "~/.emacs.d/gen_etags.py")))
-    (call-process "python" nil t nil python-command etags-path)))
-
 (defun open-url-with-w3m (url)
   (if (one-window-p)
       (split-window-horizontally))
@@ -49,16 +43,6 @@
   (open-url-with-w3m
    (concat "http://3g.dict.cn/s.php?q="
 	   (w3m-url-encode-string term 'utf-8))))
-
-;; (defvar lookup-google-cache '())
-;; (defun lookup-google (term)
-;;   (interactive
-;;    (list (completing-read
-;; 	  "Search: " lookup-google-cache
-;; 	  nil nil (thing-at-point 'word))))
-;;   (open-url-with-w3m
-;;    (concat "https://www.google.com/m/search?q="
-;; 	   (w3m-url-encode-string term 'utf-8))))
 
 ;; (setq url-proxy-services '(("http" . "localhost:3128")))
 
@@ -100,28 +84,53 @@
     (cond ((memq system-type '(windows-nt cygwin)) "start")
 	  (t "xdg-open")))
 
-  (defun dired-open-file (&optional arg)
-    (interactive)
+  (defun dired-open-file (filename &optional arg)
+    (interactive (list (read-shell-command
+			"command: " (dired-guess-cmd (dired-get-filename)))))
     (apply 'start-process "dired-open" nil
-	   (append (split-string
-		    (read-shell-command
-		     "command: " (dired-guess-cmd (dired-get-filename))))
-		   (list (dired-get-filename)))))
+	   (append (split-string filename) (list (dired-get-filename)))))
 
-  (defun dired-copy-from (&optional arg)
-    (interactive)
-    (let ((source-path (read-file-name "filepath: ")))
-      (copy-file source-path (file-name-nondirectory source-path))))
+  (defun dired-copy-form (&optional arg)
+    (interactive (list (read-file-name "filepath: ")))
+    (copy-file source-path (file-name-nondirectory source-path))
+    (revert-buffer))
 
-  (defun dired-rename-from (&optional arg)
+  (defun dired-rename-form (&optional arg)
+    (interactive (list (read-file-name "filepath: ")))
+    (rename-file source-path (file-name-nondirectory source-path))
+    (revert-buffer))
+
+  (defun dired-copy-to-other (&optional arg)
     (interactive)
-    (let ((source-path (read-file-name "filepath: ")))
-      (rename-file source-path (file-name-nondirectory source-path))))
+    (let ((marked (dired-get-marked-files nil arg))
+	  (other (next-window (selected-window)))
+	  (this (selected-window)))
+      (select-window other)
+      (let ((target (dired-current-directory)))
+	(mapcar
+	 (lambda (source-path) (copy-file source-path target))
+	 marked))
+      (revert-buffer)
+      (select-window this)))
+
+  (defun dired-rename-to-other (&optional arg)
+    (interactive)
+    (let ((marked (dired-get-marked-files nil arg))
+	  (other (next-window (selected-window)))
+	  (this (selected-window)))
+      (select-window other)
+      (let ((target (dired-current-directory)))
+	(mapcar
+	 (lambda (source-path) (rename-file source-path target))
+	 marked))
+      (revert-buffer)
+      (select-window this)))
 
   (define-key keymap "b" 'dired-open-file)
-  (define-key keymap "c" 'dired-copy-from)
-  (define-key keymap "r" 'dired-rename-from)
-  (define-key keymap [(control c) (g)] 'dired-etags-tables))
+  (define-key keymap "c" 'dired-copy-to-other)
+  (define-key keymap "r" 'dired-rename-to-other)
+  (define-key keymap "%c" 'dired-copy-form)
+  (define-key keymap "%r" 'dired-rename-form))
 
 (eval-after-load "dired" '(dired-extra-functions dired-mode-map))
 
