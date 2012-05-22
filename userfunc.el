@@ -78,67 +78,49 @@
      	     (dired up)
      	     (dired-goto-file dir))))))
 
-(defun dired-extra-functions (keymap)
+(defun dired-guess-cmd (filename)
+  (cond ((memq system-type '(windows-nt cygwin)) "start")
+	(t "xdg-open")))
 
-  (defun dired-guess-cmd (filename)
-    (cond ((memq system-type '(windows-nt cygwin)) "start")
-	  (t "xdg-open")))
+(defun dired-open-file (filename &optional arg)
+  (interactive (list (read-shell-command
+		      "command: " (dired-guess-cmd (dired-get-filename)))))
+  (apply 'start-process "dired-open" nil
+	 (append (split-string filename) (list (dired-get-filename)))))
 
-  (defun dired-open-file (filename &optional arg)
-    (interactive (list (read-shell-command
-			"command: " (dired-guess-cmd (dired-get-filename)))))
-    (apply 'start-process "dired-open" nil
-	   (append (split-string filename) (list (dired-get-filename)))))
+(defmacro dired-common-form (do-function)
+  `(lambda (&optional arg)
+     (interactive (list (read-file-name "filepath: ")))
+     (,do-function source-path (file-name-nondirectory source-path))
+     (revert-buffer)))
 
-  (defun dired-copy-form (&optional arg)
-    (interactive (list (read-file-name "filepath: ")))
-    (copy-file source-path (file-name-nondirectory source-path))
-    (revert-buffer))
+(defmacro dired-common-to-other (do-function)
+  `(lambda (&optional arg)
+     (interactive)
+     (let ((marked (dired-get-marked-files nil arg))
+	   (other (next-window (selected-window)))
+	   (this (selected-window)))
+       (select-window other)
+       (let ((target (dired-current-directory)))
+	 (mapcar
+	  (lambda (source-path) (,do-function source-path target))
+	  marked))
+       (revert-buffer)
+       (select-window this))))
 
-  (defun dired-rename-form (&optional arg)
-    (interactive (list (read-file-name "filepath: ")))
-    (rename-file source-path (file-name-nondirectory source-path))
-    (revert-buffer))
-
-  (defun dired-copy-to-other (&optional arg)
-    (interactive)
-    (let ((marked (dired-get-marked-files nil arg))
-	  (other (next-window (selected-window)))
-	  (this (selected-window)))
-      (select-window other)
-      (let ((target (dired-current-directory)))
-	(mapcar
-	 (lambda (source-path) (copy-file source-path target))
-	 marked))
-      (revert-buffer)
-      (select-window this)))
-
-  (defun dired-rename-to-other (&optional arg)
-    (interactive)
-    (let ((marked (dired-get-marked-files nil arg))
-	  (other (next-window (selected-window)))
-	  (this (selected-window)))
-      (select-window other)
-      (let ((target (dired-current-directory)))
-	(mapcar
-	 (lambda (source-path) (rename-file source-path target))
-	 marked))
-      (revert-buffer)
-      (select-window this)))
-
-  (define-key keymap "b" 'dired-open-file)
-  (define-key keymap "c" 'dired-copy-to-other)
-  (define-key keymap "r" 'dired-rename-to-other)
-  (define-key keymap "%c" 'dired-copy-form)
-  (define-key keymap "%r" 'dired-rename-form))
-
-(eval-after-load "dired" '(dired-extra-functions dired-mode-map))
+(eval-after-load "dired"
+  '(let ((keymap dired-mode-map))
+     (define-key keymap "b" 'dired-open-file)
+     (define-key keymap "c" (dired-common-to-other copy-file))
+     (define-key keymap "r" (dired-common-to-other rename-file))
+     (define-key keymap "%c" (dired-common-form copy-file))
+     (define-key keymap "%r" (dired-common-form rename-file))))
 
 ;; bookmark mode
 (eval-after-load "bookmark"
-  '(define-key bookmark-bmenu-mode-map "c" 'bookmark-bmenu-edit-annotation))
-(eval-after-load "bookmark"
-  '(define-key bookmark-bmenu-mode-map "e" 'bookmark-bmenu-select))
+  '(let ((keymap bookmark-bmenu-mode-map))
+     (define-key keymap "c" 'bookmark-bmenu-edit-annotation)
+     (define-key keymap "e" 'bookmark-bmenu-select)))
 
 ;; tabbar mode
 ;; (setq tabbar-buffer-groups-function
