@@ -61,22 +61,19 @@
 	       (not (eq (current-buffer) orig)))
       (kill-buffer orig))))
 
-(eval-after-load "dired"
-  ;; don't remove `other-window', the caller expects it to be there
-  '(defun dired-up-directory (&optional other-window)
-     "Run Dired on parent directory of current directory."
-     (interactive "P")
-     (let* ((dir (dired-current-directory))
-     	    (orig (current-buffer))
-     	    (up (file-name-directory (directory-file-name dir))))
-       (or (dired-goto-file (directory-file-name dir))
-     	   ;; Only try dired-goto-subdir if buffer has more than one dir.
-     	   (and (cdr dired-subdir-alist)
-     		(dired-goto-subdir up))
-     	   (progn
-     	     (kill-buffer orig)
-     	     (dired up)
-     	     (dired-goto-file dir))))))
+(defun dired-up-directory (&optional other-window)
+  "Run Dired on parent directory of current directory."
+  (interactive "P")
+  (let* ((dir (dired-current-directory))
+	 (orig (current-buffer))
+	 (up (file-name-directory (directory-file-name dir))))
+    (or (dired-goto-file (directory-file-name dir))
+	;; Only try dired-goto-subdir if buffer has more than one dir.
+	(and (cdr dired-subdir-alist) (dired-goto-subdir up))
+	(progn
+	  (kill-buffer orig)
+	  (dired up)
+	  (dired-goto-file dir)))))
 
 (defun dired-guess-cmd (filename)
   (cond ((memq system-type '(windows-nt cygwin)) "start")
@@ -108,19 +105,26 @@
        (revert-buffer)
        (select-window this))))
 
+(defun dired-copy-dir-as-kill (&optional arg)
+  (interactive)
+  (x-set-selection 'PRIMARY (dired-current-directory))
+  (x-set-selection 'CLIPBOARD (dired-current-directory)))
+
 (eval-after-load "dired"
-  '(let ((keymap dired-mode-map))
-     (define-key keymap "b" 'dired-open-file)
-     (define-key keymap "c" (dired-common-to-other copy-file))
-     (define-key keymap "r" (dired-common-to-other rename-file))
-     (define-key keymap "%c" (dired-common-form copy-file))
-     (define-key keymap "%r" (dired-common-form rename-file))))
+  '(progn
+     (define-key dired-mode-map "b" 'dired-open-file)
+     (define-key dired-mode-map "c" (dired-common-to-other copy-file))
+     (define-key dired-mode-map "r" (dired-common-to-other rename-file))
+     (define-key dired-mode-map "%c" (dired-common-form copy-file))
+     (define-key dired-mode-map "%r" (dired-common-form rename-file))
+     (define-key dired-mode-map "W" 'dired-copy-dir-as-kill)))
+(define-key dired-mode-map "W" 'dired-copy-dir-as-kill)
 
 ;; bookmark mode
 (eval-after-load "bookmark"
-  '(let ((keymap bookmark-bmenu-mode-map))
-     (define-key keymap "c" 'bookmark-bmenu-edit-annotation)
-     (define-key keymap "e" 'bookmark-bmenu-select)))
+  '(progn
+     (define-key bookmark-bmenu-mode-map "c" 'bookmark-bmenu-edit-annotation)
+     (define-key bookmark-bmenu-mode-map "e" 'bookmark-bmenu-select)))
 
 ;; tabbar mode
 ;; (setq tabbar-buffer-groups-function
