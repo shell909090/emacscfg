@@ -86,7 +86,7 @@
 	 (append (split-string filename) (list (dired-get-filename)))))
 
 (defmacro dired-common-form (do-function)
-  `(lambda (&optional arg)
+  `(lambda (source-path &optional arg)
      (interactive (list (read-file-name "filepath: ")))
      (,do-function source-path (file-name-nondirectory source-path))
      (revert-buffer)))
