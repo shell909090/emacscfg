@@ -32,13 +32,11 @@ make install ;安装配置
 
 推荐安装：
 auto-complete-el
-debian-el	
 dictionary-el
-dvc
 emacs-goodies-el
   color-theme
+magit
 php-elisp
-python-ropemacs
 slime
 
 测试中：

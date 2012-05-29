@@ -18,17 +18,6 @@
 (autoload 'pylookup-update "pylookup" 
   "Run pylookup-update and create the database at `pylookup-db-file'." t)
 
-;; python ropemacs mode
-;; (ignore-errors
-;;   (require 'pymacs)
-;;   (pymacs-load "ropemacs" "rope-")
-;;   (define-key ropemacs-local-keymap "\C-cd" nil)
-;;   (define-key ropemacs-local-keymap "\C-cf" nil)
-;;   (define-key ropemacs-local-keymap "\C-ci" 'rope-auto-import)
-;;   (define-key ropemacs-local-keymap "\C-co" 'rope-find-occurrences)
-;;   (setq ropemacs-confirm-saving 'nil)
-;;   (setq ropemacs-enable-autoimport 't))
-
 ;; load color theme
 (ignore-errors
   (require 'color-theme)
@@ -69,3 +58,12 @@
 
 ;; use dictionary-el, not dict in emacs-goodies-el
 (setq dictionary-server "localhost")
+
+;; magit, work for git
+(ignore-errors
+  (require 'magit)
+  (define-key dired-mode-map "\\f" 'magit-fetch)
+  (define-key dired-mode-map "\\l" 'magit-log)
+  (define-key dired-mode-map "\\p" 'magit-pull)
+  (define-key dired-mode-map "\\P" 'magit-push)
+  (define-key dired-mode-map "\\s" 'magit-status))
