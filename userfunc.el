@@ -109,19 +109,38 @@
   (x-set-selection 'PRIMARY (dired-current-directory))
   (x-set-selection 'CLIPBOARD (dired-current-directory)))
 
+(defun dired-do-rename-marked (rename-func arg)
+  (mapcar
+   (lambda (filename)
+     (let ((newname (funcall rename-func (file-name-nondirectory filename))))
+       (if newname
+	   (rename-file filename
+			(concat (file-name-directory filename) newname)))))
+   (dired-get-marked-files nil arg))
+  (revert-buffer))
+
 (defun dired-untag-file (&optional arg)
   (interactive)
   (defun untag-one (filename)
-    (if (string-match "^(.*?)\\|^\\[.*?\\]" filename)
-	(substring filename (match-end 0)) nil))
-  (defun untag-file (filename)
-    (let ((newname (untag-one (file-name-nondirectory filename))))
-      (if newname
-	  (rename-file
-	   filename
-	   (concat (file-name-directory filename) newname)))))
-  (mapcar 'untag-file (dired-get-marked-files nil arg))
-  (revert-buffer))
+    (if (string-match "(.*?)\\|\\[.*?\\]" filename)
+	(concat (substring filename 0 (match-beginning 0))
+		(substring filename (match-end 0)))
+      nil))
+  (dired-do-rename-marked 'untag-one arg))
+
+(defun dired-detag-file (&optional arg)
+  (interactive)
+  (defun detag-one (filename)
+    (if (string-match "(.*?)\\|\\[.*?\\]" filename)
+	(if (= (match-beginning 0) 0)
+	    (concat (substring (match-string 0 filename) 1 -1)
+		    (substring filename (match-end 0)))
+	  (concat (substring filename 0 (match-beginning 0))
+		  "_"
+		  (substring (match-string 0 filename) 1 -1)
+		  (substring filename (match-end 0))))
+      nil))
+  (dired-do-rename-marked 'detag-one arg))
 
 (eval-after-load "dired"
   '(progn
@@ -131,7 +150,8 @@
      (define-key dired-mode-map "%c" (dired-common-form copy-file))
      (define-key dired-mode-map "%r" (dired-common-form rename-file))
      (define-key dired-mode-map "W" 'dired-copy-dir-as-kill)
-     (define-key dired-mode-map "\\t" 'dired-untag-file)))
+     (define-key dired-mode-map "\\u" 'dired-untag-file)
+     (define-key dired-mode-map "\\d" 'dired-detag-file)))
 
 ;; bookmark mode
 (eval-after-load "bookmark"
