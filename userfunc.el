@@ -75,15 +75,14 @@
 	  (dired up)
 	  (dired-goto-file dir)))))
 
-(defun dired-guess-cmd (filename)
-  (cond ((memq system-type '(windows-nt cygwin)) "start")
-	(t "xdg-open")))
-
-(defun dired-open-file (filename &optional arg)
-  (interactive (list (read-shell-command
-		      "command: " (dired-guess-cmd (dired-get-filename)))))
+(defun dired-open-file (with-prog &optional arg)
+  (interactive
+   (list (read-shell-command
+	  "command: "
+	  (cond ((memq system-type '(windows-nt cygwin)) "start")
+		(t "xdg-open")))))
   (apply 'start-process "dired-open" nil
-	 (append (split-string filename) (list (dired-get-filename)))))
+	 (append (split-string with-prog) (list (dired-get-filename)))))
 
 (defmacro dired-common-form (do-function)
   `(lambda (source-path &optional arg)
@@ -110,6 +109,20 @@
   (x-set-selection 'PRIMARY (dired-current-directory))
   (x-set-selection 'CLIPBOARD (dired-current-directory)))
 
+(defun dired-untag-file (&optional arg)
+  (interactive)
+  (defun untag-one (filename)
+    (if (string-match "^(.*?)\\|^\\[.*?\\]" filename)
+	(substring filename (match-end 0)) nil))
+  (defun untag-file (filename)
+    (let ((newname (untag-one (file-name-nondirectory filename))))
+      (if newname
+	  (rename-file
+	   filename
+	   (concat (file-name-directory filename) newname)))))
+  (mapcar 'untag-file (dired-get-marked-files nil arg))
+  (revert-buffer))
+
 (eval-after-load "dired"
   '(progn
      (define-key dired-mode-map "b" 'dired-open-file)
@@ -117,30 +130,11 @@
      (define-key dired-mode-map "r" (dired-common-to-other rename-file))
      (define-key dired-mode-map "%c" (dired-common-form copy-file))
      (define-key dired-mode-map "%r" (dired-common-form rename-file))
-     (define-key dired-mode-map "W" 'dired-copy-dir-as-kill)))
-(define-key dired-mode-map "W" 'dired-copy-dir-as-kill)
+     (define-key dired-mode-map "W" 'dired-copy-dir-as-kill)
+     (define-key dired-mode-map "\\t" 'dired-untag-file)))
 
 ;; bookmark mode
 (eval-after-load "bookmark"
   '(progn
      (define-key bookmark-bmenu-mode-map "c" 'bookmark-bmenu-edit-annotation)
      (define-key bookmark-bmenu-mode-map "e" 'bookmark-bmenu-select)))
-
-;; tabbar mode
-;; (setq tabbar-buffer-groups-function
-;;       (lambda () (list "All Buffers")))
-
-;; (setq tabbar-buffer-list-function
-;;       (lambda ()
-;;         (remove-if
-;; 	 (lambda(buffer)
-;; 	   (find (aref (buffer-name buffer) 0) " *"))
-;; 	 (buffer-list))))
-
-;; (defun switch-tabbar (num)
-;;   (let* ((tabs (tabbar-tabs (tabbar-get-tabset "All Buffers")))
-;; 	 (tab (nth
-;; 	       (if (> num 0) (- num 1) (+ (length tabs) num))
-;; 	       tabs)))
-;;     (if tab (switch-to-buffer (car tab)))
-;;     ))
