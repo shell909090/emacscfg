@@ -1,5 +1,7 @@
 ;;; setup.el --- 
-;; show
+
+;; appearence setup
+(set-frame-font "monospace-10") ;; setup font size
 (setq inhibit-startup-screen t);; close welcome screen
 (setq column-number-mode t);; enable column mode
 (setq visible-bell t);; stop annoying bell
@@ -12,6 +14,9 @@
 (setq kill-whole-line t);; kill whole line with C-k in head of line
 (setq buffer-file-coding-system 'utf-8-unix);; use unix utf-8 coding default
 
+;; delete selection mode, not automatically work in emacs23
+(delete-selection-mode 1)
+
 ;; show-paren-mode
 (setq show-paren-style 'mixed)
 (show-paren-mode t)
@@ -23,14 +28,8 @@
  delete-old-versions t
  kept-new-versions 6
  kept-old-versions 2
- backup-directory-alist (list (cons "." (concat temporary-file-directory "backup"))))
-
-;; cc mode，默认使用linux c风格，缩进8
-(setq c-default-style "linux" c-basic-offset 8)
-
-;; abbrev mode auto
-(setq abbrev-mode t)
-(setq save-abbrevs nil)
+ backup-directory-alist `("." . ,(concat temporary-file-directory
+					 "emacs-backup")))
 
 ;; load hippie-expand
 (setq hippie-expand-try-functions-list
@@ -47,21 +46,99 @@
         try-complete-lisp-symbol-partially
         try-complete-lisp-symbol))
 
-;; uniquify
-(ignore-errors
-  (require 'uniquify)
-  (setq uniquify-buffer-name-style 'forward))
+;; (setq url-proxy-services '(("http" . "localhost:3128")))
 
-;; load desktop
+;; abbrev mode setup
+(setq
+ abbrev-mode t ;; abbrev auto
+ save-abbrevs nil)
+
+;; auto complete load and setup
+(ignore-errors
+  (require 'auto-complete)
+  (global-auto-complete-mode t)
+  (define-key ac-complete-mode-map "\C-n" 'ac-next)
+  (define-key ac-complete-mode-map "\C-p" 'ac-previous))
+
+;; bookmark mode setup, exchange c and e keybind
+(eval-after-load "bookmark"
+  '(progn
+     (define-key bookmark-bmenu-mode-map "c" 'bookmark-bmenu-edit-annotation)
+     (define-key bookmark-bmenu-mode-map "e" 'bookmark-bmenu-select)))
+
+;; cc mode setup, 默认使用linux c风格，缩进8
+(setq
+ c-default-style "linux"
+ c-basic-offset 8)
+
+;; color theme load and setup
+(ignore-errors
+  (require 'color-theme)
+  (color-theme-initialize)
+  (color-theme-clarity))
+
+;; dictionary setup, use dictionary-el, not dict in emacs-goodies-el
+(setq dictionary-server "localhost")
+
+;; desktop load and setup
 (ignore-errors
   (require 'desktop)
   (desktop-save-mode))
 
-;; load dired-x
+;; dired-x load and setup
 (ignore-errors
   (require 'dired-x)
   (setq-default dired-omit-files-p t)
   (setq dired-omit-files "^\\.?#\\|^\\.[^\\.]+"))
 
-;; delete selection mode, not automatically work in emacs23
-(delete-selection-mode 1)
+;; go mode autoload
+(autoload 'go-mode "go-mode" "Major mode for editing Go source text." t)
+
+;; msf-abbrev load and setup
+(ignore-errors
+  (require 'msf-abbrev)
+  (setq msf-abbrev-root "~/.emacs.d/mode-abbrevs")
+  (msf-abbrev-load))
+
+;; multi-term autoload
+(autoload 'multi-term "multi-term" "multi terminal" t)
+(autoload 'multi-term-dedicated-open "multi-term" "multi terminal" t)
+(setq
+ multi-term-dedicated-select-after-open-p t
+ multi-term-switch-after-close t)
+(custom-set-variables
+ '(term-default-bg-color "#000000")
+ '(term-default-fg-color "#ffffff"))
+
+;; pylookup setup
+(setq pylookup-dir "~/.emacs.d/")
+(setq pylookup-program (concat pylookup-dir "/pylookup.py"))
+(setq pylookup-db-file (concat pylookup-dir "/pylookup.db"))
+;; set search option if you want
+;; (setq pylookup-search-options '("--insensitive" "0" "--desc" "0"))
+;; to speedup, just load it on demand
+(autoload 'pylookup-lookup "pylookup"
+  "Lookup SEARCH-TERM in the Python HTML indexes." t)
+(autoload 'pylookup-update "pylookup" 
+  "Run pylookup-update and create the database at `pylookup-db-file'." t)
+
+;; template load and setup
+(ignore-errors
+  (require 'template)
+  (setq template-subdirectories '("./" "Templates/" "~/.emacs.d/templates/"))
+  (template-initialize)
+  (setq template-auto-insert t))
+
+;; top autoload
+(autoload 'top "top-mode" "top mode" t)
+
+;; uniquify load and setup
+(ignore-errors
+  (require 'uniquify)
+  (setq uniquify-buffer-name-style 'forward))
+
+;; setup auto-mode-alist
+(add-to-list 'auto-mode-alist (cons "\\.go$" 'go-mode))
+(add-to-list 'auto-mode-alist (cons "\\.md$" 'markdown-mode))
+
+;;; setup.el ends here

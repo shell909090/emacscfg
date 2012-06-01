@@ -1,3 +1,4 @@
+*.db
 *.elc
 *.dat
 locals.*

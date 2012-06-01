@@ -14,4 +14,4 @@
                       charset
                       (font-spec :family "Microsoft Yahei" :size 12)))
 
-(setq popup-terminal-command '("cmd" "/c" "start"))
+;;; emacs-win.el ends here

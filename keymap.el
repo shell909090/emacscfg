@@ -1,5 +1,6 @@
 ;;; keymap.el --- 
-;;; define keymap
+;; define keymap
+
 (global-unset-key [?\C- ])
 
 (global-set-key [f4] 'speedbar)
@@ -27,3 +28,5 @@
 
 (global-set-key "\C-ccu" 'update-etags-tables)
 (global-set-key "\C-ccv" 'visit-tags-table);; just load
+
+;;; keymap.el ends here
