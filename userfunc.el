@@ -137,7 +137,7 @@
     (insert string)
     (beginning-of-buffer)
     (dotimes (i repeat)
-      (if (not (re-search-forward regexp nil t)) (return))
+      (if (not (re-search-forward regexp nil t)) (return nil))
       (cond
        ((char-or-string-p rep) (replace-match rep))
        ((functionp rep) (replace-match (funcall rep (match-string 0))))))
@@ -146,7 +146,7 @@
 (defun lterm-string (str)
   (replace-regexp-in-string "^[[:space:]]*" "" str))
 
-(defvar *tagregexp* "(.*?)\\|\\[.*?\\]")
+(defvar *tagregexp* "(.*?)\\|\\[.*?\\]\\|【.*?】")
 
 (defun detag-filename (filename)
   (lterm-string
