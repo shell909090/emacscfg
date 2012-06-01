@@ -23,7 +23,7 @@
 (global-set-key "\C-cr" 'revert-buffer)
 (global-set-key "\C-cs" 'popup-term)
 (global-set-key "\C-ct" 'top)
-(global-set-key "\C-cw" 'compile)
+(global-set-key "\C-cw" 'compile-to-other)
 (global-set-key "\C-cx" 'multi-term-dedicated-open)
 
 (global-set-key "\C-ccu" 'update-etags-tables)

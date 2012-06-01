@@ -6,9 +6,12 @@
   (let ((this-buffer (window-buffer)))
     (switch-to-buffer (window-buffer (next-window (selected-window))))
     (switch-to-buffer-other-window this-buffer)
-    (other-window 1)
-    )
-)
+    (other-window 1)))
+
+(defun compile-to-other ()
+  (interactive)
+  (call-interactively 'compile)
+  (other-window 1))
 
 (defvar popup-terminal-command
   (cond ((memq system-type '(windows-nt cygwin))
