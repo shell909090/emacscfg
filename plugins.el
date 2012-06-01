@@ -58,12 +58,3 @@
 
 ;; use dictionary-el, not dict in emacs-goodies-el
 (setq dictionary-server "localhost")
-
-;; magit, work for git
-(ignore-errors
-  (require 'magit)
-  (define-key dired-mode-map "\\f" 'magit-fetch)
-  (define-key dired-mode-map "\\l" 'magit-log)
-  (define-key dired-mode-map "\\p" 'magit-pull)
-  (define-key dired-mode-map "\\P" 'magit-push)
-  (define-key dired-mode-map "\\s" 'magit-status))

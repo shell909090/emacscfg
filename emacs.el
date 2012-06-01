@@ -6,6 +6,7 @@
 (load "setup")
 (load "plugins")
 (load "userfunc")
+(load "mydired")
 (load "keymap")
 (cond
  ((memq system-type '(windows-nt cygwin))
