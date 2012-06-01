@@ -117,7 +117,12 @@
 (defmacro dired-common-rename-marked (funcname rename-func)
   `(defun ,funcname (&optional arg)
      (interactive)
-     (mapcar
+     (map-y-or-n-p
+      (lambda (filepath)
+	(let* ((filename (file-name-nondirectory filepath))
+	       (newname (,rename-func filename)))
+	  (if (and newname (not (string= newname filename)))
+	      (format "rename %s => %s?" filename newname))))
       (lambda (filepath)
 	(let* ((filename (file-name-nondirectory filepath))
 	       (filedir (file-name-directory filepath))
@@ -127,26 +132,34 @@
       (dired-get-marked-files nil arg))
      (revert-buffer)))
 
+(defun replace-regexp-in-string-count (regexp rep string repeat)
+  (with-temp-buffer
+    (insert string)
+    (beginning-of-buffer)
+    (dotimes (i repeat)
+      (if (not (re-search-forward regexp nil t)) (return))
+      (cond
+       ((char-or-string-p rep) (replace-match rep))
+       ((functionp rep) (replace-match (funcall rep (match-string 0))))))
+    (buffer-string)))
+
 (defun lterm-string (str)
   (replace-regexp-in-string "^[[:space:]]*" "" str))
 
 (defvar *tagregexp* "(.*?)\\|\\[.*?\\]")
 
 (defun detag-filename (filename)
-  (if (string-match *tagregexp* filename)
-      (lterm-string
-       (replace-regexp-in-string *tagregexp* "" filename))
-    nil))
+  (lterm-string
+   (replace-regexp-in-string-count *tagregexp* "" filename 1)))
 
 (defun untag-filename (filename)
-  (if (string-match *tagregexp* filename)
-      (replace-regexp-in-string
-       *tagregexp*
-       (if (= (match-beginning 0) 0)
-      	   (substring (match-string 0 filename) 1 -1)
-      	 (concat "_" (substring (match-string 0 filename) 1 -1)))
-       filename)
-    nil))
+  (replace-regexp-in-string-count
+   *tagregexp*
+   (lambda (matched)
+     (if (= (match-beginning 0) 1)
+	 (substring matched 1 -1)
+       (concat "_" (substring matched 1 -1))))
+   filename 1))
 
 (define-key dired-mode-map "W" 'dired-copy-dir-as-kill)
 (define-key dired-mode-map "b" 'dired-open-file)
