@@ -28,8 +28,7 @@
  delete-old-versions t
  kept-new-versions 6
  kept-old-versions 2
- backup-directory-alist `("." . ,(concat temporary-file-directory
-					 "emacs-backup")))
+ backup-directory-alist `(("." . ,(concat temporary-file-directory "emacs-backup"))))
 
 ;; load hippie-expand
 (setq hippie-expand-try-functions-list
