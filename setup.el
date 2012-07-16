@@ -139,5 +139,7 @@
 ;; setup auto-mode-alist
 (add-to-list 'auto-mode-alist (cons "\\.go$" 'go-mode))
 (add-to-list 'auto-mode-alist (cons "\\.md$" 'markdown-mode))
+(add-to-list 'auto-mode-alist (cons "\\.rst$" 'rst-mode))
+(add-to-list 'auto-mode-alist (cons "\\.rest$" 'rst-mode))
 
 ;;; setup.el ends here

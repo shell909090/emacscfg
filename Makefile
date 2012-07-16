@@ -5,7 +5,9 @@
 ## Keywords: 
 ## X-URL: 
 
-all: clean build install
+all: update install
+
+update: clean build
 
 build:
 	emacs -Q -L plugins/ -batch --eval '(byte-recompile-directory "." 0)'
