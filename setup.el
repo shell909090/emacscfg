@@ -93,6 +93,10 @@
 ;; go mode autoload
 (autoload 'go-mode "go-mode" "Major mode for editing Go source text." t)
 
+;; markdown mode setup
+;; 使用python-markdown，增加toc
+(setq markdown-command "markdown_py -x toc")
+
 ;; msf-abbrev load and setup
 (ignore-errors
   (require 'msf-abbrev)
