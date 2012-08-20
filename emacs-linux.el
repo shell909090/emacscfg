@@ -2,12 +2,15 @@
 (server-start)
 
 ;; maximize
-(x-send-client-message
- nil 0 nil "_NET_WM_STATE" 32
- '(1 "_NET_WM_STATE_MAXIMIZED_HORZ" 0))
-(x-send-client-message
- nil 0 nil "_NET_WM_STATE" 32
- '(1 "_NET_WM_STATE_MAXIMIZED_VERT" 0))
+(if (and (boundp 'initial-window-system)
+	 (memq initial-window-system '(x w32)))
+    (progn
+      (x-send-client-message
+       nil 0 nil "_NET_WM_STATE" 32
+       '(1 "_NET_WM_STATE_MAXIMIZED_HORZ" 0))
+      (x-send-client-message
+       nil 0 nil "_NET_WM_STATE" 32
+       '(1 "_NET_WM_STATE_MAXIMIZED_VERT" 0))))
 
 (set-fontset-font
  "fontset-default" 'unicode
