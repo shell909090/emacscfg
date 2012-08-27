@@ -13,7 +13,8 @@
        '(1 "_NET_WM_STATE_MAXIMIZED_VERT" 0))))
 
 (set-fontset-font
- "fontset-default" 'unicode
- (font-spec :family "WenQuanYi Zen Hei" :registry "unicode-bmp"))
+ 't 'unicode
+ (font-spec :family "Microsoft YaHei:style=Normal" :registry "unicode-bmp"))
+(set-frame-font "WenQuanYi Zen Hei Mono-10") ;; setup font size
 
 ;;; emacs-linux.el ends here
