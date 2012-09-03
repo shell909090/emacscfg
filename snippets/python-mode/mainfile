@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: mainfile
+# key: mainfile
+# --
+def main():
+    $0pass
+
+if __name__ == '__main__': main()

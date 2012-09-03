@@ -97,11 +97,13 @@
 ;; 使用python-markdown，增加toc
 (setq markdown-command "markdown_py -x toc")
 
-;; msf-abbrev load and setup
+;; yasnippet load and setup
 (ignore-errors
-  (require 'msf-abbrev)
-  (setq msf-abbrev-root "~/.emacs.d/mode-abbrevs")
-  (msf-abbrev-load))
+  (require 'yasnippet)
+  (setq yas-snippet-dirs
+      '("~/.emacs.d/snippets"            ;; personal snippets
+        ))
+  (yas-global-mode 1))
 
 ;; multi-term autoload
 (autoload 'multi-term "multi-term" "multi terminal" t)
