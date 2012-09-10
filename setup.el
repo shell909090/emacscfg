@@ -95,7 +95,9 @@
 
 ;; markdown mode setup
 ;; 使用python-markdown，增加toc
-(setq markdown-command "markdown_py -x toc")
+;; 虽然解决了toc的问题，但是会引入层级list处理不正确的问题，所以关闭
+;; 如果需要的话，可以临时打开，考虑引入文件级设定，自动判断处理
+;; (setq markdown-command "markdown_py -x toc")
 
 ;; yasnippet load and setup
 (ignore-errors
