@@ -29,4 +29,10 @@
 (global-set-key "\C-ccu" 'update-etags-tables)
 (global-set-key "\C-ccv" 'visit-tags-table);; just load
 
+;; python mode setup
+(add-hook
+ 'python-mode-hook
+ (lambda ()
+   (define-key python-mode-map "\C-c\C-e" 'python-end-of-block)))
+
 ;;; keymap.el ends here
