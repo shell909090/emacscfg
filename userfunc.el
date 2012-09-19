@@ -13,6 +13,10 @@
   (call-interactively 'compile)
   (other-window 1))
 
+(defun revert-buffer-noask ()
+  (interactive)
+  (revert-buffer nil 't))
+
 (defvar popup-terminal-command
   (cond ((memq system-type '(windows-nt cygwin))
 	 '("cmd" "/c" "start"))
@@ -161,8 +165,6 @@
        (concat "_" (substring matched 1 -1))))
    filename 1))
 
-(define-key dired-mode-map "W" 'dired-copy-dir-as-kill)
-(define-key dired-mode-map "b" 'dired-open-file)
 (define-key dired-mode-map "c"
   (dired-common-to-other dired-copy-to-other copy-file))
 (define-key dired-mode-map "r"
@@ -177,14 +179,5 @@
   (dired-common-rename-marked dired-lterm-string lterm-string))
 (define-key dired-mode-map "\\u"
   (dired-common-rename-marked dired-untag-filename untag-filename))
-
-;; magit, work for git
-(ignore-errors
-  (require 'magit)
-  (define-key dired-mode-map "\\f" 'magit-fetch)
-  (define-key dired-mode-map "\\l" 'magit-log)
-  (define-key dired-mode-map "\\p" 'magit-pull)
-  (define-key dired-mode-map "\\P" 'magit-push)
-  (define-key dired-mode-map "\\s" 'magit-status))
 
 ;;; setup.el ends here
