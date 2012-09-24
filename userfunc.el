@@ -116,7 +116,8 @@
 	  (lambda (source-path) (,do-function source-path target))
 	  marked))
        (revert-buffer)
-       (select-window this))))
+       (select-window this)
+       (revert-buffer))))
 
 (defmacro dired-common-rename-marked (funcname rename-func)
   `(defun ,funcname (&optional arg)
