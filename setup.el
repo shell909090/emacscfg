@@ -78,11 +78,7 @@
 (ignore-errors
   (require 'color-theme)
   (color-theme-initialize)
-  ;; (color-theme-clarity)
-  (color-theme-dark-laptop))
-;; color-theme-pok-wob
-;; color-theme-dark-laptop
-;; color-theme-tty-dark
+  (color-theme-clarity))
 
 ;; dictionary setup, use dictionary-el, not dict in emacs-goodies-el
 (setq dictionary-server "localhost")
