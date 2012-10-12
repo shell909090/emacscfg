@@ -4,16 +4,21 @@
 (set-frame-font "monospace-10") ;; setup font size
 (setq inhibit-startup-screen t);; close welcome screen
 (setq column-number-mode t);; enable column mode
-(setq visible-bell t);; stop annoying bell
 (setq frame-title-format "%b");; set title
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1));; remove menu bar
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1));; remove tool bar
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1));; remove scroll bar
+(size-indication-mode);; show file size in mode line
+(display-time-mode);; show time in mode line
+
+;; behavior
 (setq major-mode 'text-mode);; set default mode
-(setq x-select-enable-clipboard t);; emacs selection to x clipboard
-(fset 'yes-or-no-p 'y-or-n-p);; use y/n to anwser
-(setq kill-whole-line t);; kill whole line with C-k in head of line
 (setq buffer-file-coding-system 'utf-8-unix);; use unix utf-8 coding default
+(prefer-coding-system 'utf-8);; prefer utf-8
+(setq x-select-enable-clipboard t);; emacs selection to x clipboard
+(setq kill-whole-line t);; kill whole line with C-k in head of line
+(fset 'yes-or-no-p 'y-or-n-p);; use y/n to anwser
+(setq visible-bell t);; stop annoying bell
 
 ;; delete selection mode, not automatically work in emacs23
 (delete-selection-mode 1)
