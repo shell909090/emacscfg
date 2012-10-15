@@ -10,6 +10,7 @@
 (global-set-key [(control x) (control b)] 'ibuffer)
 (global-set-key "\C-xk" 'kill-this-buffer);; kill *this* buffer with no question
 (global-set-key [(control tab)] 'other-window);; same as C-x o
+(global-set-key (kbd "C-2") 'set-mark-command);; same as C-@
 
 ;; global keymap
 (global-set-key "\C-ca" 'python-shell)
