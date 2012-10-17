@@ -13,6 +13,7 @@
 (global-set-key (kbd "C-2") 'set-mark-command);; same as C-@
 
 ;; global keymap
+(global-set-key "\C-c\C-k" 'kill-other-buffer)
 (global-set-key "\C-ca" 'python-shell)
 (global-set-key "\C-cd" 'dictionary-search)
 (global-set-key "\C-ce" 'multi-term)

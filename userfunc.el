@@ -13,6 +13,10 @@
   (call-interactively 'compile)
   (other-window 1))
 
+(defun kill-other-buffer ()
+  (interactive)
+  (kill-buffer (window-buffer (next-window (selected-window)))))
+
 (defun revert-buffer-noask ()
   (interactive)
   (revert-buffer nil 't))
