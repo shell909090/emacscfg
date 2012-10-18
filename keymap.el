@@ -3,18 +3,25 @@
 
 ;; system keymap
 (global-unset-key [?\C- ])
-;; (global-set-key [f4] 'speedbar)
 (global-set-key [f7] 'switch-windows-buffer)
-(global-set-key [(meta /)] 'hippie-expand)
-(global-set-key [(control ?;)] 'comment-or-uncomment-region)
-(global-set-key [(control x) (control b)] 'ibuffer)
+(global-set-key "\M-/" 'hippie-expand)
+(global-set-key "\C-x\C-b" 'ibuffer)
 (global-set-key "\C-xk" 'kill-this-buffer);; kill *this* buffer with no question
-(global-set-key [(control tab)] 'other-window);; same as C-x o
-(global-set-key (kbd "C-2") 'set-mark-command);; same as C-@
+(global-set-key "\C-c\C-k" 'kill-other-buffer)
+(global-set-key (kbd "C-;") 'comment-or-uncomment-region)
 
 ;; global keymap
-(global-set-key "\C-c\C-k" 'kill-other-buffer)
+(global-set-key [(control tab)] 'other-window);; same as C-x o
+(global-set-key (kbd "C-'") 'other-window);; same as C-x o
+(global-set-key (kbd "M-1") 'set-mark-command);; same as C-@
+(global-set-key (kbd "M-2") 'execute-extended-command);; same as M-x
+(global-set-key (kbd "M-]") (lambda () (interactive) (scroll-up 2)))
+(global-set-key (kbd "M-[") (lambda () (interactive) (scroll-down 2)))
+
+;; global function keymap
 (global-set-key "\C-ca" 'python-shell)
+(global-set-key "\C-cc" 'lookup-dictcn)
+(global-set-key "\C-cb" 'speedbar)
 (global-set-key "\C-cd" 'dictionary-search)
 (global-set-key "\C-ce" 'multi-term)
 (global-set-key "\C-cf" 'grep-find)

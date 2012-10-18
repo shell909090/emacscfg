@@ -1,6 +1,6 @@
 ;;; userfunc.el --- 
 
-;; self define functions
+;; mine functions
 (defun switch-windows-buffer ()
   (interactive)
   (let ((this-buffer (window-buffer)))

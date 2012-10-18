@@ -16,3 +16,4 @@
     (load "locals"))
 
 ;;; emacs.el ends here
+(put 'scroll-left 'disabled nil)
