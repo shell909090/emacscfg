@@ -12,7 +12,8 @@
 (setq x-select-enable-clipboard t);; emacs selection to x clipboard
 (fset 'yes-or-no-p 'y-or-n-p);; use y/n to anwser
 (setq kill-whole-line t);; kill whole line with C-k in head of line
-(setq buffer-file-coding-system 'utf-8-unix);; use unix utf-8 coding default
+(setq default-buffer-file-coding-system 'utf-8-unix);; use unix utf-8 coding default
+(prefer-coding-system 'utf-8)
 
 ;; delete selection mode, not automatically work in emacs23
 (delete-selection-mode 1)
