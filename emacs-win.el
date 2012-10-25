@@ -12,6 +12,6 @@
 (dolist (charset '(kana han symbol cjk-misc bopomofo))
     (set-fontset-font (frame-parameter nil 'font)
                       charset
-                      (font-spec :family "Microsoft Yahei" :size 12)))
+                      (font-spec :family "Microsoft Yahei" :size 15)))
 
 ;;; emacs-win.el ends here
