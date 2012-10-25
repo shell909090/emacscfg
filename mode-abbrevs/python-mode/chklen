@@ -1,1 +1,0 @@
-if len(<query "name: ">) > <query "len: ">: <query "name: "> = <query "name: ">[:<query "len: ">]
