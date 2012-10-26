@@ -170,6 +170,7 @@
        (concat "_" (substring matched 1 -1))))
    filename 1))
 
+(define-key dired-mode-map "=" 'ediff)
 (define-key dired-mode-map "c"
   (dired-common-to-other dired-copy-to-other copy-file))
 (define-key dired-mode-map "r"
