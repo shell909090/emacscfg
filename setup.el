@@ -71,6 +71,9 @@
      (define-key bookmark-bmenu-mode-map "c" 'bookmark-bmenu-edit-annotation)
      (define-key bookmark-bmenu-mode-map "e" 'bookmark-bmenu-select)))
 
+;; ediff mode
+(setq ediff-split-window-function 'split-window-horizontally)
+
 ;; cc mode setup, 默认使用linux c风格，缩进8
 (setq
  c-default-style "linux"

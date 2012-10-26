@@ -170,11 +170,20 @@
        (concat "_" (substring matched 1 -1))))
    filename 1))
 
+(defun ediff-other ()
+  (interactive)
+  (let ((da (dired-get-filename))
+	(this (selected-window)))
+    (select-window (next-window this))
+    (ediff da (dired-get-filename))
+    (select-window this)))
+
 (define-key dired-mode-map "=" 'ediff)
 (define-key dired-mode-map "c"
   (dired-common-to-other dired-copy-to-other copy-file))
 (define-key dired-mode-map "r"
   (dired-common-to-other dired-rename-to-other rename-file))
+(define-key dired-mode-map "%=" 'ediff-other)
 (define-key dired-mode-map "%c"
   (dired-common-form dired-copy-from copy-file))
 (define-key dired-mode-map "%r"
