@@ -162,4 +162,10 @@
 (add-to-list 'auto-mode-alist (cons "\\.rst$" 'rst-mode))
 (add-to-list 'auto-mode-alist (cons "\\.rest$" 'rst-mode))
 
+;; setup tramp
+(eval-after-load "tramp"
+  '(progn
+     (delete "LC_ALL=C" tramp-remote-process-environment)
+     (add-to-list 'tramp-remote-process-environment "LC_ALL=zh_CN.utf8")))
+
 ;;; setup.el ends here
