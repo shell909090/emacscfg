@@ -40,13 +40,6 @@
      (define-key python-mode-map "\C-c\C-l" 'pylookup-lookup)
      (define-key python-mode-map "\C-c\C-d" 'python-describe-symbol)))
 
-;; dired mode keymap
-(eval-after-load "dired"
-  '(progn
-     (define-key dired-mode-map "E" 'update-etags-tables)
-     (define-key dired-mode-map "W" 'dired-copy-dir-as-kill)
-     (define-key dired-mode-map "b" 'dired-open-file)))
-
 ;; magit, work for git, in dired mode keymap
 (eval-after-load "dired"
   '(ignore-errors
