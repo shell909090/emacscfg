@@ -130,6 +130,26 @@
      (define-key dired-mode-map "%r"
        (dired-common-form dired-rename-from rename-file))))
 
+(eval-after-load "dired"
+  '(ignore-errors
+
+     (defun umount-sshfs (mountpoint)
+       (interactive "smountpoint: ")
+       (let ((real-mount-point
+	      (expand-file-name (format "~/%s" mountpoint))))
+	 (call-process "fusermount" nil nil nil "-u" real-mount-point)
+	 (delete-directory real-mount-point)))
+
+     (defun mount-sshfs (sshurl mountpoint)
+       (interactive "ssshurl: \nsmountpoint: ")
+       (let ((real-mount-point
+	      (expand-file-name (format "~/%s" mountpoint))))
+	 (ignore-errors (make-directory real-mount-point))
+	 (call-process "sshfs" nil nil nil sshurl real-mount-point)))
+
+     (define-key dired-mode-map "\\m" 'mount-sshfs)
+     (define-key dired-mode-map "\\u" 'umount-sshfs)))
+
 (defvar *tagregexp* "(.*?)\\|\\[.*?\\]\\|【.*?】")
 (eval-after-load "dired"
   '(ignore-errors
@@ -183,7 +203,7 @@
        (dired-common-rename-marked dired-detag-filename detag-filename))
      (define-key dired-mode-map "\\t"
        (dired-common-rename-marked dired-lterm-string lterm-string))
-     (define-key dired-mode-map "\\u"
+     (define-key dired-mode-map "\\w"
        (dired-common-rename-marked dired-untag-filename untag-filename))))
 
 ;; magit, work for git, in dired mode keymap
@@ -193,7 +213,7 @@
      (define-key dired-mode-map "\\f" 'magit-fetch)
      (define-key dired-mode-map "\\l" 'magit-log)
      (define-key dired-mode-map "\\p" 'magit-pull)
-     (define-key dired-mode-map "\\P" 'magit-push)
+     (define-key dired-mode-map "\\n" 'magit-push)
      (define-key dired-mode-map "\\s" 'magit-status)))
 
 ;;; dired-conf.el ends here
