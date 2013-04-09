@@ -133,19 +133,23 @@
 (eval-after-load "dired"
   '(ignore-errors
 
-     (defun umount-sshfs (mountpoint)
-       (interactive "smountpoint: ")
-       (let ((real-mount-point
-	      (expand-file-name (format "~/%s" mountpoint))))
-	 (call-process "fusermount" nil nil nil "-u" real-mount-point)
-	 (delete-directory real-mount-point)))
+     (defun umount-sshfs (&optional arg)
+       (interactive)
+       (let ((marked (dired-get-marked-files nil arg)))
+	 (mapcar
+	  (lambda (mountpoint)
+	    (call-process "fusermount" nil nil nil "-u" mountpoint)
+	    (delete-directory mountpoint))
+	  marked))
+       (revert-buffer))
 
      (defun mount-sshfs (sshurl mountpoint)
        (interactive "ssshurl: \nsmountpoint: ")
        (let ((real-mount-point
-	      (expand-file-name (format "~/%s" mountpoint))))
+	      (expand-file-name (format "./%s" mountpoint))))
 	 (ignore-errors (make-directory real-mount-point))
-	 (call-process "sshfs" nil nil nil sshurl real-mount-point)))
+	 (call-process "sshfs" nil nil nil sshurl real-mount-point))
+       (revert-buffer))
 
      (define-key dired-mode-map "\\m" 'mount-sshfs)
      (define-key dired-mode-map "\\u" 'umount-sshfs)))
