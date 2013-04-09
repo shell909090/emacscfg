@@ -6,6 +6,7 @@
 (add-to-list 'load-path "~/.emacs.d/plugins/")
 (load "setup")
 (load "userfunc")
+(load "dired-conf")
 (load "keymap")
 (cond
  ((memq system-type '(windows-nt cygwin))

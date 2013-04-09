@@ -40,14 +40,4 @@
      (define-key python-mode-map "\C-c\C-l" 'pylookup-lookup)
      (define-key python-mode-map "\C-c\C-d" 'python-describe-symbol)))
 
-;; magit, work for git, in dired mode keymap
-(eval-after-load "dired"
-  '(ignore-errors
-     (require 'magit)
-     (define-key dired-mode-map "\\f" 'magit-fetch)
-     (define-key dired-mode-map "\\l" 'magit-log)
-     (define-key dired-mode-map "\\p" 'magit-pull)
-     (define-key dired-mode-map "\\P" 'magit-push)
-     (define-key dired-mode-map "\\s" 'magit-status)))
-
 ;;; keymap.el ends here
