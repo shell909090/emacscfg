@@ -80,7 +80,6 @@
  c-basic-offset 8)
 
 ;; python mode
-(setq python-check-command "pylint")
 
 ;; color theme load and setup
 (ignore-errors
@@ -96,27 +95,13 @@
   (require 'desktop)
   (desktop-save-mode))
 
-;; dired-x load and setup
-(ignore-errors
-  (require 'dired-x)
-  (setq-default dired-omit-files-p t)
-  (setq dired-omit-files "^\\.?#\\|^\\.[^\\.]+"))
-
 ;; go mode autoload
 (autoload 'go-mode "go-mode" "Major mode for editing Go source text." t)
-
-;; markdown mode setup
-;; 使用python-markdown，增加toc
-;; 虽然解决了toc的问题，但是会引入层级list处理不正确的问题，所以关闭
-;; 如果需要的话，可以临时打开，考虑引入文件级设定，自动判断处理
-;; (setq markdown-command "markdown_py -x toc")
 
 ;; yasnippet load and setup
 (ignore-errors
   (require 'yasnippet)
-  (setq yas-snippet-dirs
-      '("~/.emacs.d/snippets"            ;; personal snippets
-        ))
+  (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
   (yas-global-mode 1))
 
 ;; multi-term autoload
@@ -131,8 +116,9 @@
 
 ;; pylookup setup
 (setq pylookup-dir "~/.emacs.d/")
-(setq pylookup-program (concat pylookup-dir "/pylookup.py"))
-(setq pylookup-db-file (concat pylookup-dir "/pylookup.db"))
+(setq
+ pylookup-program (concat pylookup-dir "/pylookup.py")
+ pylookup-db-file (concat pylookup-dir "/pylookup.db"))
 ;; set search option if you want
 ;; (setq pylookup-search-options '("--insensitive" "0" "--desc" "0"))
 ;; to speedup, just load it on demand
@@ -151,6 +137,12 @@
 ;; top autoload
 (autoload 'top "top-mode" "top mode" t)
 
+;; setup tramp
+(eval-after-load "tramp"
+  '(progn
+     (delete "LC_ALL=C" tramp-remote-process-environment)
+     (add-to-list 'tramp-remote-process-environment "LC_ALL=zh_CN.utf8")))
+
 ;; uniquify load and setup
 (ignore-errors
   (require 'uniquify)
@@ -161,11 +153,5 @@
 (add-to-list 'auto-mode-alist (cons "\\.md$" 'markdown-mode))
 (add-to-list 'auto-mode-alist (cons "\\.rst$" 'rst-mode))
 (add-to-list 'auto-mode-alist (cons "\\.rest$" 'rst-mode))
-
-;; setup tramp
-(eval-after-load "tramp"
-  '(progn
-     (delete "LC_ALL=C" tramp-remote-process-environment)
-     (add-to-list 'tramp-remote-process-environment "LC_ALL=zh_CN.utf8")))
 
 ;;; setup.el ends here
