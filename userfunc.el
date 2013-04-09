@@ -45,4 +45,18 @@
    (concat "http://3g.dict.cn/s.php?q="
 	   (w3m-url-encode-string term 'utf-8))))
 
+(defun umount-sshfs (mountpoint)
+  (interactive "smountpoint: ")
+  (let ((real-mount-point
+	 (expand-file-name (format "~/%s" mountpoint))))
+    (call-process "fusermount" nil nil nil "-u" real-mount-point)
+    (delete-directory real-mount-point)))
+
+(defun mount-sshfs (sshurl mountpoint)
+  (interactive "ssshurl: \nsmountpoint: ")
+  (let ((real-mount-point
+	 (expand-file-name (format "~/%s" mountpoint))))
+    (ignore-errors (make-directory real-mount-point))
+    (call-process "sshfs" nil nil nil sshurl real-mount-point)))
+
 ;;; userfunc.el ends here
