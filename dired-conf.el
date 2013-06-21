@@ -225,6 +225,7 @@
      (define-key dired-mode-map "\\n" 'magit-push)
      (define-key dired-mode-map "\\s" 'magit-status)))
 
+;; markdown files in dired
 (eval-after-load "dired"
   '(ignore-errors
      (defun markdown-file (&optional arg)
