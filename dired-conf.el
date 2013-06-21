@@ -36,6 +36,7 @@
 	  (dired up)
 	  (dired-goto-file dir)))))
 
+;; operation enhanced
 (defvar *etags-ext-list* `("c", "cpp", "cxx", "h", "hpp", "py", "java"))
 (eval-after-load "dired"
   '(ignore-errors
@@ -71,6 +72,7 @@
      (define-key dired-mode-map "W" 'dired-copy-dir-as-kill)
      (define-key dired-mode-map "b" 'dired-open-file)))
 
+;; ediff in dired
 (eval-after-load "dired"
   '(ignore-errors
 
@@ -85,6 +87,7 @@
      (define-key dired-mode-map "=" 'ediff)
      (define-key dired-mode-map "%=" 'ediff-other)))
 
+;; copy/move enhanced
 (eval-after-load "dired"
   '(ignore-errors
 
@@ -130,6 +133,7 @@
      (define-key dired-mode-map "%r"
        (dired-common-form dired-rename-from rename-file))))
 
+;; mount/umount sshfs
 (eval-after-load "dired"
   '(ignore-errors
 
@@ -151,9 +155,10 @@
 	 (call-process "sshfs" nil nil nil sshurl real-mount-point))
        (revert-buffer))
 
-     (define-key dired-mode-map "\\m" 'mount-sshfs)
+     (define-key dired-mode-map "\\h" 'mount-sshfs)
      (define-key dired-mode-map "\\u" 'umount-sshfs)))
 
+;; rename filename enhanced
 (defvar *tagregexp* "(.*?)\\|\\[.*?\\]\\|【.*?】")
 (eval-after-load "dired"
   '(ignore-errors
@@ -219,5 +224,22 @@
      (define-key dired-mode-map "\\p" 'magit-pull)
      (define-key dired-mode-map "\\n" 'magit-push)
      (define-key dired-mode-map "\\s" 'magit-status)))
+
+(eval-after-load "dired"
+  '(ignore-errors
+     (defun markdown-file (&optional arg)
+       (interactive)
+       (mapcar
+	(lambda (source-path)
+	  (if (string= (file-name-extension source-path) "md")
+	      (apply
+	       'start-process-shell-command "markdown" nil
+	       (list
+		"markdown" source-path ">"
+		(concat (file-name-sans-extension source-path) ".html")))
+	    ))
+	(dired-get-marked-files nil arg))
+       (revert-buffer))
+     (define-key dired-mode-map "\\m" 'markdown-file)))
 
 ;;; dired-conf.el ends here
