@@ -97,6 +97,8 @@
 
 ;; go mode autoload
 (autoload 'go-mode "go-mode" "Major mode for editing Go source text." t)
+(eval-after-load "go-mode"
+  (add-hook 'before-save-hook 'gofmt-before-save))
 
 ;; yasnippet load and setup
 (ignore-errors

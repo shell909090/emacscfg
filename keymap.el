@@ -34,6 +34,13 @@
 (global-set-key "\C-cw" 'compile-to-other)
 (global-set-key "\C-cx" 'multi-term-dedicated-open)
 
+;; go mode keymap
+(eval-after-load "go-mode"
+  '(progn
+     (define-key go-mode-map "\C-c\C-a" 'go-import-add)
+     (define-key go-mode-map "\C-c\C-o" 'godoc)
+     (define-key go-mode-map "\C-c\C-u" 'go-remove-unused-imports)))
+
 ;; python mode keymap
 (eval-after-load "python"
   '(progn
