@@ -55,3 +55,9 @@ slime
 
 测试中：
 ecb
+
+FAQ：
+注意，go-autocomplete可能无法自动make，需要手工安装。另外，系统中需要有godef和gocode。两者可以放在~/bin/下面，但是需要设定env和exec-path。一般在locals.el中添加以下内容。
+
+(setenv "PATH" "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:~/bin")
+(setq exec-path (append exec-path '("~/bin")))
