@@ -98,7 +98,7 @@
 ;; go mode autoload
 (autoload 'go-mode "go-mode" "Major mode for editing Go source text." t)
 (eval-after-load "go-mode"
-  '(progn
+  '(ignore-errors
      (add-hook 'before-save-hook 'gofmt-before-save)
      (require 'go-autocomplete)
      (require 'auto-complete-config)))
