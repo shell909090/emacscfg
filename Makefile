@@ -10,7 +10,7 @@ all: update install
 update: clean build
 
 build:
-	emacs -Q -L plugins/ -batch --eval '(byte-recompile-directory "." 0)'
+	emacs -q --no-splash -L plugins/ -batch --eval '(byte-recompile-directory "." 0)'
 
 clean:
 	find . -name '*.elc' -delete
