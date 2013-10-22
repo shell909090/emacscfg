@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# -*- coding: utf-8 -*-
+# name: iferr
+# key: iferr
+# --
+if err != nil {
+   ${0:return}
+}

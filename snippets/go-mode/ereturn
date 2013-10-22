@@ -1,4 +1,0 @@
-# name: ereturn
-# key: ereturn
-# --
-if err != nil { return }
