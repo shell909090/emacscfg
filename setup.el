@@ -125,28 +125,12 @@
  '(term-default-bg-color "#000000")
  '(term-default-fg-color "#ffffff"))
 
-;; pylookup setup
-(setq pylookup-dir "~/.emacs.d/")
-(setq
- pylookup-program (concat pylookup-dir "/pylookup.py")
- pylookup-db-file (concat pylookup-dir "/pylookup.db"))
-;; set search option if you want
-;; (setq pylookup-search-options '("--insensitive" "0" "--desc" "0"))
-;; to speedup, just load it on demand
-(autoload 'pylookup-lookup "pylookup"
-  "Lookup SEARCH-TERM in the Python HTML indexes." t)
-(autoload 'pylookup-update "pylookup" 
-  "Run pylookup-update and create the database at `pylookup-db-file'." t)
-
 ;; template load and setup
 (ignore-errors
   (require 'template)
   (setq template-subdirectories '("./" "Templates/" "~/.emacs.d/templates/"))
   (template-initialize)
   (setq template-auto-insert t))
-
-;; top autoload
-(autoload 'top "top-mode" "top mode" t)
 
 ;; setup tramp
 (eval-after-load "tramp"

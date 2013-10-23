@@ -27,7 +27,6 @@ emacs-linux.el		linux下的配置文件
 emacs-win.el		windows下的配置文件
 keymap.el		用于全局键盘映射
 locals.el		本地配置文件，如果存在则加载
-pylookup.py		pylookup模式所带的文件，用于自动python符号查找
 setup.el		默认配置参数，包括插件载入和配置
 userfunc.el		自定义函数
 

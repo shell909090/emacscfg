@@ -44,7 +44,6 @@
 ;; python mode keymap
 (eval-after-load "python"
   '(progn
-     (define-key python-mode-map "\C-c\C-l" 'pylookup-lookup)
      (define-key python-mode-map "\C-c\C-d" 'python-describe-symbol)))
 
 ;;; keymap.el ends here
