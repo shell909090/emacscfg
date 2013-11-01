@@ -134,7 +134,7 @@
 
 ;; setup tramp
 (eval-after-load "tramp"
-  '(progn
+  '(ignore-errors
      (delete "LC_ALL=C" tramp-remote-process-environment)
      (add-to-list 'tramp-remote-process-environment "LC_ALL=zh_CN.utf8")
      (set-default 'tramp-default-proxies-alist (quote ((".*" "\\`root\\'" "/ssh:%h:"))))))
