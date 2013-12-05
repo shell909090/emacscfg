@@ -29,20 +29,4 @@
   (interactive)
   (apply 'start-process "terminal" nil popup-terminal-command))
 
-(defun open-url-with-w3m (url)
-  (if (one-window-p)
-      (split-window-horizontally))
-  (other-window 1)
-  (w3m-goto-url url))
-
-(defvar lookup-dictcn-cache '())
-(defun lookup-dictcn (term)
-  (interactive
-   (list (completing-read
-	  "Search: " lookup-dictcn-cache
-	  nil nil (thing-at-point 'word))))
-  (open-url-with-w3m
-   (concat "http://3g.dict.cn/s.php?q="
-	   (w3m-url-encode-string term 'utf-8))))
-
 ;;; userfunc.el ends here
