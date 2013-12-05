@@ -219,10 +219,7 @@
 (eval-after-load "dired"
   '(ignore-errors
      (require 'magit)
-     (define-key dired-mode-map "\\f" 'magit-fetch)
      (define-key dired-mode-map "\\l" 'magit-log)
-     (define-key dired-mode-map "\\p" 'magit-pull)
-     (define-key dired-mode-map "\\n" 'magit-push)
      (define-key dired-mode-map "\\s" 'magit-status)))
 
 ;; markdown files in dired

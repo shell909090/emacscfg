@@ -20,7 +20,6 @@
 
 ;; global function keymap
 (global-set-key "\C-ca" 'python-shell)
-(global-set-key "\C-cc" 'lookup-dictcn)
 (global-set-key "\C-cb" 'speedbar)
 (global-set-key "\C-cd" 'dictionary-search)
 (global-set-key "\C-ce" 'multi-term)
@@ -29,7 +28,6 @@
 (global-set-key "\C-cm" 'man)
 (global-set-key "\C-cr" 'revert-buffer-noask)
 (global-set-key "\C-cs" 'popup-term)
-(global-set-key "\C-ct" 'top)
 (global-set-key "\C-cv" 'visit-tags-table);; just load
 (global-set-key "\C-cw" 'compile-to-other)
 (global-set-key "\C-cx" 'multi-term-dedicated-open)

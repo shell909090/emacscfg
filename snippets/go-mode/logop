@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# -*- coding: utf-8 -*-
+# name: logop
+# key: logop
+# --
+xl.Infof("$1($2).", $3)
+$0
+if err != nil {
+   xl.Errorf("$1 failed(err=%s).", err)
+   httputil.Error(w, err)
+   ${4:return}
+}
+xl.Infof("$1 successed().")
