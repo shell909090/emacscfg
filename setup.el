@@ -2,6 +2,7 @@
 
 ;; appearence setup
 (set-frame-font "monospace-10") ;; setup font size
+(set-face-attribute 'default t :font "monospace-10") ;; for multi frame
 (setq inhibit-startup-screen t);; close welcome screen
 (setq column-number-mode t);; enable column mode
 (setq frame-title-format "%b");; set title
