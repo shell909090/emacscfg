@@ -8,8 +8,6 @@
     optlist, args = getopt.getopt(sys.argv[1:], '$1')
     optdict = dict(optlist)
     if '-h' in optdict:
-        exe = path.basename(sys.argv[0])
-        print '%s ' % exe
         print main.__doc__
         return
     $0
