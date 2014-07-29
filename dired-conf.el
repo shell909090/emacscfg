@@ -7,7 +7,6 @@
   (setq dired-omit-files "^\\.?#\\|^\\.[^\\.]+"))
 
 (ignore-errors
-  (setq diredful-init-file "~/.emacs.d/diredful-conf")
   (require 'diredful))
 
 ;; we want dired not not make always a new buffer if visiting a directory

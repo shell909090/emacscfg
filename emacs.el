@@ -10,11 +10,10 @@
 (load "keymap")
 (cond
  ((memq system-type '(windows-nt cygwin))
-  (load "emacs-win"))
+  (load "win"))
  ((memq system-type '(gnu/linux))
-  (load "emacs-linux")))
+  (load "linux")))
 (if (file-exists-p "~/.emacs.d/locals.el")
     (load "locals"))
 
 ;;; emacs.el ends here
-(put 'scroll-left 'disabled nil)

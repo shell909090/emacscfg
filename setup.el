@@ -1,8 +1,8 @@
 ;;; setup.el --- 
 
 ;; appearence setup
-(set-frame-font "monospace-10") ;; setup font size
-(set-face-attribute 'default t :font "monospace-10") ;; for multi frame
+(set-frame-font "monospace-12") ;; setup font size
+(add-to-list 'default-frame-alist '(font . "monospace-12")) ;; for multi frame
 (setq inhibit-startup-screen t);; close welcome screen
 (setq column-number-mode t);; enable column mode
 (setq frame-title-format "%b");; set title
@@ -20,6 +20,7 @@
 (setq kill-whole-line t);; kill whole line with C-k in head of line
 (fset 'yes-or-no-p 'y-or-n-p);; use y/n to anwser
 (setq visible-bell t);; stop annoying bell
+(put 'scroll-left 'disabled nil)
 
 ;; delete selection mode, not automatically work in emacs23
 (delete-selection-mode 1)

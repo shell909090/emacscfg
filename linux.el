@@ -1,4 +1,4 @@
-;;; emacs-linux.el --- 
+;;; linux.el --- 
 (server-start)
 
 ;; maximize
@@ -12,9 +12,8 @@
        nil 0 nil "_NET_WM_STATE" 32
        '(1 "_NET_WM_STATE_MAXIMIZED_VERT" 0))))
 
-(set-fontset-font
- 't 'unicode
- (font-spec :family "Microsoft YaHei:style=Normal" :registry "unicode-bmp"))
-(set-frame-font "WenQuanYi Zen Hei Mono-10") ;; setup font size
+(set-frame-font "WenQuanYi Zen Hei Mono-12") ;; setup font size
+(add-to-list 'default-frame-alist '(font .  "WenQuanYi Zen Hei Mono-12")) ;; for multi frame
+(diredful-settings-load)
 
-;;; emacs-linux.el ends here
+;;; linux.el ends here
