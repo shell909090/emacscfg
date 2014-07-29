@@ -1,8 +1,6 @@
 ;;; setup.el --- 
 
 ;; appearence setup
-(set-frame-font "monospace-12") ;; setup font size
-(add-to-list 'default-frame-alist '(font . "monospace-12")) ;; for multi frame
 (setq inhibit-startup-screen t);; close welcome screen
 (setq column-number-mode t);; enable column mode
 (setq frame-title-format "%b");; set title
