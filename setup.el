@@ -86,6 +86,12 @@
  c-basic-offset 8)
 
 ;; python mode
+(defun electric-indent-ignore-python (char)
+  "Ignore electric indentation for python-mode"
+  (if (equal major-mode 'python-mode)
+      `no-indent'
+    nil))
+(add-hook 'electric-indent-functions 'electric-indent-ignore-python)
 
 ;; color theme load and setup
 (ignore-errors
