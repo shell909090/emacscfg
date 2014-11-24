@@ -14,7 +14,7 @@
 (global-set-key [(control tab)] 'other-window);; same as C-x o
 (global-set-key (kbd "C-'") 'other-window);; same as C-x o
 (global-set-key (kbd "M-2") 'set-mark-command);; same as C-@
-(global-set-key (kbd "M-3") 'execute-extended-command);; same as M-x
+;; (global-set-key (kbd "M-3") 'execute-extended-command);; same as M-x
 (global-set-key (kbd "M-]") (lambda () (interactive) (scroll-up 2)))
 (global-set-key (kbd "M-[") (lambda () (interactive) (scroll-down 2)))
 

@@ -10,13 +10,14 @@ all: update install
 update: clean build
 
 build:
-	emacs -q --no-splash -L plugins/ -batch --eval '(byte-recompile-directory "." 0)'
+	emacs -q --no-splash -batch --eval '(byte-recompile-directory "plugins" 0)'
+	emacs -q --no-splash -L plugins/ -batch --eval '(byte-recompile-directory "lisp" 0)'
 
 clean:
 	find . -name '*.elc' -delete
 
 install:
-	ln -sf $(shell pwd)/emacs.el ~/.emacs
-	ln -sf $(shell pwd)/emacs.elc ~/.emacs.elc
+	ln -sf $(shell pwd)/lisp/emacs.el ~/.emacs
+	ln -sf $(shell pwd)/lisp/emacs.elc ~/.emacs.elc
 
 ### Makefile ends here
