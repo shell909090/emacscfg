@@ -107,10 +107,11 @@
   (require 'desktop)
   (desktop-save-mode))
 
-;; go mode autoload
+;; golang mode autoload
 (autoload 'go-mode "go-mode" "Major mode for editing Go source text." t)
 (eval-after-load "go-mode"
   '(ignore-errors
+     (setq gofmt-command "goimports")
      (add-hook 'before-save-hook 'gofmt-before-save)
      (require 'go-autocomplete)
      (require 'auto-complete-config)))
