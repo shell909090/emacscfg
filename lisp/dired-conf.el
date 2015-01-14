@@ -87,38 +87,37 @@
      (define-key dired-mode-map "%=" 'ediff-other)))
 
 ;; copy/move enhanced
+(defmacro dired-common-form (funcname do-function)
+  `(defun ,funcname (source-path &optional arg)
+     (interactive (list (read-file-name "filepath: ")))
+     (,do-function source-path (file-name-nondirectory source-path))
+     (revert-buffer)))
+
+(defmacro dired-common-to-other (funcname do-function)
+  `(defun ,funcname (&optional arg)
+     (interactive)
+     (let ((marked (dired-get-marked-files nil arg))
+	   (other (next-window (selected-window)))
+	   (this (selected-window)))
+       (select-window other)
+       (let ((target (dired-current-directory)))
+	 (mapcar
+	  (lambda (source-path) (,do-function source-path target))
+	  marked))
+       (revert-buffer)
+       (select-window this)
+       (revert-buffer))))
+
+(defun async-copy-file (source-path target)
+  (apply 'start-process "copy-file" nil
+	 (list "cp" "-a" source-path target)))
+
+(defun async-rename-file (source-path target)
+  (apply 'start-process "copy-file" nil
+	 (list "mv" source-path target)))
+
 (eval-after-load "dired"
   '(ignore-errors
-
-     (defmacro dired-common-form (funcname do-function)
-       `(defun ,funcname (source-path &optional arg)
-	  (interactive (list (read-file-name "filepath: ")))
-	  (,do-function source-path (file-name-nondirectory source-path))
-	  (revert-buffer)))
-
-     (defmacro dired-common-to-other (funcname do-function)
-       `(defun ,funcname (&optional arg)
-	  (interactive)
-	  (let ((marked (dired-get-marked-files nil arg))
-		(other (next-window (selected-window)))
-		(this (selected-window)))
-	    (select-window other)
-	    (let ((target (dired-current-directory)))
-	      (mapcar
-	       (lambda (source-path) (,do-function source-path target))
-	       marked))
-	    (revert-buffer)
-	    (select-window this)
-	    (revert-buffer))))
-
-     (defun async-copy-file (source-path target)
-       (apply 'start-process "copy-file" nil
-	      (list "cp" "-a" source-path target)))
-
-     (defun async-rename-file (source-path target)
-       (apply 'start-process "copy-file" nil
-	      (list "mv" source-path target)))
-
      (define-key dired-mode-map "c"
        (dired-common-to-other dired-copy-to-other copy-file))
      (define-key dired-mode-map "r"
@@ -138,80 +137,5 @@
      (require 'magit)
      (define-key dired-mode-map "\\l" 'magit-log)
      (define-key dired-mode-map "\\s" 'magit-status)))
-
-;; rename filename enhanced
-;; (defvar *tagregexp* "(.*?)\\|\\[.*?\\]\\|【.*?】")
-;; (eval-after-load "dired"
-;;   '(ignore-errors
-
-;;      (defmacro dired-common-rename-marked (funcname rename-func)
-;;        `(defun ,funcname (&optional arg)
-;; 	  (interactive)
-;; 	  (map-y-or-n-p
-;; 	   (lambda (filepath)
-;; 	     (let* ((filename (file-name-nondirectory filepath))
-;; 		    (newname (,rename-func filename)))
-;; 	       (if (and newname (not (string= newname filename)))
-;; 		   (format "rename %s => %s?" filename newname))))
-;; 	   (lambda (filepath)
-;; 	     (let* ((filename (file-name-nondirectory filepath))
-;; 		    (filedir (file-name-directory filepath))
-;; 		    (newname (,rename-func filename)))
-;; 	       (if (and newname (not (string= newname filename)))
-;; 		   (rename-file filepath (concat filedir newname)))))
-;; 	   (dired-get-marked-files nil arg))
-;; 	  (revert-buffer)))
-
-;;      (defun replace-regexp-in-string-count (regexp rep string repeat)
-;;        (with-temp-buffer
-;; 	 (insert string)
-;; 	 (beginning-of-buffer)
-;; 	 (dotimes (i repeat)
-;; 	   (if (not (re-search-forward regexp nil t)) (return nil))
-;; 	   (cond
-;; 	    ((char-or-string-p rep) (replace-match rep))
-;; 	    ((functionp rep) (replace-match (funcall rep (match-string 0))))))
-;; 	 (buffer-string)))
-
-;;      (defun lterm-string (str)
-;;        (replace-regexp-in-string "^[[:space:]]*" "" str))
-
-;;      (defun detag-filename (filename)
-;;        (lterm-string
-;; 	(replace-regexp-in-string-count *tagregexp* "" filename 1)))
-
-;;      (defun untag-filename (filename)
-;;        (replace-regexp-in-string-count
-;; 	*tagregexp*
-;; 	(lambda (matched)
-;; 	  (if (= (match-beginning 0) 1)
-;; 	      (substring matched 1 -1)
-;; 	    (concat "_" (substring matched 1 -1))))
-;; 	filename 1))
-
-;;      (define-key dired-mode-map "\\d"
-;;        (dired-common-rename-marked dired-detag-filename detag-filename))
-;;      (define-key dired-mode-map "\\t"
-;;        (dired-common-rename-marked dired-lterm-string lterm-string))
-;;      (define-key dired-mode-map "\\w"
-;;        (dired-common-rename-marked dired-untag-filename untag-filename))))
-
-;; markdown files in dired
-;; (eval-after-load "dired"
-;;   '(ignore-errors
-;;      (defun markdown-file (&optional arg)
-;;        (interactive)
-;;        (mapcar
-;; 	(lambda (source-path)
-;; 	  (if (string= (file-name-extension source-path) "md")
-;; 	      (apply
-;; 	       'start-process-shell-command "markdown" nil
-;; 	       (list
-;; 		"markdown" source-path ">"
-;; 		(concat (file-name-sans-extension source-path) ".html")))
-;; 	    ))
-;; 	(dired-get-marked-files nil arg))
-;;        (revert-buffer))
-;;      (define-key dired-mode-map "\\m" 'markdown-file)))
 
 ;;; dired-conf.el ends here
