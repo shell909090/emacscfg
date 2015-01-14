@@ -37,52 +37,51 @@
 
 ;; operation enhanced
 (defvar *etags-ext-list* `("c", "cpp", "cxx", "h", "hpp", "py", "java"))
+
+(defun update-etags-tables (dirname)
+  (interactive (list (read-directory-name "etags path:")))
+  (let ((tagfile (expand-file-name (concat dirname "TAGS"))))
+    (defun file-handler (filename)
+      (if (member (file-name-extension filename) *etags-ext-list*)
+	  (call-process "etags" nil t nil filename "-a" "-o" tagfile)))
+    (defun traverse-directory (file)
+      (if (file-directory-p file)
+	  (mapcar 'traverse-directory (directory-files file t "^[^.]"))
+	(file-handler file)))
+    (ignore-errors (delete-file tagfile))
+    (traverse-directory dirname)))
+
+(defun dired-copy-dir-as-kill (&optional arg)
+  (interactive)
+  (x-set-selection 'PRIMARY (dired-current-directory))
+  (x-set-selection 'CLIPBOARD (dired-current-directory)))
+
+(defun dired-open-file (with-prog &optional arg)
+  (interactive
+   (list (read-shell-command
+	  "command: "
+	  (cond ((memq system-type '(windows-nt cygwin)) "start")
+		(t "xdg-open")))))
+  (apply 'start-process "dired-open" nil
+	 (append (split-string with-prog) (list (dired-get-filename)))))
+
 (eval-after-load "dired"
-  '(ignore-errors
-
-     (defun update-etags-tables (dirname)
-       (interactive (list (read-directory-name "etags path:")))
-       (let ((tagfile (expand-file-name (concat dirname "TAGS"))))
-	 (defun file-handler (filename)
-	   (if (member (file-name-extension filename) *etags-ext-list*)
-	       (call-process "etags" nil t nil filename "-a" "-o" tagfile)))
-	 (defun traverse-directory (file)
-	   (if (file-directory-p file)
-	       (mapcar 'traverse-directory (directory-files file t "^[^.]"))
-	     (file-handler file)))
-	 (ignore-errors (delete-file tagfile))
-	 (traverse-directory dirname)))
-
-     (defun dired-copy-dir-as-kill (&optional arg)
-       (interactive)
-       (x-set-selection 'PRIMARY (dired-current-directory))
-       (x-set-selection 'CLIPBOARD (dired-current-directory)))
-
-     (defun dired-open-file (with-prog &optional arg)
-       (interactive
-	(list (read-shell-command
-	       "command: "
-	       (cond ((memq system-type '(windows-nt cygwin)) "start")
-		     (t "xdg-open")))))
-       (apply 'start-process "dired-open" nil
-	      (append (split-string with-prog) (list (dired-get-filename)))))
-
+  '(progn
      (define-key dired-mode-map "E" 'update-etags-tables)
      (define-key dired-mode-map "W" 'dired-copy-dir-as-kill)
      (define-key dired-mode-map "b" 'dired-open-file)))
 
 ;; ediff in dired
+(defun ediff-other ()
+  (interactive)
+  (let ((da (dired-get-filename))
+	(this (selected-window)))
+    (select-window (next-window this))
+    (ediff da (dired-get-filename))
+    (select-window this)))
+
 (eval-after-load "dired"
-  '(ignore-errors
-
-     (defun ediff-other ()
-       (interactive)
-       (let ((da (dired-get-filename))
-	     (this (selected-window)))
-	 (select-window (next-window this))
-	 (ediff da (dired-get-filename))
-	 (select-window this)))
-
+  '(progn
      (define-key dired-mode-map "=" 'ediff)
      (define-key dired-mode-map "%=" 'ediff-other)))
 
@@ -117,7 +116,7 @@
 	 (list "mv" source-path target)))
 
 (eval-after-load "dired"
-  '(ignore-errors
+  '(progn
      (define-key dired-mode-map "c"
        (dired-common-to-other dired-copy-to-other copy-file))
      (define-key dired-mode-map "r"
@@ -133,7 +132,7 @@
 
 ;; magit, work for git, in dired mode keymap
 (eval-after-load "dired"
-  '(ignore-errors
+  '(progn
      (require 'magit)
      (define-key dired-mode-map "\\l" 'magit-log)
      (define-key dired-mode-map "\\s" 'magit-status)))

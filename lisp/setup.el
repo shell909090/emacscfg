@@ -65,11 +65,10 @@
  save-abbrevs nil)
 
 ;; auto complete load and setup
-(ignore-errors
-  (require 'auto-complete)
-  (global-auto-complete-mode t)
-  (define-key ac-complete-mode-map "\C-n" 'ac-next)
-  (define-key ac-complete-mode-map "\C-p" 'ac-previous))
+(require 'auto-complete)
+(global-auto-complete-mode t)
+(define-key ac-complete-mode-map "\C-n" 'ac-next)
+(define-key ac-complete-mode-map "\C-p" 'ac-previous)
 
 ;; bookmark mode setup, exchange c and e keybind
 (eval-after-load "bookmark"
@@ -103,9 +102,8 @@
 (setq dictionary-server "localhost")
 
 ;; desktop load and setup
-(ignore-errors
-  (require 'desktop)
-  (desktop-save-mode))
+(require 'desktop)
+(desktop-save-mode)
 
 ;; golang mode autoload
 (autoload 'go-mode "go-mode" "Major mode for editing Go source text." t)
@@ -117,10 +115,9 @@
      (require 'auto-complete-config)))
 
 ;; yasnippet load and setup
-(ignore-errors
-  (require 'yasnippet)
-  (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
-  (yas-global-mode 1))
+(require 'yasnippet)
+(setq yas-snippet-dirs '("~/.emacs.d/snippets"))
+(yas-global-mode 1)
 
 ;; multi-term autoload
 (autoload 'multi-term "multi-term" "multi terminal" t)
@@ -141,7 +138,7 @@
 
 ;; setup tramp
 (eval-after-load "tramp"
-  '(ignore-errors
+  '(progn
      (delete "LC_ALL=C" tramp-remote-process-environment)
      (add-to-list 'tramp-remote-process-environment "LC_ALL=zh_CN.utf8")
      (set-default 'tramp-default-proxies-alist (quote ((".*" "\\`root\\'" "/ssh:%h:"))))))
