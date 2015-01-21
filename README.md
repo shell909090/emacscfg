@@ -43,3 +43,12 @@
 go-autocomplete可能无法自动make，需要手工安装。
 
 系统中需要有godef和gocode。两者可以放在~/bin/下面，但是需要设定env和exec-path。默认在setup.el中已经配置。
+
+go的几个依赖组件安装方法
+
+    go get golang.org/x/tools/cmd/goimports
+    go install golang.org/x/tools/cmd/goimports
+	go get github.com/nsf/gocode
+	go install github.com/nsf/gocode
+	go get code.google.com/p/rog-go/exp/cmd/godef
+	go install code.google.com/p/rog-go/exp/cmd/godef
