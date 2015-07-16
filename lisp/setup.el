@@ -154,4 +154,9 @@
 (add-to-list 'auto-mode-alist (cons "\\.rst$" 'rst-mode))
 (add-to-list 'auto-mode-alist (cons "\\.rest$" 'rst-mode))
 
+;; setup geeknote for evernote
+(require 'geeknote)
+(setq geeknote-command "~/bin/geeknote")
+
+
 ;;; setup.el ends here
