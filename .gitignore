@@ -5,3 +5,4 @@ locals.*
 tramp
 image-dired
 auto-save-list/*
+eshell/
