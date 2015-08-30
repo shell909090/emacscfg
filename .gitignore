@@ -6,3 +6,5 @@ tramp
 image-dired
 auto-save-list/*
 eshell/
+.emacs.desktop*
+bookmarks
