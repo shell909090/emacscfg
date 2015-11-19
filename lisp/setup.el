@@ -79,6 +79,9 @@
 ;; ediff mode
 (setq ediff-split-window-function 'split-window-horizontally)
 
+;; ispell
+(setq ispell-dictionary "english")
+
 ;; cc mode setup, 默认使用linux c风格，缩进8
 (setq
  c-default-style "linux"
