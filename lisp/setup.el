@@ -52,10 +52,10 @@
         try-complete-lisp-symbol))
 
 ;; environment setup
-(setenv "PATH" "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:~/bin")
+(setenv "PATH" "~/workspace/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:~/bin")
 (setq exec-path
       (append exec-path
-	      '("/usr/local/sbin" "/usr/sbin" "/sbin" "~/bin")))
+	      '("~/workspace/go/bin" "/usr/local/sbin" "/usr/sbin" "/sbin" "/bin" "~/bin")))
 
 ;; (setq url-proxy-services '(("http" . "localhost:3128")))
 
