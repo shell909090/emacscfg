@@ -1,14 +1,15 @@
 ;;; multi-term.el --- Managing multiple terminal buffers in Emacs.
 
 ;; Author: Andy Stewart <lazycat.manatee@gmail.com>
-;; Maintainer: FENG Jiabin <benplusplus@gmail.com>
-;; Copyright (C) 2008, 2009, Andy Stewart, all rights reserved.
-;; Created: 2008-09-19 23:02:42
-;; Version: 0.8.8
-;; Last-Updated: 2009-07-04 06:27:31
+;; Maintainer: Andy Stewart <lazycat.manatee@gmail.com>
+;; Copyright (C) 2008 ~ 2016 Andy Stewart, all rights reserved.
+;; Copyright (C) 2010, ahei, all rights reserved.
+;; Created: <2008-09-19 23:02:42>
+;; Version: 1.3
+;; Last-Updated: 2016-06-19 17:30:20
 ;; URL: http://www.emacswiki.org/emacs/download/multi-term.el
 ;; Keywords: term, terminal, multiple buffer
-;; Compatibility: GNU Emacs 23.0.60.1
+;; Compatibility: GNU Emacs 23.2.1, GNU Emacs 24.4 (and prereleases)
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -125,6 +126,48 @@
 ;;
 
 ;;; Change log:
+;;
+;; 2016/06/19
+;;      * Add Hogren's patch: `term-send-delete-word' and binding to key 'M-d'.
+;;
+;; 2015/02/20
+;;      * Binding C-Backspace to `term-send-backward-kill-word' to follow emacs behaviour.
+;;
+;; 2014/12/04
+;;      * Ernesto Rodriguez Reina <erreina@gmail.com>
+;;      Fixed the bug of cursor not return to the position it was before opened the dedicated terminal window when
+;;      `multi-term-dedicated-close-back-to-open-buffer-p' and `multi-term-dedicated-select-after-open-p' are t.
+;;
+;; 2014/08/27
+;;      * Kevin Peng <kkpengboy@gmail.com>
+;;      Keep multi-term buffer list make multi-term-next/prev can switch temrinal buffer even terminal buffer's name is changed.
+;;
+;; 2014/07/21
+;;      * Andy Stewart
+;;      Bind C-m with `term-send-return' instead `term-send-input' to fixed bug that
+;;      duplicate input when you C-a and C-m in terminal.
+;;
+;; 2014/06/21
+;;      * Fixed bug that can't found define of `multi-term-dedicated-handle-other-window-advice'.
+;;
+;; 2014/05/12
+;;      * Make Emacs 24.4 compatibility cleaner by avoiding version sniffing.
+;;
+;; 2014/03/23
+;;      * Add `term-send-esc' and binding with 'C-c C-e', send esc is useful for some program, such as vim. ;)
+;;      * Add new option `multi-term-dedicated-close-back-to-open-buffer-p' .
+;;      * Bind C-y with `term-paste' to avoid paste content can't insert in term mode.
+;;
+;; 2014/03/17   Andy Stewart
+;;      * Swap key binding of `term-send-raw' and `term-send-input', i think it's better send yank data when user hit ctrl+m.
+;;
+;; 2014/01/16
+;;      * Fix breakage introduced in Emacs 24.4.
+;;
+;; 2013/01/08
+;;      * Fix customize group of `multi-term-try-create'.
+;;      * Add autoloads.
+;;      * Add new commands `term-send-quote' and `term-send-M-x'.
 ;;
 ;; 2009/07/04
 ;;      * Add new option `multi-term-dedicated-select-after-open-p'.
@@ -243,13 +286,18 @@ If this is nil, setup to environment variable of `SHELL'."
   :type 'string
   :group 'multi-term)
 
+(defcustom multi-term-program-switches nil
+  "The command-line switches to pass to the term program."
+  :type 'string
+  :group 'multi-term)
+
 (defcustom multi-term-try-create t
   "Try to create a new term buffer when switch.
 
 When use `multi-term-next' or `multi-term-prev', switch term buffer,
 and try to create a new term buffer if no term buffers exist."
   :type 'boolean
-  :group 'multi-shell)
+  :group 'multi-term)
 
 (defcustom multi-term-default-dir "~/"
   "The default directory for terms if current directory doesn't exist."
@@ -298,11 +346,13 @@ If this option is nil, don't switch other `multi-term' buffer."
 (defcustom term-bind-key-alist
   '(
     ("C-c C-c" . term-interrupt-subjob)
+    ("C-c C-e" . term-send-esc)
     ("C-p" . previous-line)
     ("C-n" . next-line)
     ("C-s" . isearch-forward)
     ("C-r" . isearch-backward)
-    ("C-m" . term-send-raw)
+    ("C-m" . term-send-return)
+    ("C-y" . term-paste)
     ("M-f" . term-send-forward-word)
     ("M-b" . term-send-backward-word)
     ("M-o" . term-send-backspace)
@@ -310,8 +360,10 @@ If this option is nil, don't switch other `multi-term' buffer."
     ("M-n" . term-send-down)
     ("M-M" . term-send-forward-kill-word)
     ("M-N" . term-send-backward-kill-word)
+    ("<C-backspace>" . term-send-backward-kill-word)
     ("M-r" . term-send-reverse-search-history)
-    ("M-," . term-send-input)
+    ("M-d" . term-send-delete-word)
+    ("M-," . term-send-raw)
     ("M-." . comint-dynamic-complete))
   "The key alist that will need to be bind.
 If you do not like default setup, modify it, with (KEY . COMMAND) format."
@@ -341,8 +393,13 @@ Default is nil."
   :type 'boolean
   :set (lambda (symbol value)
          (set symbol value)
-         (when (ad-advised-definition-p 'other-window)
-           (multi-term-dedicated-handle-other-window-advice value)))
+         ;; ad-advised-definition-p no longer exists on Emacs 24.4 as of 2014-01-03.
+         (when (fboundp 'multi-term-dedicated-handle-other-window-advice)
+           (if (fboundp 'ad-advised-definition-p)
+               (when (ad-advised-definition-p 'other-window)
+                 (multi-term-dedicated-handle-other-window-advice value))
+             (when (ad-is-advised 'other-window)
+               (multi-term-dedicated-handle-other-window-advice value)))))
   :group 'multi-term)
 
 (defcustom multi-term-dedicated-select-after-open-p nil
@@ -352,6 +409,15 @@ Please make this option with t if you want focus terminal window.
 Default is nil."
   :type 'boolean
   :group 'multi-term)
+
+(defcustom multi-term-dedicated-close-back-to-open-buffer-p nil
+  "Some userlike the cursor return to the position it was before I opened the dedicated terminal window.
+Please make this option with t if you want it. ;)
+
+Default is nil."
+  :type 'boolean
+  :group 'multi-term
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Constant ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defconst multi-term-dedicated-buffer-name "MULTI-TERM-DEDICATED"
@@ -364,6 +430,13 @@ Default is nil."
 (defvar multi-term-dedicated-buffer nil
   "The dedicated `multi-term' buffer.")
 
+(defvar multi-term-dedicated-close-buffer nil
+  "The buffer that first time open dedicated `multi-term' buffer.
+Details look option `multi-term-dedicated-close-back-to-open-buffer-p'.")
+
+(defvar multi-term-buffer-list nil
+  "The list of non-dedicated terminal buffers managed by `multi-term'.")
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Interactive Functions ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;###autoload
 (defun multi-term ()
@@ -373,24 +446,28 @@ Will prompt you shell name when you type `C-u' before this command."
   (let (term-buffer)
     ;; Set buffer.
     (setq term-buffer (multi-term-get-buffer current-prefix-arg))
+    (setq multi-term-buffer-list (nconc multi-term-buffer-list (list term-buffer)))
     (set-buffer term-buffer)
     ;; Internal handle for `multi-term' buffer.
     (multi-term-internal)
     ;; Switch buffer
     (switch-to-buffer term-buffer)))
 
+;;;###autoload
 (defun multi-term-next (&optional offset)
   "Go to the next term buffer.
 If OFFSET is `non-nil', will goto next term buffer with OFFSET."
   (interactive "P")
   (multi-term-switch 'NEXT (or offset 1)))
 
+;;;###autoload
 (defun multi-term-prev (&optional offset)
   "Go to the previous term buffer.
 If OFFSET is `non-nil', will goto previous term buffer with OFFSET."
   (interactive "P")
   (multi-term-switch 'PREVIOUS (or offset 1)))
 
+;;;###autoload
 (defun multi-term-dedicated-open ()
   "Open dedicated `multi-term' window.
 Will prompt you shell name when you type `C-u' before this command."
@@ -449,19 +526,41 @@ Will prompt you shell name when you type `C-u' before this command."
              (<= win-height multi-term-dedicated-max-window-height))
         (setq multi-term-dedicated-window-height win-height))))
 
+;;;###autoload
 (defun multi-term-dedicated-toggle ()
   "Toggle dedicated `multi-term' window."
   (interactive)
   (if (multi-term-dedicated-exist-p)
-      (multi-term-dedicated-close)
-    (multi-term-dedicated-open)))
+      (progn
+        (multi-term-dedicated-close)
+        (if (and multi-term-dedicated-close-back-to-open-buffer-p
+                 multi-term-dedicated-close-buffer)
+            (switch-to-buffer multi-term-dedicated-close-buffer)
+          ))
+    (if multi-term-dedicated-close-back-to-open-buffer-p
+        (setq multi-term-dedicated-close-buffer (current-buffer)))
+    (multi-term-dedicated-open)
+    ))
 
+;;;###autoload
 (defun multi-term-dedicated-select ()
   "Select the `multi-term' dedicated window."
   (interactive)
   (if (multi-term-dedicated-exist-p)
       (select-window multi-term-dedicated-window)
     (message "`multi-term' window is not exist.")))
+
+(defun term-send-esc ()
+  "Send ESC in term mode."
+  (interactive)
+  (term-send-raw-string "\e"))
+
+(defun term-send-return ()
+  "Use term-send-raw-string \"\C-m\" instead term-send-input.
+Because term-send-input have bug that will duplicate input when you C-a and C-m in terminal."
+  (interactive)
+  (term-send-raw-string "\C-m")
+  )
 
 (defun term-send-backward-kill-word ()
   "Backward kill word in term mode."
@@ -487,6 +586,22 @@ Will prompt you shell name when you type `C-u' before this command."
   "Search history reverse."
   (interactive)
   (term-send-raw-string "\C-r"))
+
+(defun term-send-delete-word ()
+  "Delete word in term mode."
+  (interactive)
+  (term-send-raw-string "\ed"))
+
+(defun term-send-quote ()
+  "Quote the next character in term-mode.
+Similar to how `quoted-insert' works in a regular buffer."
+  (interactive)
+  (term-send-raw-string "\C-v"))
+
+(defun term-send-M-x ()
+  "Type M-x in term-mode."
+  (interactive)
+  (term-send-raw-string "\ex"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Utilise Functions ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun multi-term-internal ()
@@ -514,26 +629,26 @@ If option DEDICATED-WINDOW is `non-nil' will create dedicated `multi-term' windo
                           (getenv "SHELL")
                           (getenv "ESHELL")
                           "/bin/sh"))
-          term-list-length              ;get length of term list
-          index                         ;setup new term index
+          (index 1)                     ;setup new term index
           term-name)                    ;term name
       (if dedicated-window
           (setq term-name multi-term-dedicated-buffer-name)
         ;; Compute index.
-        (setq term-list-length (length (multi-term-list)))
-        (setq index (if term-list-length (1+ term-list-length) 1))
+        (while (buffer-live-p (get-buffer (format "*%s<%s>*" multi-term-buffer-name index)))
+          (setq index (1+ index)))
         ;; switch to current local directory,
         ;; if in-existence, switch to `multi-term-default-dir'.
         (cd (or default-directory (expand-file-name multi-term-default-dir)))
         ;; adjust value N when max index of term buffer is less than length of term list
-        (while (buffer-live-p (get-buffer (format "*%s<%s>*" multi-term-buffer-name index)))
-          (setq index (1+ index)))
         (setq term-name (format "%s<%s>" multi-term-buffer-name index)))
       ;; Try get other shell name if `special-shell' is non-nil.
       (if special-shell
           (setq shell-name (read-from-minibuffer "Run program: " shell-name)))
       ;; Make term, details to see function `make-term' in `term.el'.
-      (make-term term-name shell-name))))
+      (if multi-term-program-switches
+          (make-term term-name shell-name nil multi-term-program-switches)
+        (make-term term-name shell-name)))))
+
 
 (defun multi-term-handle-close ()
   "Close current term buffer when `exit' from term buffer."
@@ -554,27 +669,14 @@ If option DEDICATED-WINDOW is `non-nil' will create dedicated `multi-term' windo
       (term-quit-subjob))
     ;; Remember dedicated window height.
     (multi-term-dedicated-remember-window-height)
-    ;; Try to switch other multi-term buffer
-    ;; when option `multi-term-switch-after-close' is non-nil.
-    (when multi-term-switch-after-close
-      (multi-term-switch-internal multi-term-switch-after-close 1))))
-
-(defun multi-term-list ()
-  "List term buffers presently active."
-  ;; Autload command `remove-if-not'.
-  (autoload 'remove-if-not "cl-seq")
-  (sort
-   (remove-if-not (lambda (b)
-                    (setq case-fold-search t)
-                    (string-match
-                     (format "^\\\*%s<[0-9]+>\\\*$" multi-term-buffer-name)
-                     (buffer-name b)))
-                  (buffer-list))
-   (lambda (a b)
-     (< (string-to-number
-         (cadr (split-string (buffer-name a) "[<>]")))
-        (string-to-number
-         (cadr (split-string (buffer-name b)  "[<>]")))))))
+    (let ((killed-buffer (current-buffer)))
+      ;; Try to switch other multi-term buffer
+      ;; when option `multi-term-switch-after-close' is non-nil.
+      (when multi-term-switch-after-close
+        (multi-term-switch-internal multi-term-switch-after-close 1))
+      ;; Remove killed buffer from the buffer list if it's in there
+      (setq multi-term-buffer-list
+            (delq killed-buffer multi-term-buffer-list)))))
 
 (defun multi-term-switch (direction offset)
   "Switch `multi-term' buffers.
@@ -585,28 +687,24 @@ Option OFFSET for skip OFFSET number term buffer."
     (if multi-term-try-create
         (progn
           (multi-term)
-          (message "Create a new `multi-term' buffer."))
-      (message "Haven't any `multi-term' buffer exist."))))
+          (message "Created a new `multi-term' buffer."))
+      (message "No `multi-term' buffers exist."))))
 
 (defun multi-term-switch-internal (direction offset)
   "Internal `multi-term' buffers switch function.
 If DIRECTION is `NEXT', switch to the next term.
 If DIRECTION `PREVIOUS', switch to the previous term.
 Option OFFSET for skip OFFSET number term buffer."
-  (let (terms this-buffer)
-    (setq terms (multi-term-list))
-    (if (consp terms)
-        (progn
-          (setf (cdr (last terms)) terms)
-          (setq this-buffer (position (current-buffer) (multi-term-list)))
-          (if this-buffer
-              (if (eql direction 'NEXT)
-                  (switch-to-buffer (nth (+ this-buffer offset) terms))
-                (switch-to-buffer (nth (+ (- (length (multi-term-list)) offset)
-                                          this-buffer) terms)))
-            (switch-to-buffer (car terms)))
-          t)
-      nil)))
+  (if multi-term-buffer-list
+      (let ((buffer-list-len (length multi-term-buffer-list))
+            (my-index (position (current-buffer) multi-term-buffer-list)))
+        (if my-index
+            (let ((target-index (if (eq direction 'NEXT)
+                                    (mod (+ my-index offset) buffer-list-len)
+                                  (mod (- my-index offset) buffer-list-len))))
+              (switch-to-buffer (nth target-index multi-term-buffer-list)))
+          (switch-to-buffer (car multi-term-buffer-list))))
+    nil))
 
 (defun multi-term-keystroke-setup ()
   "Keystroke setup of `term-char-mode'.
@@ -753,6 +851,12 @@ This advice can make `other-window' skip `multi-term' dedicated window."
       (other-window count))))
 
 (provide 'multi-term)
+
+;; Local Variables:
+;; time-stamp-line-limit: 10
+;; time-stamp-start: "Last-Updated: <"
+;; time-stamp-end: ">"
+;; End:
 
 ;;; multi-term.el ends here
 

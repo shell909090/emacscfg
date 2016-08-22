@@ -1,14 +1,14 @@
 ;;; diredful.el --- colorful file names in dired buffers
 
 ;; Author: Thamer Mahmoud <thamer.mahmoud@gmail.com>
-;; Version: 1.2
-;; Time-stamp: <2011-04-11 14:36:44 thamer>
-;; URL: http://www.emacswiki.org/emacs/download/diredful.el
+;; Version: 1.10
+;; Time-stamp: <2016-05-29 19:12:11 thamer>
+;; URL: https://github.com/thamer/diredful
 ;; Keywords: dired, colors, extension, widget
-;; Compatibility: Tested on GNU Emacs 23.2
-;; Copyright (C) 2011 Thamer Mahmoud, all rights reserved.
+;; Compatibility: Tested on GNU Emacs 23.4 and 24.x
+;; Copyright (C) 2011-6 Thamer Mahmoud, all rights reserved.
 
-;; This file is NOT part of GNU Emacs.
+;; This file is not part of GNU Emacs.
 
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
@@ -27,10 +27,9 @@
 
 ;;; Commentary:
 ;;
-;; This package provides a simple way to customize dired mode to
-;; display files in different faces and colors. Faces are chosen based
-;; on file extension, file name, or a regexp that matches the whole
-;; file line.
+;; This package provides a simple UI for customizing dired mode to use
+;; different faces and colors. Faces are chosen based on file
+;; extension, file name, or a regexp matching the file line.
 ;;
 ;;; Install:
 ;;
@@ -38,6 +37,7 @@
 ;; into your $HOME/.emacs startup file.
 ;;
 ;;     (require 'diredful)
+;;     (diredful-mode 1)
 ;;
 ;;; Usage:
 ;;
@@ -45,42 +45,39 @@
 ;;
 ;;     M-x diredful-add
 ;;
-;; This will ask you to define a new name for a file type, like
-;; "images". You can then specify a list of extensions and file names
-;; that belong to this type, and customize the face that will be
-;; used to display them. A new face will be automatically generated
-;; and updated for each type.
+;; This will ask you to define a new name for a file type, such as
+;; "images". You can then specify a list of extensions or file names
+;; that belong to this type and customize the face used to display
+;; them. A new face will be automatically generated and updated for
+;; each type.
 ;;
 ;; Note: changes will only be applied to newly created dired
 ;; buffers.
 ;;
-;; File Types can be added, edited, and deleted using any of the
-;; following three commands:
+;; File Types can be added, edited, and deleted using the following
+;; commands:
 ;;
 ;;     M-x diredful-add
 ;;     M-x diredful-delete
 ;;     M-x diredful-edit
+;;     M-x diredful-edit-file-at-point
 ;;
 ;; These settings will be saved to the location of
-;; `diredful-init-file' (the default location is
+;; `diredful-init-file' (the default is
 ;; "~/.emacs.d/diredful-conf.el"). You may choose a different location
 ;; by doing:
 ;;
-;;     M-x customize-variable diredful-init-file
+;;     M-x customize-variable <ENTER> diredful-init-file
 ;;
 ;; Tip: File type names are sorted alphabetically before being
-;; applied. If two file types matched the same file, the
-;; file type that comes last in an alphabetically-sorted list will
-;; take precedence (e.g., a type named "zworldwritable" will take
-;; priority over other file types).
+;; applied. If two file types matched the same file, the file type
+;; that comes last in an alphabetically-sorted list will take
+;; precedence (e.g., a type named "zworldwritable" will take priority
+;; over other types).
 ;;
 
 ;;; Code:
-(require 'dired)
-(require 'dired-x)
-;;; wid-edit and cus-edit are required below
-
-(defgroup diredful nil "diredful group"
+(defgroup diredful nil "Colorful file names in dired buffers."
   :group 'convenience
   :group 'dired)
 
@@ -107,8 +104,8 @@ buffers. Each type has the following structure:
  WHOLELINE ;; if non-nil, apply face to the whole line \
  not just the file name.
  WITHDIR ;; if non-nil, include directories when applying pattern.
- WITHOUTLINK ;; if non-nil, exclude symbolic links when applying.
- pattern")
+ WITHOUTLINK ;; if non-nil, exclude symbolic links when applying
+ pattern.")
 
 (defun diredful-settings-save ()
   (let ((file (expand-file-name diredful-init-file)))
@@ -128,15 +125,16 @@ buffers. Each type has the following structure:
 file found. Run diredful-add.")
           (insert-file-contents file)
           (goto-char (point-min))
+          ;; Check whether names is loaded
           (condition-case eof
               (setq diredful-names (read (current-buffer)))
             (end-of-file (message "diredful: Failed to load. \
             File exists but empty or corrupt.")))
+          ;; Check whether list is loaded
           (condition-case eof
               (setq diredful-alist (read (current-buffer)))
             (end-of-file (message "diredful: Failed to load. \
-            File exists but empty or corrupt.")))
-          (setq diredful-custom-loaded t))))))
+            File exists but empty or corrupt."))))))))
 
 (defun diredful-filter (condp ls)
   (delq nil (mapcar (lambda (x) (and (funcall condp x) x)) ls)))
@@ -246,7 +244,7 @@ another name" doc-string)))) name)
 
 (defun diredful-add (name)
   "Add a file type used for choosing colors to file names in
-dired buffers"
+dired buffers."
   (interactive
    (append
     (let* ((name (read-string (format "New name for file type: "))))
@@ -259,7 +257,7 @@ dired buffers"
 
 (defun diredful-delete (name)
   "Delete a file type used for choosing colors to file names in
-dired buffers"
+dired buffers."
   (interactive
    (list
     (completing-read
@@ -269,21 +267,36 @@ dired buffers"
     (error "File type cannot be empty"))
   ;; Reset all colors from dired font-lock so that any deleted types
   ;; wouldn't remain active
-  (diredful 0)
+  (diredful-internal 0)
   ;; No assoc-delete-all?
   (setq diredful-alist
         (remove (assoc name diredful-alist) diredful-alist))
   (setq diredful-names (remove name diredful-names))
   (diredful-settings-save)
   ;; Re-Enable colors
-  (diredful 1))
+  (diredful-internal 1))
 
 (defvar diredful-widgets nil
   "List holding widget information.")
 
+(defun diredful-edit-file-at-point ()
+  "Edit file under point by checking what face is currently active."
+  (interactive)
+  (let ((cface (face-at-point)))
+    (unless (stringp cface)
+      (setq cface (symbol-name cface)))
+    (if (string-match "diredful" cface)
+        (let ((name (substring cface 14)))
+          (if (member name diredful-names)
+              (diredful-edit name)
+            (error "diredful: The type '%s' is not found or was\
+ renamed. Revisit the current buffer to edit the current name." name)))
+      (error "diredful: No pattern defined for this file or extension.\
+ Please use diredful-add first."))))
+
 (defun diredful-edit (name)
   "Edit a file type used for choosing colors to file names in
-dired buffers"
+dired buffers."
   (interactive
    (list (completing-read "Edit Dired Color: "
                           diredful-names nil t)))
@@ -306,26 +319,19 @@ dired buffers"
     (make-local-variable 'diredful-widgets)
     (erase-buffer)
     (remove-overlays)
-    ;; (unless (facep face-str)
-    ;;   (setq face-str 'default))
-    (require 'widget)
-    ;; FIXIT: Loading this alone might break customize colors?
+    (require 'wid-edit)
     (require 'cus-edit) ;; for custom-face-edit
-    (widget-insert "Type `C-c C-c' or press [Save] after you have \
+    (widget-insert "Type `C-c C-v' or press [Save] after you have \
 finished editing.\n\n" )
     (setq diredful-widgets
           (list
            ;; This widget also includes the current name of the type
            ;; being edited.
-           (let ((wid (widget-create
-                       'editable-field :value name
-                       :format "Type Name: %v" "")))
-             (widget-put wid :being-edited name)
-             wid)
+           (widget-create 'editable-field :value name
+                          :format "Type Name: %v" "")
            (ignore (widget-insert "\n"))
-           (widget-create
-            'editable-field :value pattern-str
-            :format "Pattern: %v" "")
+           (widget-create 'editable-field :value pattern-str
+                          :format "Pattern: %v" "")
            (ignore (widget-insert "\nPattern Type:\n"))
            (widget-create
             'radio-button-choice
@@ -337,7 +343,7 @@ regexps. Ex. jpe?g gif png (case-insensitive)\n"
 applied to file names. Ex. README [Rr]eadme.\n"
                    t)
             '(item :format "Regexp on whole line (starting from \
-the first permission column), and including file name.\n"
+the first permission column) including file name.\n"
                    1))
            (ignore (widget-insert "\n "))
            ;; Check Boxes
@@ -354,8 +360,6 @@ file name).\n"))
            (ignore (widget-insert "\n"))
            ;; Face Attributes
            (ignore (widget-insert "Face to use:\n\n"))
-           ;; FIXIT: Use a better equivalent to custom-face-edit if
-           ;; there is one
            (widget-create 'custom-face-edit :value face-str)))
     ;; Delete empty widget-insert
     (delq nil diredful-widgets)
@@ -365,8 +369,7 @@ file name).\n"))
      'push-button
      :button-face 'custom-button
      :notify (lambda (&rest ignore)
-               (diredful-save diredful-widgets)
-               (kill-buffer)) "Save")
+               (diredful-save diredful-widgets)) "Save")
     (widget-insert " ")
     (widget-create 'push-button
                    :button-face 'custom-button
@@ -374,14 +377,16 @@ file name).\n"))
                              (kill-buffer))
                    "Cancel")
     (widget-insert "\n\n")
-    ;; This is needed to get rid of cus-edit bindings.
+    ;; Editable name
+    (widget-put (nth 0 diredful-widgets) :being-edited name)
+    ;; FIXME: This is needed to get rid of cus-edit bindings. However,
+    ;; "C-c C-v" doesn't work for editable-fields inside a
+    ;; custom-face-edit.
+    (mapc (lambda (p) (widget-put p :keymap nil)) diredful-widgets)
     ;; Keymaps
-    (widget-put (get 'editable-field 'widget-type) :keymap nil)
     (set-keymap-parent map widget-keymap)
-    (define-key map (kbd "C-c C-c")
-      '(lambda () (interactive)
-         (diredful-save diredful-widgets)
-         (kill-buffer)))
+    (define-key map (kbd "C-c C-v")
+      '(lambda () (interactive) (diredful-save diredful-widgets)))
     (use-local-map map)
     (widget-setup))
   (goto-char (point-min))
@@ -418,13 +423,15 @@ update."
                        withoutlink))
     (add-to-list 'diredful-names name)
     (diredful-settings-save)
-    (diredful 0)
-    (diredful 1)))
+    (diredful-internal 0)
+    (diredful-internal 1)
+    (kill-buffer)))
 
-(defun diredful (enable)
+(defun diredful-internal (enable)
+  "Used to reset and reload diredful variables."
   (if (not (length diredful-names))
       (message "diredful: No file types have been \
-defined. Define a new file type using diredful-add.")
+defined. Please define a new file type using diredful-add.")
     (let (sorted name)
       ;; Make a copy of list
       (setq sorted (append diredful-names nil))
@@ -451,7 +458,7 @@ defined. Define a new file type using diredful-add.")
                   (split-string ft-pattern) ft-withdir ft-withoutlink)
                  (if (facep ft-face)
                      (symbol-name ft-face)
-                  (diredful-make-face (car sorted) ft-face)) ft-whole
+                   (diredful-make-face (car sorted) ft-face)) ft-whole
                    enable)))
              ;; Type is a file name
              ((eq ft-type t)
@@ -478,8 +485,32 @@ defined. Define a new file type using diredful-add.")
       (diredful-apply "^[D]" "dired-flagged" nil enable)
       (diredful-apply "^[*]" "dired-marked" nil enable))))
 
-(diredful-settings-load)
-(diredful 0)
-(diredful 1)
+;;;###autoload
+(define-minor-mode diredful-mode
+  "Toggle diredful minor mode. Will only affect newly created
+dired buffers. When diredful mode is enabled, files in dired
+buffers will be displayed in different faces and colors."
+  :global t
+  :group 'diredful
+  (require 'dired)
+  (require 'dired-x)
+  (if diredful-mode
+      (progn
+        (diredful-settings-load)
+        (diredful-internal 1))
+    (diredful-internal 0)))
+
+;; FIXME: There is an autoload bug when using melpa that prevents this
+;; variable from being set using the customize interface.
+;;;###autoload
+(defcustom diredful-mode nil
+  "Toggle diredful minor mode. Will only affect newly created
+dired buffers. When diredful mode is enabled, files in dired
+buffers will be displayed in different faces and colors."
+  :set 'custom-set-minor-mode
+  :type    'boolean
+  :group   'diredful
+)
+
 (provide 'diredful)
 ;;; diredful.el ends here.
