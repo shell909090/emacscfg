@@ -79,6 +79,10 @@
 ;; ediff mode
 (setq ediff-split-window-function 'split-window-horizontally)
 
+;; etags-table
+(require 'etags-table)
+(setq etags-table-search-up-depth 5)
+
 ;; ispell
 (setq ispell-dictionary "english")
 
