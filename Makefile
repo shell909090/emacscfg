@@ -16,6 +16,17 @@ build:
 clean:
 	find . -name '*.elc' -delete
 
+install-venv:
+	virtualenv pyenv
+	pyenv/bin/pip --upgrade rope
+	pyenv/bin/pip --upgrade jedi
+	pyenv/bin/pip --upgrade importmagic
+	pyenv/bin/pip --upgrade autopep8
+	pyenv/bin/pip --upgrade yapf
+
+clean-venv:
+	rm -rf pyenv
+
 install:
 	ln -sf $(shell pwd)/lisp/emacs.el ~/.emacs
 	ln -sf $(shell pwd)/lisp/emacs.elc ~/.emacs.elc
