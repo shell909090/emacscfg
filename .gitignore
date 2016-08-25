@@ -9,3 +9,4 @@ eshell/
 .emacs.desktop*
 bookmarks
 pyenv
+elpa/*/snippets/
