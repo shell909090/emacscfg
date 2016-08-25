@@ -5,7 +5,7 @@
 ## Keywords: 
 ## X-URL: 
 
-all: update install
+all: install
 
 update: clean build
 
