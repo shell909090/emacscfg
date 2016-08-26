@@ -15,14 +15,15 @@ build:
 
 clean:
 	find . -name '*.elc' -delete
+	find . -name '*.pyc' -delete
 
 install-venv:
 	virtualenv pyenv
-	pyenv/bin/pip --upgrade rope
-	pyenv/bin/pip --upgrade jedi
-	pyenv/bin/pip --upgrade importmagic
-	pyenv/bin/pip --upgrade autopep8
-	pyenv/bin/pip --upgrade yapf
+	pyenv/bin/pip install --upgrade rope
+	pyenv/bin/pip install --upgrade jedi
+	pyenv/bin/pip install --upgrade importmagic
+	pyenv/bin/pip install --upgrade autopep8
+	pyenv/bin/pip install --upgrade yapf
 
 clean-venv:
 	rm -rf pyenv

@@ -82,8 +82,8 @@
 ;; elpy
 (ignore-errors
   (package-initialize)
-  (elpy-enable)
-  (pyvenv-activate "~/.emacs.d/pyenv/"))
+  (pyvenv-activate "~/.emacs.d/pyenv/")
+  (elpy-enable))
 
 ;; etags-table
 (require 'etags-table)
