@@ -4,6 +4,7 @@
 ;; system keymap
 (global-unset-key [?\C- ])
 (global-set-key [f7] 'switch-windows-buffer)
+(global-set-key [f8] 'ein:notebooklist-open)
 (global-set-key "\M-/" 'hippie-expand)
 (global-set-key "\C-x\C-b" 'ibuffer)
 (global-set-key "\C-xk" 'kill-this-buffer);; kill *this* buffer with no question
