@@ -50,5 +50,5 @@ go的几个依赖组件安装方法
     go install golang.org/x/tools/cmd/goimports
 	go get github.com/nsf/gocode
 	go install github.com/nsf/gocode
-	go get code.google.com/p/rog-go/exp/cmd/godef
-	go install code.google.com/p/rog-go/exp/cmd/godef
+	go get github.com/rogpeppe/godef
+	go install github.com/rogpeppe/godef
