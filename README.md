@@ -37,6 +37,8 @@
 * magit
 * php-elisp
 * slime
+* elpa-markdown-mode
+* elpa-helm
 
 # Misc
 
