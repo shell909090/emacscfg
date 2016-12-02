@@ -100,7 +100,7 @@
 ;; python mode
 (setq
  python-shell-interpreter "ipython"
- python-shell-interpreter-args ""
+ python-shell-interpreter-args "--colors=NoColor"
  python-shell-prompt-regexp "In \\[[0-9]+\\]: "
  python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
  python-shell-completion-setup-code
@@ -136,7 +136,9 @@
      (setq gofmt-command "goimports")
      (add-hook 'before-save-hook 'gofmt-before-save)
      (require 'go-autocomplete)
-     (require 'auto-complete-config)))
+     (require 'auto-complete-config)
+     (require 'golint)
+     ))
 
 ;; yasnippet load and setup
 (require 'yasnippet)
