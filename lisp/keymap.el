@@ -7,7 +7,12 @@
 (global-set-key [f8] 'ein:notebooklist-open)
 (global-set-key "\M-/" 'hippie-expand)
 (global-set-key "\C-x\C-b" 'ibuffer)
-(global-set-key "\C-xk" 'kill-this-buffer);; kill *this* buffer with no question
+;; kill *this* buffer with no question
+;; (global-set-key (kbd "C-x k") 'kill-this-buffer)
+(global-set-key (kbd "C-x k")
+		(lambda ()
+		  (interactive)
+		  (kill-buffer (buffer-name))))
 (global-set-key "\C-c\C-k" 'kill-other-buffer)
 (global-set-key (kbd "C-;") 'comment-or-uncomment-region)
 

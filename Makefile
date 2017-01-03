@@ -18,6 +18,7 @@ clean:
 	find . -name '*.pyc' -delete
 
 install-venv:
+	mkdir -p pyenv
 	virtualenv pyenv
 	pyenv/bin/pip install --upgrade rope
 	pyenv/bin/pip install --upgrade jedi
