@@ -79,6 +79,11 @@
 ;; ediff mode
 (setq ediff-split-window-function 'split-window-horizontally)
 
+;; edit server
+(ignore-errors
+  (require 'edit-server)
+  (edit-server-start))
+
 ;; elpy
 (ignore-errors
   (package-initialize)

@@ -371,6 +371,13 @@ SEQUENCE must be a sequence of numbers or markers."
 SEQUENCE must be a sequence of numbers or markers."
   (apply #'max (seq-into sequence 'list)))
 
+(defun seq-random-elt (sequence)
+  "Return a random element from SEQUENCE.
+Signal an error if SEQUENCE is empty."
+  (if (seq-empty-p sequence)
+      (error "Sequence cannot be empty")
+    (seq-elt sequence (random (seq-length sequence)))))
+
 (defun seq--drop-list (list n)
   "Return a list from LIST without its first N elements.
 This is an optimization for lists in `seq-drop'."
@@ -420,7 +427,7 @@ BINDINGS."
     (seq-doseq (name args)
       (unless rest-marker
         (pcase name
-          ((pred seq-p)
+          ((pred seqp)
            (setq bindings (seq--make-bindings (seq--elt-safe args index)
                                               `(seq--elt-safe ,sequence ,index)
                                               bindings)))
@@ -453,7 +460,7 @@ If no element is found, return nil."
 (defalias 'seq-do #'mapc)
 (defalias 'seq-each #'seq-do)
 (defalias 'seq-map #'mapcar)
-(defalias 'seq-p #'sequencep)
+(defalias 'seqp #'sequencep)
 
 (unless (fboundp 'elisp--font-lock-flush-elisp-buffers)
   ;; In Emacs≥25, (via elisp--font-lock-flush-elisp-buffers and a few others)

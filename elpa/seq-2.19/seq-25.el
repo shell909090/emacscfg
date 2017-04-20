@@ -91,7 +91,7 @@ given, and the match does not fail."
 
 ARGS can also include the `&rest' marker followed by a variable
 name to be bound to the rest of SEQUENCE."
-  (declare (indent 2) (debug t))
+  (declare (indent 2) (debug (sexp form body)))
   `(pcase-let ((,(seq--make-pcase-patterns args) ,sequence))
      ,@body))
 
@@ -131,7 +131,7 @@ Return SEQUENCE."
 
 (cl-defgeneric seq-subseq (sequence start &optional end)
   "Return the sequence of elements of SEQUENCE from START to END.
-END is inclusive.
+END is exclusive.
 
 If END is omitted, it defaults to the length of the sequence.  If
 START or END is negative, it counts from the end.  Signal an
@@ -493,6 +493,13 @@ SEQUENCE must be a sequence of numbers or markers."
   "Return element of SEQUENCE at the index N.
 If no element is found, return nil."
   (ignore-errors (seq-elt sequence n))))
+
+(cl-defgeneric seq-random-elt (sequence)
+  "Return a random element from SEQUENCE.
+Signal an error if SEQUENCE is empty."
+  (if (seq-empty-p sequence)
+      (error "Sequence cannot be empty")
+    (seq-elt sequence (random (seq-length sequence)))))
 
 (provide 'seq-25)
 ;;; seq-25.el ends here
