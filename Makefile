@@ -26,6 +26,18 @@ install-venv:
 	pyenv/bin/pip install --upgrade autopep8
 	pyenv/bin/pip install --upgrade yapf
 
+install-deb:
+	sudo aptitude install auto-complete-el dictionary-el emacs-goodies-el magit
+	sudo aptitude install elpa-markdown-mode elpa-helm
+
+install-golang:
+	go get golang.org/x/tools/cmd/goimports
+	go install golang.org/x/tools/cmd/goimports
+	go get github.com/nsf/gocode
+	go install github.com/nsf/gocode
+	go get github.com/rogpeppe/godef
+	go install github.com/rogpeppe/godef
+
 clean-venv:
 	rm -rf pyenv
 
