@@ -36,20 +36,20 @@
 	  (dired-goto-file dir)))))
 
 ;; operation enhanced
-(defvar *etags-ext-list* `("c", "cpp", "cxx", "h", "hpp", "py", "java"))
+;; (defvar *etags-ext-list* `("c", "cpp", "cxx", "h", "hpp", "py", "java"))
 
-(defun update-etags-tables (dirname)
-  (interactive (list (read-directory-name "etags path:")))
-  (let ((tagfile (expand-file-name (concat dirname "TAGS"))))
-    (defun file-handler (filename)
-      (if (member (file-name-extension filename) *etags-ext-list*)
-	  (call-process "etags" nil t nil filename "-a" "-o" tagfile)))
-    (defun traverse-directory (file)
-      (if (file-directory-p file)
-	  (mapcar 'traverse-directory (directory-files file t "^[^.]"))
-	(file-handler file)))
-    (ignore-errors (delete-file tagfile))
-    (traverse-directory dirname)))
+;; (defun update-etags-tables (dirname)
+;;   (interactive (list (read-directory-name "etags path:")))
+;;   (let ((tagfile (expand-file-name (concat dirname "TAGS"))))
+;;     (defun file-handler (filename)
+;;       (if (member (file-name-extension filename) *etags-ext-list*)
+;; 	  (call-process "etags" nil t nil filename "-a" "-o" tagfile)))
+;;     (defun traverse-directory (file)
+;;       (if (file-directory-p file)
+;; 	  (mapcar 'traverse-directory (directory-files file t "^[^.]"))
+;; 	(file-handler file)))
+;;     (ignore-errors (delete-file tagfile))
+;;     (traverse-directory dirname)))
 
 (defun dired-copy-dir-as-kill (&optional arg)
   (interactive)
@@ -67,7 +67,7 @@
 
 (eval-after-load "dired"
   '(progn
-     (define-key dired-mode-map "E" 'update-etags-tables)
+     ;; (define-key dired-mode-map "E" 'update-etags-tables)
      (define-key dired-mode-map "W" 'dired-copy-dir-as-kill)
      (define-key dired-mode-map "b" 'dired-open-file)))
 
