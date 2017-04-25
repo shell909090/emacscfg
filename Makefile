@@ -9,9 +9,9 @@ all: install
 
 update: clean build
 
-build:
-	emacs -q --no-splash -batch --eval '(byte-recompile-directory "plugins" 0)'
-	emacs -q --no-splash -L plugins/ -batch --eval '(byte-recompile-directory "lisp" 0)'
+# build:
+# 	emacs -q --no-splash -batch --eval '(byte-recompile-directory "plugins" 0)'
+# 	emacs -q --no-splash -L plugins/ -batch --eval '(byte-recompile-directory "lisp" 0)'
 
 clean:
 	find . -name '*.elc' -delete

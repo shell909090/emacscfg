@@ -52,7 +52,7 @@
         try-complete-lisp-symbol))
 
 ;; environment setup
-(setenv "PATH" "~/workspace/gocode/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:~/bin")
+;; (setenv "PATH" "~/workspace/gocode/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:~/bin")
 (setq exec-path
       (append exec-path
 	      '("~/workspace/gocode/bin" "/usr/local/sbin" "/usr/sbin" "/sbin" "/bin" "~/bin")))

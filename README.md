@@ -25,32 +25,19 @@
 注:
 
 	make clean ;清理安装目录
-	make build ;编译全部代码
 	make install ;安装配置
 
 # 推荐安装
 
-* auto-complete-el
-* dictionary-el
-* emacs-goodies-el
-*   color-theme
-* magit
+debian的依赖可以参考Makefile的install-deb一节。其他推荐：
+
 * php-elisp
 * slime
-* elpa-markdown-mode
-* elpa-helm
 
 # Misc
 
 go-autocomplete可能无法自动make，需要手工安装。
 
-系统中需要有godef和gocode。两者可以放在~/bin/下面，但是需要设定env和exec-path。默认在setup.el中已经配置。
+系统中需要有godef和gocode。两者可以放在~/bin/下面，也可以自行添加$PATH。需要修改exec-path，默认在setup.el中已经配置。
 
-go的几个依赖组件安装方法
-
-    go get golang.org/x/tools/cmd/goimports
-    go install golang.org/x/tools/cmd/goimports
-	go get github.com/nsf/gocode
-	go install github.com/nsf/gocode
-	go get github.com/rogpeppe/godef
-	go install github.com/rogpeppe/godef
+go的几个依赖组件安装方法请参考Makefile的install-golang一节。
