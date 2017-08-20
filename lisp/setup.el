@@ -143,6 +143,8 @@
      (require 'go-autocomplete)
      (require 'auto-complete-config)
      (require 'golint)
+     (require 'go-guru)
+     (add-hook 'go-mode-hook #'go-guru-hl-identifier-mode)
      ))
 
 ;; yasnippet load and setup
