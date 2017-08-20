@@ -1,0 +1,1 @@
+/home/shell/workspace/github.com/dominikh/go-mode.el/go-rename.el
