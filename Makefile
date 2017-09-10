@@ -28,7 +28,7 @@ install-venv:
 
 install-deb:
 	sudo aptitude install auto-complete-el dictionary-el emacs-goodies-el magit
-	sudo aptitude install elpa-markdown-mode elpa-helm exuberant-ctags
+	sudo aptitude install elpa-markdown-mode elpa-helm exuberant-ctags flake8
 
 install-golang:
 	go get golang.org/x/tools/cmd/goimports
