@@ -37,6 +37,8 @@ install-golang:
 	go install github.com/nsf/gocode
 	go get github.com/rogpeppe/godef
 	go install github.com/rogpeppe/godef
+	go get golang.org/x/tools/cmd/guru
+	go install golang.org/x/tools/cmd/guru
 
 clean-venv:
 	rm -rf pyenv

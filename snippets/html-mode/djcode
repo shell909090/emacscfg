@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: {% ... %}
+# key: djcode
+# --
+{% $0 %}
