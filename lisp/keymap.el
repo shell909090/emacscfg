@@ -20,7 +20,7 @@
 (global-set-key [(control tab)] 'other-window);; same as C-x o
 (global-set-key (kbd "C-'") 'other-window);; same as C-x o
 (global-set-key (kbd "M-2") 'set-mark-command);; same as C-@
-;; (global-set-key (kbd "M-3") 'execute-extended-command);; same as M-x
+(global-set-key (kbd "M-4") 'ispell-complete-word)
 (global-set-key (kbd "M-]") (lambda () (interactive) (scroll-up 2)))
 (global-set-key (kbd "M-[") (lambda () (interactive) (scroll-down 2)))
 
@@ -30,6 +30,7 @@
 (global-set-key "\C-cd" 'dictionary-search)
 (global-set-key "\C-ce" 'multi-term)
 (global-set-key "\C-cf" 'grep-find)
+(global-set-key "\C-ci" 'ispell-buffer)
 (global-set-key "\C-cl" 'align)
 (global-set-key "\C-cm" 'man)
 (global-set-key "\C-cr" 'revert-buffer-noask)
