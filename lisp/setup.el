@@ -65,10 +65,11 @@
  save-abbrevs nil)
 
 ;; auto complete load and setup
-(require 'auto-complete)
-(global-auto-complete-mode t)
-(define-key ac-complete-mode-map "\C-n" 'ac-next)
-(define-key ac-complete-mode-map "\C-p" 'ac-previous)
+(eval-after-load "auto-complete"
+  '(progn
+     (global-auto-complete-mode t)
+     (define-key ac-complete-mode-map "\C-n" 'ac-next)
+     (define-key ac-complete-mode-map "\C-p" 'ac-previous)))
 
 ;; bookmark mode setup, exchange c and e keybind
 (eval-after-load "bookmark"
@@ -85,10 +86,11 @@
   (edit-server-start))
 
 ;; elpy
-(ignore-errors
-  (package-initialize)
-  (pyvenv-activate "~/.emacs.d/pyenv/")
-  (elpy-enable))
+(eval-after-load "elpy"
+  '(progn
+     (package-initialize)
+     (pyvenv-activate "~/.emacs.d/pyenv/")
+     (elpy-enable)))
 
 ;; etags-table
 (require 'etags-table)
@@ -137,20 +139,21 @@
 ;; golang mode autoload
 (autoload 'go-mode "go-mode" "Major mode for editing Go source text." t)
 (eval-after-load "go-mode"
-  '(ignore-errors
+  '(progn
      (setq gofmt-command "goimports")
      (add-hook 'before-save-hook 'gofmt-before-save)
      (require 'go-autocomplete)
      (require 'auto-complete-config)
      (require 'golint)
      (require 'go-guru)
-     (add-hook 'go-mode-hook #'go-guru-hl-identifier-mode)
-     ))
+     (add-hook 'go-mode-hook #'go-guru-hl-identifier-mode)))
 
 ;; yasnippet load and setup
-(require 'yasnippet)
-(setq yas-snippet-dirs '("~/.emacs.d/snippets"))
-(yas-global-mode 1)
+;; (eval-after-load "yasnippet"
+(ignore-errors
+  (require 'yasnippet)
+  (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
+  (yas-global-mode 1))
 
 ;; multi-term autoload
 (autoload 'multi-term "multi-term" "multi terminal" t)

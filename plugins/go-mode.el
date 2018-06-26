@@ -1,1 +1,0 @@
-/home/shell/workspace/github.com/dominikh/go-mode.el/go-mode.el

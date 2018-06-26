@@ -3,6 +3,7 @@
 *.elc
 *.dat
 locals.*
+elpa/
 tramp
 image-dired
 auto-save-list/*

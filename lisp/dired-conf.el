@@ -131,7 +131,7 @@
        (dired-common-form dired-rename-from rename-file))))
 
 ;; magit, work for git, in dired mode keymap
-(eval-after-load "dired"
+(eval-after-load "magit"
   '(progn
      (require 'magit)
      (define-key dired-mode-map "\\l" 'magit-log)

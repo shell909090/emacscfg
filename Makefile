@@ -7,11 +7,9 @@
 
 all: install
 
-update: clean build
-
-# build:
-# 	emacs -q --no-splash -batch --eval '(byte-recompile-directory "plugins" 0)'
-# 	emacs -q --no-splash -L plugins/ -batch --eval '(byte-recompile-directory "lisp" 0)'
+install:
+	ln -sf $(shell pwd)/lisp/emacs.el ~/.emacs
+	ln -sf $(shell pwd)/lisp/emacs.elc ~/.emacs.elc
 
 clean:
 	find . -name '*.elc' -delete
@@ -26,9 +24,18 @@ install-venv:
 	pyenv/bin/pip install --upgrade autopep8
 	pyenv/bin/pip install --upgrade yapf
 
+install-elpa:
+	emacs -q --no-splash --script lisp/install.el
+
+clean-elpa:
+	rm -rf elpa
+
+clean-venv:
+	rm -rf pyenv
+
 install-deb:
-	sudo aptitude install auto-complete-el dictionary-el emacs-goodies-el magit
-	sudo aptitude install elpa-markdown-mode elpa-helm exuberant-ctags flake8
+	sudo aptitude install magit emacs-goodies-el
+	sudo aptitude install exuberant-ctags flake8
 
 install-golang:
 	go get golang.org/x/tools/cmd/goimports
@@ -39,12 +46,5 @@ install-golang:
 	go install github.com/rogpeppe/godef
 	go get golang.org/x/tools/cmd/guru
 	go install golang.org/x/tools/cmd/guru
-
-clean-venv:
-	rm -rf pyenv
-
-install:
-	ln -sf $(shell pwd)/lisp/emacs.el ~/.emacs
-	ln -sf $(shell pwd)/lisp/emacs.elc ~/.emacs.elc
 
 ### Makefile ends here
