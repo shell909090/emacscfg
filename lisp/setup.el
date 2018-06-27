@@ -59,17 +59,23 @@
 
 ;; (setq url-proxy-services '(("http" . "localhost:3128")))
 
+;; setup elpa
+(add-to-list
+ 'package-archives
+ '("melpa" . "http://melpa.milkbox.net/packages/")
+ '("marmalade" . "https://marmalade-repo.org/packages/"))
+
 ;; abbrev mode setup
 (setq
  abbrev-mode t ;; abbrev auto
  save-abbrevs nil)
 
 ;; auto complete load and setup
-(eval-after-load "auto-complete"
-  '(progn
-     (global-auto-complete-mode t)
-     (define-key ac-complete-mode-map "\C-n" 'ac-next)
-     (define-key ac-complete-mode-map "\C-p" 'ac-previous)))
+(require 'auto-complete)
+(global-auto-complete-mode t)
+(ac-config-default)
+(define-key ac-complete-mode-map "\C-n" 'ac-next)
+(define-key ac-complete-mode-map "\C-p" 'ac-previous)
 
 ;; bookmark mode setup, exchange c and e keybind
 (eval-after-load "bookmark"
@@ -79,11 +85,6 @@
 
 ;; ediff mode
 (setq ediff-split-window-function 'split-window-horizontally)
-
-;; edit server
-(ignore-errors
-  (require 'edit-server)
-  (edit-server-start))
 
 ;; elpy
 (eval-after-load "elpy"
@@ -144,7 +145,7 @@
      (add-hook 'before-save-hook 'gofmt-before-save)
      (require 'go-autocomplete)
      (require 'auto-complete-config)
-     (require 'golint)
+     (require 'go-errcheck)
      (require 'go-guru)
      (add-hook 'go-mode-hook #'go-guru-hl-identifier-mode)))
 

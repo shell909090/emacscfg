@@ -5,8 +5,8 @@
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 (add-to-list 'load-path "~/.emacs.d/plugins/")
 (package-initialize)
-(load "setup")
 (load "userfunc")
+(load "setup")
 (load "dired-conf")
 (load "keymap")
 (cond

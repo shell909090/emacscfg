@@ -38,13 +38,15 @@ install-deb:
 	sudo aptitude install exuberant-ctags flake8
 
 install-golang:
-	go get golang.org/x/tools/cmd/goimports
+	go get -u golang.org/x/tools/cmd/goimports
 	go install golang.org/x/tools/cmd/goimports
-	go get github.com/nsf/gocode
+	go get -u github.com/nsf/gocode
 	go install github.com/nsf/gocode
-	go get github.com/rogpeppe/godef
+	go get -u github.com/rogpeppe/godef
 	go install github.com/rogpeppe/godef
-	go get golang.org/x/tools/cmd/guru
+	go get -u golang.org/x/tools/cmd/guru
 	go install golang.org/x/tools/cmd/guru
+	go get -u github.com/kisielk/errcheck
+	go install github.com/kisielk/errcheck
 
 ### Makefile ends here

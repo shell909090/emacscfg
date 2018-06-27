@@ -41,3 +41,10 @@ go-autocomplete可能无法自动make，需要手工安装。
 系统中需要有godef和gocode。两者可以放在~/bin/下面，也可以自行添加$PATH。需要修改exec-path，默认在setup.el中已经配置。
 
 go的几个依赖组件安装方法请参考Makefile的install-golang一节。
+
+# TODO
+
+* replace template with yatemplate
+* python mode goes wrong
+* golang mode goes wrong
+* split emacs-goodies-el

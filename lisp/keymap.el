@@ -42,7 +42,8 @@
 ;; go mode keymap
 (eval-after-load "go-mode"
   '(progn
-     (define-key go-mode-map "\C-c\C-p" 'godoc)))
+     (define-key go-mode-map "\C-c\C-p" 'godoc)
+     (define-key go-mode-map "\C-c\C-r" 'go-errcheck)))
 
 ;; python mode keymap
 (eval-after-load "python"
