@@ -55,7 +55,8 @@
 ;; (setenv "PATH" "~/workspace/gocode/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:~/bin")
 (setq exec-path
       (append exec-path
-	      '("~/workspace/gocode/bin" "/usr/local/sbin" "/usr/sbin" "/sbin" "/bin" "~/bin")))
+	      '("~/workspace/gocode/bin" "/usr/local/sbin" "/usr/local/bin"
+		"/usr/sbin" "/usr/bin" "/sbin" "/bin" "~/.local/bin")))
 
 ;; (setq url-proxy-services '(("http" . "localhost:3128")))
 
@@ -89,7 +90,6 @@
 ;; elpy
 (eval-after-load "elpy"
   '(progn
-     (package-initialize)
      (pyvenv-activate "~/.emacs.d/pyenv/")
      (elpy-enable)))
 
@@ -149,12 +149,8 @@
      (require 'go-guru)
      (add-hook 'go-mode-hook #'go-guru-hl-identifier-mode)))
 
-;; yasnippet load and setup
-;; (eval-after-load "yasnippet"
-(ignore-errors
-  (require 'yasnippet)
-  (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
-  (yas-global-mode 1))
+;; markdown autoload
+(autoload 'markdown-mode "markdown-mode" "markdown mode" t)
 
 ;; multi-term autoload
 (autoload 'multi-term "multi-term" "multi terminal" t)
@@ -184,6 +180,12 @@
 (ignore-errors
   (require 'uniquify)
   (setq uniquify-buffer-name-style 'forward))
+
+;; yasnippet load and setup
+(ignore-errors
+  (require 'yasnippet)
+  (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
+  (yas-global-mode 1))
 
 ;; setup auto-mode-alist
 (add-to-list 'auto-mode-alist (cons "\\.go$" 'go-mode))
