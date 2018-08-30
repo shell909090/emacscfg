@@ -11,6 +11,7 @@
 
 
 (package-install 'auto-complete)
+(package-install 'color-theme)
 (package-install 'dictionary)
 (package-install 'diredful)
 (package-install 'ein)

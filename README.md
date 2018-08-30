@@ -4,16 +4,18 @@
 * README.md				本说明文件
 * LICENSE.md			授权说明文件
 * lisp              	配置文件目录
+  * install.el			安装文件，用于初始安装elpa
   * emacs.el			主配置文件
   * linux.el			linux下的配置文件
   * win.el				windows下的配置文件
+  * mac.el				mac下的配置文件
   * keymap.el			用于全局键盘映射
   * locals.el			本地配置文件，如果存在则加载
   * setup.el			默认配置参数，包括插件载入和配置
   * userfunc.el			自定义函数
   * dired-conf.el		dired的相关函数和配置
   * diredful-conf.el	diredful相关的配置信息
-* plugins				插件安装目录
+* plugins				插件安装目录，安装elpa中没有的文件，目前只有三个插件。
 * snippets				缩写数据目录
 * templates				自动建立模板目录
 
