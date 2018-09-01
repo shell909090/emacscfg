@@ -2,4 +2,4 @@
 # name: logerr
 # key: logerr
 # --
-log.Error("%s", err.Error())
+log.Error(err.Error())
