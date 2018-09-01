@@ -61,7 +61,8 @@
    (list (read-shell-command
 	  "command: "
 	  (cond ((memq system-type '(windows-nt cygwin)) "start")
-		(t "xdg-open")))))
+		((memq system-type '(darwin)) "open")
+		((memq system-type '(gnu/linux)) "xdg-open")))))
   (apply 'start-process "dired-open" nil
 	 (append (split-string with-prog) (list (dired-get-filename)))))
 

@@ -24,7 +24,10 @@
 (defvar popup-terminal-command
   (cond ((memq system-type '(windows-nt cygwin))
 	 '("cmd" "/c" "start"))
-	(t '("sh" "-c" "terminator --new-tab --working-directory=`pwd`"))))
+	((memq system-type '(darwin))
+	 '("open" "-a" "Terminal" "."))
+	((memq system-type '(gnu/linux))
+	 '("sh" "-c" "terminator --new-tab --working-directory=`pwd`"))))
 (defun popup-term ()
   (interactive)
   (apply 'start-process "terminal" nil popup-terminal-command))

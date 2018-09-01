@@ -33,11 +33,13 @@
 (global-set-key "\C-ci" 'ispell-buffer)
 (global-set-key "\C-cl" 'align)
 (global-set-key "\C-cm" 'man)
+(global-set-key "\C-co" 'ispell-continue)
 (global-set-key "\C-cr" 'revert-buffer-noask)
 (global-set-key "\C-cs" 'popup-term)
 (global-set-key "\C-cv" 'visit-tags-table);; just load
 (global-set-key "\C-cw" 'compile-to-other)
 (global-set-key "\C-cx" 'multi-term-dedicated-open)
+(global-set-key "\C-c:" 'ispell-region)
 
 ;; go mode keymap
 (eval-after-load "go-mode"
