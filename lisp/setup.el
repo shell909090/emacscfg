@@ -128,7 +128,8 @@
 
 ;; desktop load and setup
 (require 'desktop)
-(desktop-save-mode)
+(desktop-change-dir "~/.emacs.d/")
+(desktop-save-mode 1)
 
 ;; golang mode autoload
 (autoload 'go-mode "go-mode" "Major mode for editing Go source text." t)
