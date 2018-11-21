@@ -51,13 +51,6 @@
         try-complete-lisp-symbol-partially
         try-complete-lisp-symbol))
 
-;; environment setup
-;; (setenv "PATH" "~/workspace/gocode/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:~/bin")
-(setq exec-path
-      (append exec-path
-	      '("~/workspace/gocode/bin" "/usr/local/sbin" "/usr/local/bin"
-		"/usr/sbin" "/usr/bin" "/sbin" "/bin" "~/.local/bin")))
-
 ;; (setq url-proxy-services '(("http" . "localhost:3128")))
 
 ;; setup elpa

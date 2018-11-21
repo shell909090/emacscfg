@@ -17,4 +17,12 @@
 (eval-after-load "diredful"
   '(diredful-settings-load))
 
+;; environment setup
+(setenv "PATH"
+	"~/workspace/gocode/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:~/.local/bin")
+(setq exec-path
+      (append exec-path
+	      '("~/workspace/gocode/bin" "/usr/local/sbin" "/usr/local/bin"
+		"/usr/sbin" "/usr/bin" "/sbin" "/bin" "~/.local/bin")))
+
 ;;; linux.el ends here
