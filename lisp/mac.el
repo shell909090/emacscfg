@@ -18,12 +18,12 @@
   '(diredful-settings-load))
 
 (setenv "PATH"
-	"~/workspace/gocode/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:~/bin")
+	"/Users/shell/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin")
 (setq exec-path
       (append exec-path
-	      '("~/workspace/gocode/bin" "/usr/local/sbin" "/usr/local/bin"
-		"/usr/sbin" "/usr/bin" "/sbin" "/bin" "~/bin")))
+	      '("/Users/shell/bin" "/usr/local/sbin" "/usr/local/bin"
+		"/usr/sbin" "/usr/bin" "/sbin" "/bin")))
 
-(setenv "GOPATH" "/Users/shell/workspace/gocode")
+(setenv "GOPATH" "/Users/shell/")
 
 ;;; mac.el ends here
