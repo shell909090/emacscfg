@@ -9,7 +9,6 @@ all: install
 
 install:
 	ln -sf $(shell pwd)/lisp/emacs.el ~/.emacs
-	ln -sf $(shell pwd)/lisp/emacs.elc ~/.emacs.elc
 
 clean:
 	find . -name '*.elc' -delete
