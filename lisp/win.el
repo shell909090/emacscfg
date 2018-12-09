@@ -1,4 +1,4 @@
-;;; emacs-win.el --- 
+;;; win.el --- 
 (server-start)
 
 ;; maximize
@@ -14,4 +14,4 @@
                       charset
                       (font-spec :family "Microsoft Yahei" :size 15)))
 
-;;; emacs-win.el ends here
+;;; win.el ends here
