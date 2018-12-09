@@ -14,7 +14,6 @@
 (setq major-mode 'text-mode);; set default mode
 (setq buffer-file-coding-system 'utf-8-unix);; use unix utf-8 coding default
 (prefer-coding-system 'utf-8);; prefer utf-8
-(setq x-select-enable-clipboard t);; emacs selection to x clipboard
 (setq kill-whole-line t);; kill whole line with C-k in head of line
 (fset 'yes-or-no-p 'y-or-n-p);; use y/n to anwser
 (setq visible-bell t);; stop annoying bell
