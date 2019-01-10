@@ -8,12 +8,10 @@
 (global-set-key "\M-/" 'hippie-expand)
 (global-set-key "\C-x\C-b" 'ibuffer)
 ;; kill *this* buffer with no question
-;; (global-set-key (kbd "C-x k") 'kill-this-buffer)
 (global-set-key (kbd "C-x k")
 		(lambda ()
 		  (interactive)
 		  (kill-buffer (buffer-name))))
-(global-set-key "\C-c\C-k" 'kill-other-buffer)
 (global-set-key (kbd "C-;") 'comment-or-uncomment-region)
 
 ;; global keymap
@@ -31,6 +29,7 @@
 (global-set-key "\C-ce" 'multi-term)
 (global-set-key "\C-cf" 'grep-find)
 (global-set-key "\C-ci" 'ispell-buffer)
+(global-set-key "\C-ck" 'kill-other-buffer)
 (global-set-key "\C-cl" 'align)
 (global-set-key "\C-cm" 'man)
 (global-set-key "\C-co" 'ispell-continue)
@@ -51,5 +50,12 @@
 (eval-after-load "python"
   '(progn
      (define-key python-mode-map "\C-c\C-d" 'python-describe-symbol)))
+
+;; multi-term mode keymap
+(add-hook 'term-mode-hook
+  (lambda ()
+    (message "abc")
+    (define-key term-raw-map "\C-c\C-j" 'term-line-mode)
+    (define-key term-raw-map "\C-c\C-k" 'term-line-mode)))
 
 ;;; keymap.el ends here
