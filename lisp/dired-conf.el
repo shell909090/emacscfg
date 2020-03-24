@@ -9,6 +9,9 @@
 (ignore-errors
   (require 'diredful))
 
+;; fix dired with tramp can't open file issue
+(setq dired-listing-switches "-al --time-style long-iso")
+
 ;; we want dired not not make always a new buffer if visiting a directory
 ;; but using only one dired buffer for all directories.
 (defadvice dired-find-file (around dired-subst-directory activate)
