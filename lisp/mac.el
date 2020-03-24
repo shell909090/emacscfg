@@ -18,11 +18,11 @@
   '(diredful-settings-load))
 
 (setenv "PATH"
-	"/Users/shell/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin")
+	"/usr/local/opt/coreutils/libexec/gnubin:/Users/shell/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin")
 (setq exec-path
-      (append exec-path
-	      '("/Users/shell/bin" "/usr/local/sbin" "/usr/local/bin"
-		"/usr/sbin" "/usr/bin" "/sbin" "/bin")))
+      (append '("/usr/local/opt/coreutils/libexec/gnubin"
+		"/Users/shell/bin" "/usr/local/sbin" "/usr/local/bin")
+	      exec-path))
 
 (setenv "GOPATH" "/Users/shell/")
 
