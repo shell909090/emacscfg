@@ -1,8 +1,8 @@
 ;;; mac.el --- 
 (server-start)
 
-(set-frame-font "Monaco-16") ;; setup font size
-(add-to-list 'default-frame-alist '(font .  "Monaco-16")) ;; for multi frame
+(set-frame-font "Monaco-14") ;; setup font size
+(add-to-list 'default-frame-alist '(font .  "Monaco-14")) ;; for multi frame
 
 ;; default Latin font (e.g. Consolas)
 (set-face-attribute 'default nil :family "Monaco")
@@ -12,7 +12,7 @@
 ;; WARNING!  Depending on the default font,
 ;; if the size is not supported very well, the frame will be clipped
 ;; so that the beginning of the buffer may not be visible correctly. 
-(set-face-attribute 'default nil :height 160)
+(set-face-attribute 'default nil :height 140)
 
 (eval-after-load "diredful"
   '(diredful-settings-load))
