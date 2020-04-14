@@ -20,3 +20,20 @@
     (load "locals"))
 
 ;;; emacs.el ends here
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (kubernetes multi-term markdown-mode magit helm go-guru go-errcheck go-autocomplete flycheck epl elpy ein diredful dictionary color-theme)))
+ '(template-use-package t nil (template))
+ '(term-default-bg-color "#000000")
+ '(term-default-fg-color "#ffffff"))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
