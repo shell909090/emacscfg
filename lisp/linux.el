@@ -15,8 +15,8 @@
 ;;    nil 0 nil "_NET_WM_STATE" 32
 ;;    '(1 "_NET_WM_STATE_MAXIMIZED_VERT" 0)))
 
-(set-frame-font "Noto Sans Mono CJK SC-14") ;; setup font size
-(add-to-list 'default-frame-alist '(font .  "Noto Sans Mono CJK SC-14")) ;; for multi frame
+(set-frame-font "Noto Sans Mono CJK SC-16") ;; setup font size
+(add-to-list 'default-frame-alist '(font .  "Noto Sans Mono CJK SC-16")) ;; for multi frame
 (eval-after-load "diredful"
   '(diredful-settings-load))
 
