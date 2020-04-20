@@ -9,6 +9,7 @@
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1));; remove scroll bar
 (size-indication-mode);; show file size in mode line
 (display-time-mode);; show time in mode line
+(setq split-width-threshold 240);; split window vertically
 
 ;; behavior
 (setq major-mode 'text-mode);; set default mode

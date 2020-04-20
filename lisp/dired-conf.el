@@ -3,14 +3,13 @@
 ;; dired-x load and setup
 (ignore-errors
   (require 'dired-x)
+  (require 'diredful)
   (setq-default dired-omit-files-p t)
-  (setq dired-omit-files "^\\.?#\\|^\\.[^\\.]+"))
+  (setq dired-omit-files "^\\.?#\\|^\\.[^\\.]+")
+  ;; fix dired with tramp can't open file issue
+  (setq dired-listing-switches "-al --time-style long-iso")
+)
 
-(ignore-errors
-  (require 'diredful))
-
-;; fix dired with tramp can't open file issue
-(setq dired-listing-switches "-al --time-style long-iso")
 
 ;; we want dired not not make always a new buffer if visiting a directory
 ;; but using only one dired buffer for all directories.
@@ -38,22 +37,6 @@
 	  (dired up)
 	  (dired-goto-file dir)))))
 
-;; operation enhanced
-;; (defvar *etags-ext-list* `("c", "cpp", "cxx", "h", "hpp", "py", "java"))
-
-;; (defun update-etags-tables (dirname)
-;;   (interactive (list (read-directory-name "etags path:")))
-;;   (let ((tagfile (expand-file-name (concat dirname "TAGS"))))
-;;     (defun file-handler (filename)
-;;       (if (member (file-name-extension filename) *etags-ext-list*)
-;; 	  (call-process "etags" nil t nil filename "-a" "-o" tagfile)))
-;;     (defun traverse-directory (file)
-;;       (if (file-directory-p file)
-;; 	  (mapcar 'traverse-directory (directory-files file t "^[^.]"))
-;; 	(file-handler file)))
-;;     (ignore-errors (delete-file tagfile))
-;;     (traverse-directory dirname)))
-
 (defun dired-copy-dir-as-kill (&optional arg)
   (interactive)
   (x-set-selection 'PRIMARY (dired-current-directory))
@@ -71,7 +54,6 @@
 
 (eval-after-load "dired"
   '(progn
-     ;; (define-key dired-mode-map "E" 'update-etags-tables)
      (define-key dired-mode-map "W" 'dired-copy-dir-as-kill)
      (define-key dired-mode-map "b" 'dired-open-file)))
 
