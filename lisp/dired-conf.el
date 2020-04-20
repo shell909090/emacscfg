@@ -1,15 +1,12 @@
 ;;; dired-conf.el --- 
 
 ;; dired-x load and setup
-(ignore-errors
-  (require 'dired-x)
-  (require 'diredful)
-  (setq-default dired-omit-files-p t)
-  (setq dired-omit-files "^\\.?#\\|^\\.[^\\.]+")
-  ;; fix dired with tramp can't open file issue
-  (setq dired-listing-switches "-al --time-style long-iso")
-)
-
+(require 'dired-x)
+(require 'diredful)
+(setq-default dired-omit-files-p t)
+(setq dired-omit-files "^\\.?#\\|^\\.[^\\.]+")
+;; fix dired with tramp can't open file issue
+(setq dired-listing-switches "-al --time-style long-iso")
 
 ;; we want dired not not make always a new buffer if visiting a directory
 ;; but using only one dired buffer for all directories.
@@ -42,6 +39,8 @@
   (x-set-selection 'PRIMARY (dired-current-directory))
   (x-set-selection 'CLIPBOARD (dired-current-directory)))
 
+(define-key dired-mode-map "W" 'dired-copy-dir-as-kill)
+
 (defun dired-open-file (with-prog &optional arg)
   (interactive
    (list (read-shell-command
@@ -52,10 +51,7 @@
   (apply 'start-process "dired-open" nil
 	 (append (split-string with-prog) (list (dired-get-filename)))))
 
-(eval-after-load "dired"
-  '(progn
-     (define-key dired-mode-map "W" 'dired-copy-dir-as-kill)
-     (define-key dired-mode-map "b" 'dired-open-file)))
+(define-key dired-mode-map "b" 'dired-open-file)
 
 ;; ediff in dired
 (defun ediff-other ()
@@ -66,10 +62,8 @@
     (ediff da (dired-get-filename))
     (select-window this)))
 
-(eval-after-load "dired"
-  '(progn
-     (define-key dired-mode-map "=" 'ediff)
-     (define-key dired-mode-map "%=" 'ediff-other)))
+(define-key dired-mode-map "=" 'ediff)
+(define-key dired-mode-map "%=" 'ediff-other)
 
 ;; copy/move enhanced
 (defmacro dired-common-form (funcname do-function)
@@ -101,20 +95,18 @@
   (apply 'start-process "copy-file" nil
 	 (list "mv" source-path target)))
 
-(eval-after-load "dired"
-  '(progn
-     (define-key dired-mode-map "c"
-       (dired-common-to-other dired-copy-to-other copy-file))
-     (define-key dired-mode-map "r"
-       (dired-common-to-other dired-rename-to-other rename-file))
-     (define-key dired-mode-map "\\c"
-       (dired-common-to-other dired-async-copy-to-other async-copy-file))
-     (define-key dired-mode-map "\\r"
-       (dired-common-to-other dired-async-rename-to-other async-rename-file))
-     (define-key dired-mode-map "%c"
-       (dired-common-form dired-copy-from copy-file))
-     (define-key dired-mode-map "%r"
-       (dired-common-form dired-rename-from rename-file))))
+(define-key dired-mode-map "c"
+  (dired-common-to-other dired-copy-to-other copy-file))
+(define-key dired-mode-map "r"
+  (dired-common-to-other dired-rename-to-other rename-file))
+(define-key dired-mode-map "\\c"
+  (dired-common-to-other dired-async-copy-to-other async-copy-file))
+(define-key dired-mode-map "\\r"
+  (dired-common-to-other dired-async-rename-to-other async-rename-file))
+(define-key dired-mode-map "%c"
+  (dired-common-form dired-copy-from copy-file))
+(define-key dired-mode-map "%r"
+  (dired-common-form dired-rename-from rename-file))
 
 ;; magit, work for git, in dired mode keymap
 (eval-after-load "magit"

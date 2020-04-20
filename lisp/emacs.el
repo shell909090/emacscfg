@@ -5,10 +5,10 @@
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 (add-to-list 'load-path "~/.emacs.d/plugins/")
 (package-initialize)
-(load "userfunc")
 (load "setup")
+(load "plugins")
+(load "users")
 (load "dired-conf")
-(load "keymap")
 (cond
  ((memq system-type '(gnu/linux))
   (load "linux"))
