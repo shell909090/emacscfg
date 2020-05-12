@@ -67,6 +67,7 @@
 ;; markdown autoload
 (autoload 'markdown-mode "markdown-mode" "markdown mode" t)
 (add-to-list 'auto-mode-alist (cons "\\.md$" 'markdown-mode))
+(add-to-list 'auto-mode-alist (cons "\\.markdown$" 'markdown-mode))
 
 ;; multi-term autoload
 (autoload 'multi-term "multi-term" "multi terminal" t)

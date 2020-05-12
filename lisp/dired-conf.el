@@ -6,7 +6,7 @@
 (setq-default dired-omit-files-p t)
 (setq dired-omit-files "^\\.?#\\|^\\.[^\\.]+")
 ;; fix dired with tramp can't open file issue
-(setq dired-listing-switches "-al --time-style long-iso")
+(setq dired-listing-switches "-alh --time-style long-iso")
 
 ;; we want dired not not make always a new buffer if visiting a directory
 ;; but using only one dired buffer for all directories.
