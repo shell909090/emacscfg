@@ -4,6 +4,7 @@
 (require 'dired-x)
 (require 'diredful)
 (setq-default dired-omit-files-p t)
+(add-hook 'dired-mode-hook (lambda () (dired-omit-mode 1)))
 (setq dired-omit-files "^\\.?#\\|^\\.[^\\.]+")
 ;; fix dired with tramp can't open file issue
 (setq dired-listing-switches "-alh --time-style long-iso")
