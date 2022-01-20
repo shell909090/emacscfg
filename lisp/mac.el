@@ -18,7 +18,7 @@
   '(diredful-settings-load))
 
 (setenv "PATH"
-	"/usr/local/opt/coreutils/libexec/gnubin:/Users/shell/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin")
+	"/usr/local/opt/coreutils/libexec/gnubin:/Users/shell/.krew/bin:/Users/shell/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/local/opt/libpq/bin:/Users/shell/.local/share/go/bin")
 (setq exec-path
       (append '("/usr/local/opt/coreutils/libexec/gnubin"
 		"/Users/shell/bin" "/usr/local/sbin" "/usr/local/bin")
