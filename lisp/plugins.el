@@ -26,9 +26,9 @@
 
 ;; color theme load and setup
 (ignore-errors
-  (require 'color-theme)
-  (color-theme-initialize)
-  (color-theme-clarity))
+  (require 'color-theme-modern) ;; usage: https://github.com/emacs-jp/replace-colorthemes#activating-a-theme
+  (load-theme 'clarity t t)
+  (enable-theme 'clarity))
 
 ;; dictionary setup, use dictionary-el, not dict in emacs-goodies-el
 (setq dictionary-server "localhost")
