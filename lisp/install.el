@@ -11,7 +11,7 @@
 
 
 (package-install 'auto-complete)
-(package-install 'color-theme)
+(package-install 'color-theme-modern) ;; color-theme is deprcated and replaced by color-theme-modern, https://github.com/emacs-jp/replace-colortheme
 (package-install 'dictionary)
 (package-install 'diredful)
 (package-install 'ein)
