@@ -59,7 +59,8 @@
      (require 'go-guru)
      (add-hook 'go-mode-hook #'go-guru-hl-identifier-mode)
      (define-key go-mode-map "\C-c\C-p" 'godoc)
-     (define-key go-mode-map "\C-c\C-r" 'go-errcheck)))
+     (define-key go-mode-map "\C-c\C-r" 'go-errcheck)
+     (speedbar-add-supported-extension ".go")))
 
 ;; ispell
 (setq ispell-dictionary "english")
