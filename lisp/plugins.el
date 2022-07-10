@@ -65,6 +65,9 @@
 ;; ispell
 (setq ispell-dictionary "english")
 
+;; javascript mode
+(setq js-indent-level 2)
+
 ;; markdown autoload
 (autoload 'markdown-mode "markdown-mode" "markdown mode" t)
 (add-to-list 'auto-mode-alist (cons "\\.md$" 'markdown-mode))
@@ -107,6 +110,9 @@
 ;; rst-mode load and setup
 (add-to-list 'auto-mode-alist (cons "\\.rst$" 'rst-mode))
 (add-to-list 'auto-mode-alist (cons "\\.rest$" 'rst-mode))
+
+;; shell mode
+(setq sh-indentation 2)
 
 ;; template load and setup
 (ignore-errors

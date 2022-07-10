@@ -27,7 +27,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (kubernetes multi-term markdown-mode magit helm go-guru go-errcheck go-autocomplete flycheck epl elpy ein diredful dictionary color-theme)))
+    (yaml-mode kubernetes multi-term markdown-mode magit helm go-guru go-errcheck go-autocomplete flycheck epl elpy ein diredful dictionary color-theme)))
  '(template-use-package t nil (template))
  '(term-default-bg-color "#000000")
  '(term-default-fg-color "#ffffff"))
