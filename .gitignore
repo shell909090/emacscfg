@@ -4,13 +4,17 @@
 *.dat
 locals.*
 .emacs.desktop*
+%backup*
 
 image-dired
 bookmarks
 tramp
+snippets
+templates
 
 auto-save-list/
 elpa/
 eshell/
 pyenv/
 request/
+transient/

@@ -33,7 +33,6 @@ clean-venv:
 	rm -rf pyenv
 
 install-deb:
-	sudo aptitude install magit emacs-goodies-el
 	sudo aptitude install exuberant-ctags flake8
 
 install-golang:

@@ -26,8 +26,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   (quote
-    (yaml-mode kubernetes multi-term markdown-mode magit helm go-guru go-errcheck go-autocomplete flycheck epl elpy ein diredful dictionary color-theme)))
+   '(dash auto-complete js2-mode color-theme-modern rust-mode with-editor csv-mode go-mode yaml-mode yasnippet kubernetes multi-term markdown-mode magit helm go-guru go-errcheck go-autocomplete flycheck epl elpy ein diredful dictionary color-theme))
  '(template-use-package t nil (template))
  '(term-default-bg-color "#000000")
  '(term-default-fg-color "#ffffff"))
