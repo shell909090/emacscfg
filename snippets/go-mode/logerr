@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: logerr
-# key: logerr
-# --
-logger.Error(err.Error())

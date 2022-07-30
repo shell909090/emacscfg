@@ -1,6 +1,0 @@
-# -*- mode: snippet -*-
-# contributor: Shell Xu <shell909090@gmail.com>
-# name: {{ ... }}
-# key: djshow
-# --
-{{ $0 }}
