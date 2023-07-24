@@ -24,6 +24,8 @@
 (package-install 'helm)
 (package-install 'markdown-mode)
 (package-install 'multi-term)
+(package-install 'pkg-info)
+(package-install 'popup)
 (package-install 'yasnippet)
 
 ;; (package-install 'magit)
