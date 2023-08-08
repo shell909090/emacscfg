@@ -10,6 +10,7 @@
 (size-indication-mode);; show file size in mode line
 (display-time-mode);; show time in mode line
 (setq split-width-threshold 240);; split window vertically
+(setq split-height-threshold 9999);; never split window horizontally
 
 ;; behavior
 (setq major-mode 'text-mode);; set default mode
