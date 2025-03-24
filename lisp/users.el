@@ -73,7 +73,8 @@
 (global-set-key "\C-ck" 'kill-other-buffer)
 (global-set-key "\C-cl" 'align)
 (global-set-key "\C-cm" 'man)
-(global-set-key "\C-co" 'ispell-continue)
+(global-set-key "\C-co" 'run-ask-ollama)
+(global-set-key "\C-cp" 'ispell-continue)
 (global-set-key "\C-cr" 'revert-buffer-noask)
 (global-set-key "\C-cs" 'popup-term)
 (global-set-key "\C-cv" 'visit-tags-table);; just load
