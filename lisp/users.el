@@ -8,6 +8,16 @@
     (switch-to-buffer-other-window this-buffer)
     (other-window 1)))
 
+(defun run-ask-ollama ()
+  (interactive)
+  (let ((background (buffer-string))
+	(question (read-from-minibuffer "What's your question? "))
+	(buff (get-buffer-create "ollama")))
+    (start-process "ollama" buff "ask_ollama.py" "-e" "http://192.168.37.20:11434" "-m" "deepseek-r1:14b" "-fi" question)
+    (process-send-string "ollama" background)
+    (process-send-eof "ollama")
+    (switch-to-buffer buff)))
+
 (defun compile-to-other ()
   (interactive)
   (call-interactively 'compile)
