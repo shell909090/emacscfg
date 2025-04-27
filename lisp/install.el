@@ -22,11 +22,15 @@
 (package-install 'go-guru)
 (package-install 'go-mode)
 (package-install 'helm)
+(package-install 'kubernetes)
 (package-install 'markdown-mode)
 (package-install 'multi-term)
 (package-install 'pkg-info)
 (package-install 'popup)
+(package-install 'terraform-mode)
+(package-install 'yaml-mode)
 (package-install 'yasnippet)
+
 
 ;; (package-install 'magit)
 
