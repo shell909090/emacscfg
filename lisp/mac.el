@@ -7,6 +7,8 @@
 ;; default Latin font (e.g. Consolas)
 (set-face-attribute 'default nil :family "Monaco")
 
+(set-frame-parameter nil 'ns-appearance 'dark)
+
 ;; default font size (point * 10)
 ;;
 ;; WARNING!  Depending on the default font,
