@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: getopt
+# key: getopt
+# --
+global optdict
+optlist, args = getopt.getopt(sys.argv[1:], '$1')
+optdict = dict(optlist)
+if '-h' in optdict:
+   print main.__doc__
+   return

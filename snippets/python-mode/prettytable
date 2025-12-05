@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: prettytable
+# contributor: Shell Xu <shell909090@gmail.com>
+# key: prettytable
+# --
+from prettytable import PrettyTable
+x = PrettyTable()
+x.field_names = ['$1']
+x.add_row(($0))

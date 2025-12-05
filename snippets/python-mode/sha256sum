@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: sha256sum
+# contributor: Shell Xu <shell909090@gmail.com>
+# key: sha256sum
+# --
+import hashlib
+def sha256sum(s):
+    h = hashlib.sha256()
+    h.update(s.encode('utf-8'))
+    return h.hexdigest().upper()

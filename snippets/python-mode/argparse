@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: argparse
+# contributor: Shell Xu <shell909090@gmail.com>
+# key: argparse
+# --
+parser = argparse.ArgumentParser()
+parser.add_argument('--watermark', '-m', help='watermark to write')
+parser.add_argument('--font', '-f', help='path of font file.')
+parser.add_argument('--long', '-s', type=int, default=10, help='help')
+parser.add_argument('rest', nargs='*', type=str)
+args = parser.parse_args()

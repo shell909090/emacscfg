@@ -1,0 +1,13 @@
+# -*- coding: utf-8 -*-
+# name: init
+# contributor: Shell Xu <shell909090@gmail.com>
+# key: init
+# --
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+'''
+@date: `(format-time-string "%Y-%m-%d")`
+@author: Shell.Xu
+@copyright: `(format-time-string "%Y")`, Shell.Xu <shell909090@gmail.com>
+@license: BSD-3-clause
+'''
