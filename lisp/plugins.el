@@ -5,14 +5,6 @@
  abbrev-mode t ;; abbrev auto
  save-abbrevs nil)
 
-;; auto complete load and setup
-(ignore-errors
-  (require 'auto-complete)
-  (global-auto-complete-mode t)
-  (ac-config-default)
-  (define-key ac-complete-mode-map "\C-n" 'ac-next)
-  (define-key ac-complete-mode-map "\C-p" 'ac-previous))
-
 ;; bookmark mode setup, exchange c and e keybind
 (eval-after-load "bookmark"
   '(progn
@@ -30,11 +22,27 @@
   (load-theme 'clarity t t)
   (enable-theme 'clarity))
 
-;; dictionary setup, use dictionary-el, not dict in emacs-goodies-el
-(setq dictionary-server "localhost")
+;; corfu setup
+(require 'corfu)
+(use-package corfu
+  :ensure t
+  :init
+  (global-corfu-mode)
+  :custom
+  (corfu-auto t)
+  (corfu-auto-prefix 2))
 
 ;; ediff mode
 (setq ediff-split-window-function 'split-window-horizontally)
+
+;; eglot setup
+(require 'eglot)
+(use-package eglot
+  :ensure t
+  :hook (python-mode . eglot-ensure) ; 进入 python-mode 自动启动 eglot
+  :config
+  ;; 提高补全响应速度
+  (setq eglot-send-changes-idle-time 0.1))
 
 ;; elpy
 (eval-after-load "elpy"
@@ -46,6 +54,18 @@
 (require 'etags-table)
 (setq etags-table-search-up-depth 5)
 
+;; gptel
+(use-package gptel
+  :ensure t
+  :config
+  (setq gptel-ollama-backend
+        (gptel-make-ollama "ollama"
+          :host "192.168.33.4:11434"
+          :stream t
+          :models '(qwen3:30b qwen3-coder:30b)))
+  (setq-default gptel-backend gptel-ollama-backend
+                gptel-model 'qwen3-coder:30b))
+
 ;; golang mode autoload
 (autoload 'go-mode "go-mode" "Major mode for editing Go source text." t)
 (add-to-list 'auto-mode-alist (cons "\\.go$" 'go-mode))
@@ -53,8 +73,8 @@
   '(progn
      (setq gofmt-command "goimports")
      (add-hook 'before-save-hook 'gofmt-before-save)
-     (require 'go-autocomplete)
-     (require 'auto-complete-config)
+     ;; (require 'go-autocomplete)
+     ;; (require 'auto-complete-config)
      (require 'go-errcheck)
      (require 'go-guru)
      (add-hook 'go-mode-hook #'go-guru-hl-identifier-mode)
@@ -72,6 +92,36 @@
 (autoload 'markdown-mode "markdown-mode" "markdown mode" t)
 (add-to-list 'auto-mode-alist (cons "\\.md$" 'markdown-mode))
 (add-to-list 'auto-mode-alist (cons "\\.markdown$" 'markdown-mode))
+
+;; minuet setup
+(use-package minuet
+  :bind
+  (("M-y" . #'minuet-complete-with-minibuffer) ;; use minibuffer for completion
+   ("M-i" . #'minuet-show-suggestion) ;; use overlay for completion
+   ("C-c m" . #'minuet-configure-provider)
+   :map minuet-active-mode-map
+   ;; These keymaps activate only when a minuet suggestion is displayed in the current buffer
+   ("M-p" . #'minuet-previous-suggestion) ;; invoke completion or cycle to next completion
+   ("M-n" . #'minuet-next-suggestion) ;; invoke completion or cycle to previous completion
+   ("M-A" . #'minuet-accept-suggestion) ;; accept whole completion
+   ;; Accept the first line of completion, or N lines with a numeric-prefix:
+   ;; e.g. C-u 2 M-a will accepts 2 lines of completion.
+   ("M-a" . #'minuet-accept-suggestion-line)
+   ("M-e" . #'minuet-dismiss-suggestion))
+  :init
+  ;; if you want to enable auto suggestion.
+  ;; Note that you can manually invoke completions without enable minuet-auto-suggestion-mode
+  (add-hook 'prog-mode-hook #'minuet-auto-suggestion-mode)
+  :config
+  ;; You can use M-x minuet-configure-provider to interactively configure provider and model
+  (setq minuet-provider 'openai-fim-compatible)
+  (setq minuet-context-window 4096)
+  (setq minuet-request-timeout 10)
+  (plist-put minuet-openai-fim-compatible-options :end-point "http://192.168.33.4:11434/v1/completions")
+  (plist-put minuet-openai-fim-compatible-options :name "Ollama")
+  (plist-put minuet-openai-fim-compatible-options :api-key "TERM")
+  (plist-put minuet-openai-fim-compatible-options :model "qwen3-coder:30b"))
+(require 'minuet)
 
 ;; multi-term autoload
 (autoload 'multi-term "multi-term" "multi terminal" t)
@@ -91,8 +141,6 @@
  python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
  python-shell-completion-setup-code
    "from IPython.core.completerlib import module_completion"
- ;; python-shell-completion-module-string-code
- ;;   "';'.join(module_completion('''%s'''))\n"
  python-shell-completion-string-code
    "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
 (defun electric-indent-ignore-python (char)

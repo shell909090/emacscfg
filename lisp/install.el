@@ -10,14 +10,13 @@
 (list-packages)
 
 
-(package-install 'auto-complete)
 (package-install 'color-theme-modern) ;; color-theme is deprcated and replaced by color-theme-modern, https://github.com/emacs-jp/replace-colortheme
+(package-install 'corfu)
 (package-install 'dictionary)
 (package-install 'diredful)
 (package-install 'ein)
 (package-install 'elpy)
 (package-install 'flycheck)
-(package-install 'go-autocomplete)
 (package-install 'go-errcheck)
 (package-install 'go-guru)
 (package-install 'go-mode)
