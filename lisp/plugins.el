@@ -54,17 +54,17 @@
 (require 'etags-table)
 (setq etags-table-search-up-depth 5)
 
-;; gptel
-(use-package gptel
-  :ensure t
-  :config
-  (setq gptel-ollama-backend
-        (gptel-make-ollama "ollama"
-          :host "192.168.33.4:11434"
-          :stream t
-          :models '(qwen3:30b qwen3-coder:30b)))
-  (setq-default gptel-backend gptel-ollama-backend
-                gptel-model 'qwen3-coder:30b))
+;; ;; gptel
+;; (use-package gptel
+;;   :ensure t
+;;   :config
+;;   (setq gptel-ollama-backend
+;;         (gptel-make-ollama "ollama"
+;;           :host "192.168.33.4:11434"
+;;           :stream t
+;;           :models '(qwen3:30b qwen3-coder:30b)))
+;;   (setq-default gptel-backend gptel-ollama-backend
+;;                 gptel-model 'qwen3-coder:30b))
 
 ;; golang mode autoload
 (autoload 'go-mode "go-mode" "Major mode for editing Go source text." t)
@@ -93,35 +93,35 @@
 (add-to-list 'auto-mode-alist (cons "\\.md$" 'markdown-mode))
 (add-to-list 'auto-mode-alist (cons "\\.markdown$" 'markdown-mode))
 
-;; minuet setup
-(use-package minuet
-  :bind
-  (("M-y" . #'minuet-complete-with-minibuffer) ;; use minibuffer for completion
-   ("M-i" . #'minuet-show-suggestion) ;; use overlay for completion
-   ("C-c m" . #'minuet-configure-provider)
-   :map minuet-active-mode-map
-   ;; These keymaps activate only when a minuet suggestion is displayed in the current buffer
-   ("M-p" . #'minuet-previous-suggestion) ;; invoke completion or cycle to next completion
-   ("M-n" . #'minuet-next-suggestion) ;; invoke completion or cycle to previous completion
-   ("M-A" . #'minuet-accept-suggestion) ;; accept whole completion
-   ;; Accept the first line of completion, or N lines with a numeric-prefix:
-   ;; e.g. C-u 2 M-a will accepts 2 lines of completion.
-   ("M-a" . #'minuet-accept-suggestion-line)
-   ("M-e" . #'minuet-dismiss-suggestion))
-  :init
-  ;; if you want to enable auto suggestion.
-  ;; Note that you can manually invoke completions without enable minuet-auto-suggestion-mode
-  (add-hook 'prog-mode-hook #'minuet-auto-suggestion-mode)
-  :config
-  ;; You can use M-x minuet-configure-provider to interactively configure provider and model
-  (setq minuet-provider 'openai-fim-compatible)
-  (setq minuet-context-window 4096)
-  (setq minuet-request-timeout 10)
-  (plist-put minuet-openai-fim-compatible-options :end-point "http://192.168.33.4:11434/v1/completions")
-  (plist-put minuet-openai-fim-compatible-options :name "Ollama")
-  (plist-put minuet-openai-fim-compatible-options :api-key "TERM")
-  (plist-put minuet-openai-fim-compatible-options :model "qwen3-coder:30b"))
-(require 'minuet)
+;; ;; minuet setup
+;; (use-package minuet
+;;   :bind
+;;   (("M-y" . #'minuet-complete-with-minibuffer) ;; use minibuffer for completion
+;;    ("M-i" . #'minuet-show-suggestion) ;; use overlay for completion
+;;    ("C-c m" . #'minuet-configure-provider)
+;;    :map minuet-active-mode-map
+;;    ;; These keymaps activate only when a minuet suggestion is displayed in the current buffer
+;;    ("M-p" . #'minuet-previous-suggestion) ;; invoke completion or cycle to next completion
+;;    ("M-n" . #'minuet-next-suggestion) ;; invoke completion or cycle to previous completion
+;;    ("M-A" . #'minuet-accept-suggestion) ;; accept whole completion
+;;    ;; Accept the first line of completion, or N lines with a numeric-prefix:
+;;    ;; e.g. C-u 2 M-a will accepts 2 lines of completion.
+;;    ("M-a" . #'minuet-accept-suggestion-line)
+;;    ("M-e" . #'minuet-dismiss-suggestion))
+;;   :init
+;;   ;; if you want to enable auto suggestion.
+;;   ;; Note that you can manually invoke completions without enable minuet-auto-suggestion-mode
+;;   (add-hook 'prog-mode-hook #'minuet-auto-suggestion-mode)
+;;   :config
+;;   ;; You can use M-x minuet-configure-provider to interactively configure provider and model
+;;   (setq minuet-provider 'openai-fim-compatible)
+;;   (setq minuet-context-window 1024)
+;;   (setq minuet-request-timeout 10)
+;;   (plist-put minuet-openai-fim-compatible-options :end-point "http://192.168.33.4:11434/v1/completions")
+;;   (plist-put minuet-openai-fim-compatible-options :name "Ollama")
+;;   (plist-put minuet-openai-fim-compatible-options :api-key "TERM")
+;;   (plist-put minuet-openai-fim-compatible-options :model "qwen2.5-coder:7b"))
+;; (require 'minuet)
 
 ;; multi-term autoload
 (autoload 'multi-term "multi-term" "multi terminal" t)
