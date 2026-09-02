@@ -1,21 +1,22 @@
-;;; emacs.el ---
+;;; emacs.el --- -*- lexical-binding: t; -*-
 ;; .emacs profile, written by shell.xu
 
 ;; load other set
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 (add-to-list 'load-path "~/.emacs.d/plugins/")
+(cond
+ ((eq system-type 'darwin)
+  (load "mac"))
+ ((eq system-type 'gnu/linux)
+  (load "linux"))
+ ((memq system-type '(windows-nt cygwin))
+  (load "win")))
+
 (package-initialize)
 (load "setup")
 (load "plugins")
 (load "users")
 (load "dired-conf")
-(cond
- ((memq system-type '(gnu/linux))
-  (load "linux"))
- ((memq system-type '(darwin))
-  (load "mac"))
- ((memq system-type '(windows-nt cygwin))
-  (load "win")))
 (if (file-exists-p "~/.emacs.d/lisp/locals.el")
     (load "locals"))
 
